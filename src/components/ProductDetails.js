@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Space, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import Overview from './Overview';
@@ -29,10 +29,12 @@ const ProductDetails = () => {
         />
       </Header>
       <Content style={{ padding: '0 50px' }}>
-        <Overview></Overview>
-        <RelatedItems></RelatedItems>
-        <QA></QA>
-        <Ratings></Ratings>
+        <Space direction="vertical" size="large" split={<Divider/>}>
+          <Overview></Overview>
+          <RelatedItems></RelatedItems>
+          <QA></QA>
+          <Ratings></Ratings>
+        </Space>
       </Content>
 
 

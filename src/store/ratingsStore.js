@@ -1,8 +1,8 @@
 import makeActionCreator from '../utils/makeActionCreator';
 import { createSelector } from 'reselect';
 
-export const setRating = makeActionCreator('SET_RATING', 'Rating');
-export const setReview = makeActionCreator('SET_REVIEW', 'Review');
+export const setRating = makeActionCreator('SET_RATING', 'rating');
+export const setReview = makeActionCreator('SET_REVIEW', 'review');
 
 const initialState = {
   rating: 1.5,
@@ -12,10 +12,11 @@ const initialState = {
 export const ratingReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'SET_RATING': {
-    return action.payload.Rating;
+    console.log('setting rating', action.rating);
+    return action.rating;
   }
   case 'SET_REVIEW': {
-    return action.payload.Review;
+    return action.review;
   }
   default: {
     return state;

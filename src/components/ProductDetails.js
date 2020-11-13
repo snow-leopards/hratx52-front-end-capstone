@@ -20,13 +20,15 @@ const ProductDetails = () => {
   return (
     <Layout>
       <Header className="header">
-        <div className="logo" />
-        <Search
+        <div className="logo">LOGO</div>
+        {/* <Search
+          clasName="searchForm"
           placeholder="input search text"
           allowClear
           onSearch={onSearch}
           style={{ width: 200, margin: '0 10px' }}
-        />
+        /> */}
+        <Search clasName="searchForm" placeholder="input search text" onSearch={onSearch} style={{ width: 200 } } />
       </Header>
       <Content style={{ padding: '0 50px' }}>
         <Space direction="vertical" size="large" split={<Divider/>}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectProduct } from '../store/overviewStore';
+import { selectProduct } from '../reducers/overviewReducers';
 
 const Overview = () => {
 

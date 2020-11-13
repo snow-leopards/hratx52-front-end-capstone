@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectQ, selectA} from '../store/QAStore';
-import { selectProduct } from '../store/overviewStore';
+import { selectQ, selectA} from '../reducers/QAReducers';
+import { selectProduct } from '../reducers/overviewReducers';
 
 
 

@@ -1,4 +1,4 @@
-import makeActionCreator from '../utils/makeActionCreator';
+import makeActionCreator from '../utils/makeActionCreator.jsx';
 import { createSelector } from 'reselect';
 
 export const setQA = makeActionCreator('SET_QA', 'QA');

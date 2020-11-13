@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectRating, selectReview} from '../reducers/ratingsReducers';
-import { selectProduct } from '../reducers/overviewReducers';
+import { selectRating, selectReview} from '../reducers/ratingsReducers.jsx';
+import { selectProduct } from '../reducers/overviewReducers.jsx';
 import { Rate } from 'antd';
-import {setRating} from '../reducers/ratingsReducers';
+import {setRating} from '../reducers/ratingsReducers.jsx';
 import { useDispatch } from 'react-redux';
 
 

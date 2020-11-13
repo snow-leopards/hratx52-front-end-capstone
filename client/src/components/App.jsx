@@ -1,7 +1,6 @@
 import React from 'react';
 import { Rate } from 'antd';
-import '../App.css';
-import ProductDetails from './ProductDetails';
+import ProductDetails from './ProductDetails.jsx';
 
 
 const App = () => {

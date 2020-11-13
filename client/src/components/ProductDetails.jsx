@@ -2,10 +2,10 @@ import React from 'react';
 import { Layout, Space, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import Overview from './Overview';
-import RelatedItems from './RelatedItems';
-import QA from './QA';
-import Ratings from './Ratings';
+import Overview from './Overview.jsx';
+import RelatedItems from './RelatedItems.jsx';
+import QA from './QA.jsx';
+import Ratings from './Ratings.jsx';
 
 const { Header, Content} = Layout;
 const { Search } = Input;

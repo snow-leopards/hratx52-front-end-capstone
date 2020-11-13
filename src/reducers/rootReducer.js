@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {productReducer} from './overviewStore';
-import {QAReducer} from './QAStore';
-import {ratingReducer} from './ratingsStore';
+import {productReducer} from './overviewReducers';
+import {QAReducer} from './QAReducers';
+import {ratingReducer} from './ratingsReducers';
 
 export const rootReducer = combineReducers({
   overview: productReducer,

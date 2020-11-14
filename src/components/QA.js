@@ -13,7 +13,7 @@ const QA = () => {
 
   return (
     <div>
-    This is QA Section for product: {product} <br/>
+    This is QA Section for product: {product.name} <br/>
     Question: {question} <br/>
     Answer: {answer}
     </div>

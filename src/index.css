@@ -36,3 +36,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.innerCarousel {
+  position: absolute;
+  z-index: 9999;
+  margin-left: 15px;
+  margin-top: 30px;
+  width: 100px;
+
+}
+
+.small-image {
+  object-fit: contain;
+}
+
+.chevron {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 20px;
+}

@@ -6,7 +6,9 @@ export const setReview = makeActionCreator('SET_REVIEW', 'review');
 
 const initialState = {
   rating: 1.5,
-  review: 'I am pretty dissapointed, it broke the second time I\'ve used it! '
+  avgRating: null,
+  review: 'I am pretty dissapointed, it broke the second time I\'ve used it! ',
+  reviewList: []
 };
 
 export const ratingReducer = (state = initialState, action) => {

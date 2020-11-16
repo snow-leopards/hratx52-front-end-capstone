@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Dropdown, Menu } from 'antd';
+import { Layout, Dropdown, Menu, Button, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import '../App.css';
 import Ratings from './Ratings';
@@ -24,9 +24,13 @@ const RatingsReviewsOverview = (props) => {
   return (
     <Layout>
       <Sider className='RROverviewSider'>
-        RatingProductBreakdown
-        <Ratings></Ratings>
-        <RatingProductBreakdown></RatingProductBreakdown>
+        <Space direction='vertical'>
+          Ratings and Reviews:
+          <Ratings></Ratings>
+          % of reviews recommend this product
+          Star rating breakdown
+          <RatingProductBreakdown></RatingProductBreakdown>
+        </Space>
       </Sider>
       <Layout>
         <Header className='RROverviewSider'>
@@ -38,6 +42,8 @@ const RatingsReviewsOverview = (props) => {
         </Header>
         <Content>
           <ReviewList></ReviewList>
+          <Button type='primary'>Add A Review</Button>
+          <Button disabled>More Reviews</Button>
         </Content>
       </Layout>
     </Layout>

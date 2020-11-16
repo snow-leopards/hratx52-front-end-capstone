@@ -26,6 +26,7 @@
   color: white;
 }
 
+
 .App-link {
   color: #61dafb;
 }
@@ -37,4 +38,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.RROverviewSider {
+  color: black;
+  background-color: #F0F2F5;
 }

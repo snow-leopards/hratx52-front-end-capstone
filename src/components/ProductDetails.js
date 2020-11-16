@@ -5,7 +5,7 @@ import { Input } from 'antd';
 import Overview from './Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
-import Ratings from './Ratings';
+import RatingsReviewsOverview from './RatingsReviewsOverview';
 
 const { Header, Content} = Layout;
 const { Search } = Input;
@@ -33,7 +33,7 @@ const ProductDetails = () => {
           <Overview></Overview>
           <RelatedItems></RelatedItems>
           <QA></QA>
-          <Ratings></Ratings>
+          <RatingsReviewsOverview></RatingsReviewsOverview>
         </Space>
       </Content>
 

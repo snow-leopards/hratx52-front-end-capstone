@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/rootReducer';
+import thunkMiddleware from 'redux-thunk';
+
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 
-const store = createStore(rootReducer);
+const composedEnhancer = applyMiddleware(thunkMiddleware);
+const store = createStore(rootReducer, composedEnhancer);
 
 ReactDOM.render(
   <Provider store={store}>

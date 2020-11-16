@@ -16,7 +16,7 @@ const Ratings = () => {
 
   return (
     <div>
-    This is Ratings Section for product: {product} <br/>
+    This is Ratings Section for product: {product.name} <br/>
     Rating: <Rate allowHalf defaultValue={rating} onChange={(rating) => dispatch({type: 'SET_RATING', rating: {rating}})}/> <br/>
     Rating: <Rate allowHalf defaultValue={rating} onChange={(rating) => dispatch(setRating({rating}))} /> <br/>
     Review: {review}

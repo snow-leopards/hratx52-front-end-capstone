@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from '@reach/router';
 import { Layout, Space, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
@@ -7,10 +8,12 @@ import RelatedItems from './RelatedItems';
 import QA from './QA';
 import Ratings from './Ratings';
 
-const { Header, Content} = Layout;
+const { Content} = Layout;
 const { Search } = Input;
 
 const ProductDetails = () => {
+
+  const params = useParams();
 
   const onSearch = () => {
     console.log('Search');
@@ -19,20 +22,9 @@ const ProductDetails = () => {
   //more functions go here
   return (
     <Layout>
-      <Header className="header">
-        <div className="logo">LOGO</div>
-        {/* <Search
-          clasName="searchForm"
-          placeholder="input search text"
-          allowClear
-          onSearch={onSearch}
-          style={{ width: 200, margin: '0 10px' }}
-        /> */}
-        <Search clasName="searchForm" placeholder="input search text" onSearch={onSearch} style={{ width: 200 } } />
-      </Header>
       <Content style={{ padding: '0 50px' }}>
-        <Space direction="vertical" size="large" split={<Divider/>}>
-          <Overview></Overview>
+        <Space style={{ width: '100%' }} direction="vertical" size="large" split={<Divider/>}>
+          <Overview productId={params.id}></Overview>
           <RelatedItems></RelatedItems>
           <QA></QA>
           <Ratings></Ratings>

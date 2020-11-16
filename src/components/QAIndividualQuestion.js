@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectQ, selectA} from '../reducers/QAReducers';
 import { selectProduct } from '../reducers/overviewReducers';
 import { Layout, Row, Col, Image, Descriptions } from 'antd';
-import dummyData from '../DummyData/QAListQuestionsData';
+import dummyData from '../dummyData/QAListQuestionsData';
 
 const { Header, Footer, Sider, Content } = Layout;
 

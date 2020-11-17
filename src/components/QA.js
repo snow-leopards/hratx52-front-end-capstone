@@ -9,13 +9,11 @@ import IndividualQuestion from './QAIndividualQuestion';
 const { Header, Footer, Sider, Content } = Layout;
 
 const QA = ({ productId }) => {
-  const question = useSelector(selectQ);
-  const answer = useSelector(selectA);
-  //Here I am sharing state from Kornelija's store
+
   const product = useSelector(selectProduct);
   const dispatch = useDispatch();
   const fetchedQuestions = useSelector(selectQ);
-  console.log(fetchedQuestions);
+
 
   useEffect(() => {
     dispatch(fetchQuestions(productId));

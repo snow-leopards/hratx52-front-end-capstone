@@ -9,7 +9,6 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const IndividualQuestion = ( { aQuestion } ) => {
   const product = useSelector(selectProduct);
-  console.log('PRODUCT:', product);
   var answers = aQuestion.answers;
   var answersArray = [];
   for (var key in answers) {

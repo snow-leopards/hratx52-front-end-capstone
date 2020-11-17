@@ -15,7 +15,7 @@ const Ratings = () => {
 
   return (
     <div>
-    Avg Rating: {product} <br/>
+    Avg Rating: {product.id} <br/>
     Rating: <Rate allowHalf defaultValue={rating} onChange={(rating) => dispatch({type: 'SET_RATING', rating: {rating}})}/> <br/>
     </div>
   );

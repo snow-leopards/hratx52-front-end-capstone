@@ -27,7 +27,7 @@ const ProductDetails = () => {
           <Overview productId={params.id}></Overview>
           <RelatedItems></RelatedItems>
           <QA></QA>
-          <RatingsReviewsOverview></RatingsReviewsOverview>
+          <RatingsReviewsOverview productId={params.id}></RatingsReviewsOverview>
         </Space>
       </Content>
 

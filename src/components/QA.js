@@ -29,7 +29,7 @@ const QA = ({ productId }) => {
             {fetchedQuestions.length > 0 &&
             fetchedQuestions.map((aQuestion) => {
               return (
-                <IndividualQuestion key={aQuestion.id} productId={productId} aQuestion={aQuestion}/>
+                <IndividualQuestion key={aQuestion.question_id} productId={productId} aQuestion={aQuestion}/>
               );
             })
             }

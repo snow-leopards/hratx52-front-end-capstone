@@ -3,10 +3,10 @@ import { useParams } from '@reach/router';
 import { Layout, Space, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import Overview from './Overview';
+import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
-import Ratings from './Ratings';
+import RatingsReviewsOverview from './RatingsAndReviews/RatingsReviewsOverview';
 
 const { Content} = Layout;
 const { Search } = Input;
@@ -27,7 +27,7 @@ const ProductDetails = () => {
           <Overview productId={params.id}></Overview>
           <RelatedItems></RelatedItems>
           <QA productId={params.id}></QA>
-          <Ratings></Ratings>
+          <RatingsReviewsOverview productId={params.id}></RatingsReviewsOverview>
         </Space>
       </Content>
 

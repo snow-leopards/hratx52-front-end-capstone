@@ -34,7 +34,10 @@ const RatingsReviewsOverview = (props) => {
 
   return (
     <Layout>
-      <Sider className='RROverviewSider'>
+      <Sider
+        className='RROverviewSider'
+        style={{color: 'white'}}
+      >
         <Space direction='vertical'>
           Ratings and Reviews:
           <Ratings></Ratings>
@@ -44,7 +47,8 @@ const RatingsReviewsOverview = (props) => {
         </Space>
       </Sider>
       <Layout>
-        <Header className='RROverviewSider'>
+        <Header
+          style={{color: 'white'}}>
           (filter/sort drop-down menu) :
           <Dropdown overlay={menu}>
             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>Sort By: <DownOutlined />

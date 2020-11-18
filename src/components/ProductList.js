@@ -4,7 +4,7 @@ import { Layout, Space, Divider, List, Avatar } from 'antd';
 import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
-import Ratings from './Ratings';
+import Ratings from './RatingsAndReviews/Ratings';
 import { fetchProductList, selectProductList } from '../reducers/overviewReducers';
 
 

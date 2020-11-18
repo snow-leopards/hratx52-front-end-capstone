@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout, Space, Divider, List, Avatar } from 'antd';
-import Overview from './Overview';
+import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
 import Ratings from './RatingsAndReviews/Ratings';

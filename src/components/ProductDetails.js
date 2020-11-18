@@ -3,7 +3,7 @@ import { useParams } from '@reach/router';
 import { Layout, Space, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import Overview from './Overview';
+import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
 import RatingsReviewsOverview from './RatingsAndReviews/RatingsReviewsOverview';
@@ -26,7 +26,7 @@ const ProductDetails = () => {
         <Space style={{ width: '100%' }} direction="vertical" size="large" split={<Divider/>}>
           <Overview productId={params.id}></Overview>
           <RelatedItems></RelatedItems>
-          <QA></QA>
+          <QA productId={params.id}></QA>
           <RatingsReviewsOverview productId={params.id}></RatingsReviewsOverview>
         </Space>
       </Content>

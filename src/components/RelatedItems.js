@@ -1,38 +1,73 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { List, Card } from 'antd';
 
 const RelatedItems = ({itemID}) => {
-  const getRelatedItems = () => {
-    console.log('inside getRelatedItems');
-  };
-
-  useEffect(() =>{
-    getRelatedItems();
-  });
 
   const placeholderData = [
     {
-      title: 'Title 1',
+      id: 9001,
+      name: 'Expanded Product Name with Extra Text',
+      defaultPrice: '123',
+      imgSrc: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
     },
     {
-      title: 'Title 2',
+      id: 2,
+      name: 'Lorem Ipsum',
+      defaultPrice: '456',
+      imgSrc: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
     },
     {
-      title: 'Title 3',
+      id: 0,
+      name: 'Expanded Product Name with Extra Text but this one is even longer',
+      defaultPrice: '1',
+      imgSrc: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
     },
     {
-      title: 'Title 4',
+      id: 999999,
+      name: 'Test 123',
+      defaultPrice: '1234567890',
+      imgSrc: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
     },
   ];
+
+  // Our "main" information array of related items
+  // This will need to be built from multiple calls to the API
+  const [relatedItems, setRelatedItems] = useState(placeholderData);
+
+  const getRelatedItemsFromAPI = () => {
+    fetch(`http://3.21.164.220/products/${itemID}/related`)
+      .then(results => results.json())
+      .then((results) => {
+        console.log('These are the related items:', results);
+
+      })
+      .catch((err) => {
+        console.log('Error from fetch inside of relatedItems:', err);
+      });
+    // console.log('inside getRelatedItemsFromAPI');
+  };
+
+  useEffect(() =>{
+    getRelatedItemsFromAPI();
+  }, []);
+
   return (
     <div>
-      <div>This is RelatedItems Section</div>
       <List
-        grid = {{ gutter: 16, column: 4 }}
-        dataSource = {placeholderData}
+        grid = {{ gutter: 8, column: 4 }}
+        dataSource = {relatedItems}
         renderItem={item => (
           <List.Item>
-            <Card title={item.title}>Card content</Card>
+            <Card
+              hoverable
+              style={{ width: 140 }}
+              cover={<img alt="example" src={item.imgSrc} />}
+            >
+              <Card.Meta
+                title={item.name}
+                description={'$' + item.defaultPrice}
+              />
+            </Card>
           </List.Item>
         )}
       >

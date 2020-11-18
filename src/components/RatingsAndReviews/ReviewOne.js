@@ -9,7 +9,7 @@ const ReviewOne = () => {
   //data from store
   const product = useSelector(selectProduct);
   const reviewList = useSelector(selectReviewList);
-  console.log('reviewListRO: ', reviewList);
+  // console.log('reviewListRO: ', reviewList);
 
   return (
     <>

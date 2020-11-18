@@ -60,6 +60,12 @@ export const selectProductList = createSelector(
   //This needs to map to whatever is defined in this file
   overview => overview.productList
 );
+export const selectProductStyle = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.overview,
+  //This needs to map to whatever is defined in this file
+  overview => overview.productStyle
+);
 
 // gets first 100 products from the list
 export const fetchProductList = async(dispatch, getState) => {

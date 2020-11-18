@@ -32,9 +32,15 @@ body {
 #siteWideMessage {
   background-color: #f0f2f5;
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.carouselPlaceHolder {
+  width: 800px;
+  height: 600px;
 }
 
 .innerCarousel {
@@ -42,8 +48,55 @@ code {
   z-index: 9999;
   margin-left: 15px;
   margin-top: 30px;
-  width: 100px;
+  height: 60px;
+  width: 60px;
+}
 
+.outer-carousel {
+  position: absolute;
+  width: 800px;
+  height: 600px;
+  z-index: 9999;
+  transition: width 2s;
+
+}
+
+.outer-carousel .carousel__slider--horizontal li{
+  height: 600px;
+}
+
+.outer-carousel.expanded .carousel__slider--horizontal li{
+  height: 600px;
+}
+
+.outer-carousel.expanded .carousel__slider--horizontal{
+  width: 157%;
+}
+.expand-button {
+  position: relative;
+  top: 20px;
+  right: -780px;
+  z-index: 99999;
+}
+
+.arrows {
+  position: relative;
+  z-index: 99999999px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 20px;
+}
+
+.arrows.right {
+  top: -330px;
+  left: 390px;
+}
+
+.arrows.left {
+  top: -300px;
+  left: -390px
 }
 
 .small-image {

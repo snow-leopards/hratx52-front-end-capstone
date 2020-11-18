@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Layout, Dropdown, Menu, Button, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import '../App.css';
+import '../../App.css';
 import Ratings from './Ratings';
 import ReviewList from './ReviewList';
 import RatingProductBreakdown from './RatingProductBreakdown';
+import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
 
+//layout tags
 const { Header, Sider, Content } = Layout;
-// const { DownOutlined } = Icons;
-const RatingsReviewsOverview = (props) => {
 
+
+const RatingsReviewsOverview = (props) => {
   const onClick = ({ key }) => {
     console.log(`Clicked ${key}`);
   };
+
+  const dispatch = useDispatch();
+  const reviewList = useSelector(selectReviewList);
+
+  useEffect(() => {
+    dispatch(fetchReviewList(props.productId));
+  }, []);
+
   const menu = (
     <Menu onClick={onClick}>
       <Menu.Item key="Newest">Newest</Menu.Item>
@@ -41,7 +52,10 @@ const RatingsReviewsOverview = (props) => {
           </Dropdown>
         </Header>
         <Content>
-          <ReviewList></ReviewList>
+          <ReviewList
+            productId={props.productId}
+            reviewList={props.reviewList}
+          ></ReviewList>
           <Button type='primary'>Add A Review</Button>
           <Button disabled>More Reviews</Button>
         </Content>

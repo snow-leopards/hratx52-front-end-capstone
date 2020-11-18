@@ -5,7 +5,7 @@ import { Input } from 'antd';
 import Overview from './Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
-import Ratings from './Ratings';
+import Ratings from './RatingsAndReviews/Ratings';
 
 const { Header } = Layout;
 const { Search } = Input;

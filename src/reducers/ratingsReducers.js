@@ -8,7 +8,6 @@ export const setReviewList = makeActionCreator('SET_REVIEW_LIST');
 const initialState = {
   rating: 1,
   avgRating: null,
-  review: 'I am pretty dissapointed, it broke the second time I\'ve used it! ',
   reviewList: []
 };
 
@@ -63,13 +62,11 @@ export const selectReviewList = createSelector(
 export const fetchReviewList = (productId) => {
   return async(dispatch, getState) => {
     fetch(`http://3.21.164.220/reviews/?product_id=${productId}`)
-      .then((res) => (res.json()))
-      .then((result) => {
-        console.log('fetch result: ', result);
-      })
-      .then((result) => {
-        dispatch({ type: 'SET_REVIEW_LIST', payload: result });
-      })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          dispatch({ type: 'SET_REVIEW_LIST', payload: result.results });
+        })
       .catch(console.log('error cannot fetch'));
   };
 };

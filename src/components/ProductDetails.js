@@ -6,7 +6,7 @@ import { Input } from 'antd';
 import Overview from './Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
-import RatingsReviewsOverview from './RatingsReviewsOverview';
+import RatingsReviewsOverview from './RatingsAndReviews/RatingsReviewsOverview';
 
 const { Content} = Layout;
 const { Search } = Input;

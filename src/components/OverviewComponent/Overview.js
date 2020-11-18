@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle } from '../reducers/overviewReducers';
+import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle } from '../../reducers/overviewReducers';
 import { Layout, Row, Col, Descriptions, Skeleton } from 'antd';
 import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { ButtonBack, ButtonFirst, ButtonLast, ButtonNext,

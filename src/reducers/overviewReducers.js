@@ -19,7 +19,7 @@ const initialState = {
 };
 
 export const productReducer = (state = initialState, action) => {
-  debugger;
+
   switch (action.type) {
   case 'SET_PRODUCT': {
 
@@ -113,7 +113,6 @@ export const fetchProductStyle = (productId) => {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
           dispatch(setProdutStyle(result.results));
         },
         (error) => {

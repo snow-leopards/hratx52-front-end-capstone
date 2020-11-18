@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Space, Divider, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import Overview from './Overview';
+import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
 import Ratings from './Ratings';

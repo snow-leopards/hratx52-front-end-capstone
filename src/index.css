@@ -110,3 +110,8 @@ code {
   width: 100%;
   font-size: 20px;
 }
+
+.overview-skeleton {
+  height: 664px;
+  background-color: white;
+}

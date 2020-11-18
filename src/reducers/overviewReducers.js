@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 
 export const setProduct = makeActionCreator('SET_PRODUCT', 'product');
 export const setProducList = makeActionCreator('SET_PRODUCT_LIST', 'productList');
-export const setProdutStyle = makeActionCreator('SET_PRODUCT_STYLE', 'productStyle');
+export const setProdutStyle = makeActionCreator('SET_PRODUCT_STYLE', 'productStyleList');
 
 const initialState = {
   product: {
@@ -13,13 +13,13 @@ const initialState = {
     description: '',
     category: '',
     defaultPrice: null
-
   },
   productList: [],
-  productStyle: []
+  productStyleList: []
 };
 
 export const productReducer = (state = initialState, action) => {
+  debugger;
   switch (action.type) {
   case 'SET_PRODUCT': {
 
@@ -37,7 +37,7 @@ export const productReducer = (state = initialState, action) => {
   case 'SET_PRODUCT_STYLE': {
     return {
       ...state,
-      productStyle: action.productStyle
+      productStyleList: action.productStyleList
 
     };
   }
@@ -64,7 +64,7 @@ export const selectProductStyle = createSelector(
   //This needs to map to whatever the key is in rootReducer.js
   state => state.overview,
   //This needs to map to whatever is defined in this file
-  overview => overview.productStyle
+  overview => overview.productStyleList
 );
 
 // gets first 100 products from the list
@@ -114,7 +114,7 @@ export const fetchProductStyle = (productId) => {
       .then(
         (result) => {
           console.log(result);
-          dispatch(setProdutStyle(result));
+          dispatch(setProdutStyle(result.results));
         },
         (error) => {
           console.log('fetch request failed for product styles');

@@ -70,7 +70,7 @@ code {
 }
 
 .outer-carousel.expanded .carousel__slider--horizontal{
-  width: 157%;
+  width: 135%;
 }
 .expand-button {
   position: relative;

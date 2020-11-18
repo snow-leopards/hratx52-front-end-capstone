@@ -2,6 +2,8 @@ import makeActionCreator from '../utils/makeActionCreator';
 import { createSelector } from 'reselect';
 
 export const setProduct = makeActionCreator('SET_PRODUCT', 'product');
+export const setProducList = makeActionCreator('SET_PRODUCT_LIST', 'productList');
+export const setProdutStyle = makeActionCreator('SET_PRODUCT_STYLE', 'productStyle');
 
 const initialState = {
   product: {
@@ -13,7 +15,8 @@ const initialState = {
     defaultPrice: null
 
   },
-  productList: []
+  productList: [],
+  productStyle: []
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -28,7 +31,14 @@ export const productReducer = (state = initialState, action) => {
   case 'SET_PRODUCT_LIST': {
     return {
       ...state,
-      productList: action.payload
+      productList: action.productList
+    };
+  }
+  case 'SET_PRODUCT_STYLE': {
+    return {
+      ...state,
+      productStyle: action.productStyle
+
     };
   }
   default: {
@@ -50,20 +60,28 @@ export const selectProductList = createSelector(
   //This needs to map to whatever is defined in this file
   overview => overview.productList
 );
+export const selectProductStyle = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.overview,
+  //This needs to map to whatever is defined in this file
+  overview => overview.productStyle
+);
 
+// gets first 100 products from the list
 export const fetchProductList = async(dispatch, getState) => {
   fetch('http://3.21.164.220/products?count=100')
     .then(res => res.json())
     .then(
       (result) => {
-        dispatch({ type: 'SET_PRODUCT_LIST', payload: result });
+        dispatch(setProducList(result));
       },
       (error) => {
-      //TODO: handle errors
+        console.log('fetch request failed for product list');
       }
     );
 };
 
+// gets product INFORMATION by selected id
 export const fetchProductInformation = (productId) => {
   return async(dispatch, getState) => {
     fetch('http://3.21.164.220/products/' + productId)
@@ -82,7 +100,24 @@ export const fetchProductInformation = (productId) => {
           dispatch(setProduct(newProduct));
         },
         (error) => {
-        //TODO: handle errors
+          console.log('fetch request failed for product information');
+        }
+      );
+  };
+};
+
+// gets product STYLE by selected id
+export const fetchProductStyle = (productId) => {
+  return async(dispatch, getState) => {
+    fetch('http://3.21.164.220/products/' + productId + '/styles')
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          dispatch(setProdutStyle(result));
+        },
+        (error) => {
+          console.log('fetch request failed for product styles');
         }
       );
   };

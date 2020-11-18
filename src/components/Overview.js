@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProduct, fetchProductInformation } from '../reducers/overviewReducers';
+import { selectProduct, fetchProductInformation, fetchProductStyle } from '../reducers/overviewReducers';
 import { Layout, Row, Col, Descriptions } from 'antd';
 import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { ButtonBack, ButtonFirst, ButtonLast, ButtonNext,
@@ -25,6 +25,7 @@ const Overview = (props) => {
 
   useEffect(() => {
     dispatch(fetchProductInformation(props.productId));
+    dispatch(fetchProductStyle(props.productId));
   }, []);
 
 

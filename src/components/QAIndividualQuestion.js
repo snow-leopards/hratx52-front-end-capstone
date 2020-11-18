@@ -7,27 +7,29 @@ import dummyData from '../dummyData/QAListQuestionsData';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const IndividualQuestion = ( { aQuestion } ) => {
+const IndividualQuestion = ( { question } ) => {
   const product = useSelector(selectProduct);
-  var answers = aQuestion.answers;
-  var answersArray = [];
-  for (var key in answers) {
-    answersArray.push(answers[key]);
+  var answers = [];
+  for (var key in question.answers) {
+    answers.push(question.answers[key]);
   }
 
+  answers.sort((a, b) => (a.helpfulness < b.helpfulness) ? 1 : -1);
+
   return (
-    <div>
-      <div className="questionBody">Q: {aQuestion.question_body}</div>
-      <div>{answersArray.map((anAnswer) => {
+    <Layout>
+      <Row className="questionBody" style={{fontWeight: 'bold'}}> Q: {question.question_body}</Row>
+      <Content>{answers.map((answer) => {
         return (
-          <div key={anAnswer.id}>
-            <div key={anAnswer.body} className="answerBody">A: {anAnswer.body}</div>
-            <div key={anAnswer.date} className="answerDetails">by {anAnswer.answerer_name}, {anAnswer.date.slice(5, 8)}{anAnswer.date.slice(8, 10)}-{anAnswer.date.slice(0, 4)}</div>
+          <div key={answer.id}>
+            <Row key={answer.body} className="answerBody">A: {answer.body}</Row>
+            <Row key={answer.date} className="answerDetails">by {answer.answerer_name}, {answer.date.slice(5, 8)}{answer.date.slice(8, 10)}-{answer.date.slice(0, 4)}</Row>
+            <Row key={'helpful' + answer.id}>Helpful? Yes ({answer.helpfulness})</Row>
           </div>
         );
       })}
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 };
 

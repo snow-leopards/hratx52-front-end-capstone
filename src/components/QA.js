@@ -27,9 +27,9 @@ const QA = ({ productId }) => {
         <Content>
           <div>
             {fetchedQuestions.length > 0 &&
-            fetchedQuestions.map((aQuestion) => {
+            fetchedQuestions.map((question) => {
               return (
-                <IndividualQuestion key={aQuestion.question_id} productId={productId} aQuestion={aQuestion}/>
+                <IndividualQuestion key={question.question_id} productId={productId} question={question}/>
               );
             })
             }

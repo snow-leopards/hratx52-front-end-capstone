@@ -10,8 +10,8 @@ import ReviewOne from './ReviewOne';
 const ReviewList = (props) => {
   //data from store
   const { Content } = Layout;
-  const product = useSelector(selectProduct);
-  const reviewList = useSelector(selectReviewList);
+  // const product = useSelector(selectProduct);
+  // const reviewList = useSelector(selectReviewList);
 
 
   return (
@@ -19,8 +19,7 @@ const ReviewList = (props) => {
       <Content>
         <List
           itemLayout="vertical"
-          size="medium"
-        >
+          size="medium">
           <ReviewOne></ReviewOne>
         </List>
       </Content>

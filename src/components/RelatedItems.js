@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { List, Card } from 'antd';
 
-const RelatedItems = ({itemID}) => {
+const RelatedItems = ({productId}) => {
 
   const placeholderData = [
     {
@@ -37,7 +37,7 @@ const RelatedItems = ({itemID}) => {
   const getRelatedItemsFromAPI = () => {
 
     // Initial fetch, to find the list of relatedItems e.g. [5, 9, 7, 2, 1]
-    fetch(`http://3.21.164.220/products/${itemID}/related`)
+    fetch(`http://3.21.164.220/products/${productId}/related`)
       .then(relatedItemIDs => relatedItemIDs.json())
       .then((relatedItemIDs) => {
         let relatedItemsStylePromises = [];

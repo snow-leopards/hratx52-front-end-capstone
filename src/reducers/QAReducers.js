@@ -2,9 +2,11 @@ import makeActionCreator from '../utils/makeActionCreator';
 import { createSelector } from 'reselect';
 
 export const setQA = makeActionCreator('SET_QA', 'question');
+export const setAnswer = makeActionCreator('SET_ANSWERS', 'answers');
 
 const initialState = {
-  question: []
+  question: [],
+  answers: []
 };
 
 export const QAReducer = (state = initialState, action) => {
@@ -13,6 +15,12 @@ export const QAReducer = (state = initialState, action) => {
     return {
       ...state,
       question: action.payload
+    };
+  }
+  case 'SET_ANSWERS': {
+    return {
+      ...state,
+      answers: action.payload
     };
   }
   default: {
@@ -32,7 +40,7 @@ export const selectA = createSelector(
   //This needs to map to whatever the key is in rootReducer.js
   state => state.QA,
   //This needs to map to whatever is defined in this file
-  QA => QA.answer
+  QA => QA.answers
 );
 
 export const fetchQuestions = (productId) => {

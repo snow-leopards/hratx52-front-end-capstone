@@ -25,7 +25,7 @@ const ProductDetails = () => {
       <Content style={{ padding: '0 50px' }}>
         <Space style={{ width: '100%' }} direction="vertical" size="large" split={<Divider/>}>
           <Overview productId={params.id}></Overview>
-          <RelatedItems itemID={3}></RelatedItems>
+          <RelatedItems productId={params.id}></RelatedItems>
           <QA productId={params.id}></QA>
           <RatingsReviewsOverview productId={params.id}></RatingsReviewsOverview>
         </Space>

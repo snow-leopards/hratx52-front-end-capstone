@@ -13,17 +13,25 @@ const { Header, Sider, Content } = Layout;
 
 
 const RatingsReviewsOverview = (props) => {
-  const onClick = ({ key }) => {
-    console.log(`Clicked ${key}`);
-  };
 
+  //useDispatch invocation
   const dispatch = useDispatch();
-  const reviewList = useSelector(selectReviewList);
 
+  //hook to rerender with new data
   useEffect(() => {
     dispatch(fetchReviewList(props.productId));
   }, []);
 
+  //data from store
+  const reviewList = useSelector(selectReviewList);
+
+  //handling for drop-down selection
+  const onClick = ({ key }) => {
+    console.log(`Clicked ${key}`);
+  };
+
+
+  //menu for drop-down sort
   const menu = (
     <Menu onClick={onClick}>
       <Menu.Item key="Newest">Newest</Menu.Item>
@@ -32,18 +40,30 @@ const RatingsReviewsOverview = (props) => {
     </Menu>
   );
 
+  //in-line styling
+  const styles = {
+    sider: {
+      color: 'white'
+    }
+  };
+
   return (
     <Layout>
       <Sider
         className='RROverviewSider'
-        style={{color: 'white'}}
+        style={styles.sider}
       >
         <Space direction='vertical'>
-          Ratings and Reviews:
+          <b>Ratings and Reviews:</b>
+          <br />
           <Ratings></Ratings>
           % of reviews recommend this product
+          <br />
           Star rating breakdown
-          <RatingProductBreakdown></RatingProductBreakdown>
+          <br />
+          <RatingProductBreakdown
+            productId={props.productId}
+          ></RatingProductBreakdown>
         </Space>
       </Sider>
       <Layout>

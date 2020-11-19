@@ -19,21 +19,21 @@ const PageHeader = () => {
   //more functions go here
   return (
     <Layout>
-      <Header className="header">
-        <div className="logo">LOGO</div>
-        <Menu style={{ float: 'left' }}>
-          <Menu.Item key="home">
-            <a href="/" rel="noopener noreferrer">
-              Home
-            </a>
-          </Menu.Item>
-        </Menu>
+      <Header style={{ display: 'flex', justifyContent: 'space-between', color: 'orange', fontWeight: 'bold', fontSize: '20px'}} className="header">
+        <div>
+          LOGO
+        </div>
+        <div style={{ float: 'left', backgroundColor: '#001529' }}>
+          <a style= {{color: 'orange'}} href="/" rel="noopener noreferrer">
+            HOME
+          </a>
+        </div>
         <Search
           className="searchForm"
           placeholder="input search text"
           allowClear
           onSearch={onSearch}
-          style={{ width: 200, margin: '0 10px' }}
+          style={{ width: '200px', alignSelf: 'center' }}
         />
       </Header>
     </Layout>

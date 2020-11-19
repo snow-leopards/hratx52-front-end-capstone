@@ -12,7 +12,8 @@ const initialState = {
     slogan: '',
     description: '',
     category: '',
-    defaultPrice: null
+    defaultPrice: null,
+    featuresList: []
   },
   productList: [],
   productStyleList: []
@@ -94,7 +95,8 @@ export const fetchProductInformation = (productId) => {
             slogan: result.slogan,
             description: result.description,
             category: result.category,
-            defaultPrice: result.default_price
+            defaultPrice: result.default_price,
+            featuresList: result.features
           };
 
           dispatch(setProduct(newProduct));

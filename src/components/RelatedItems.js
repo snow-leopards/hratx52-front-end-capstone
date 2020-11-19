@@ -35,7 +35,6 @@ const RelatedItems = ({itemID}) => {
   const [relatedItems, setRelatedItems] = useState(placeholderData);
 
   const getRelatedItemsFromAPI = () => {
-    let itemID = 5;
 
     // Initial fetch, to find the list of relatedItems e.g. [5, 9, 7, 2, 1]
     fetch(`http://3.21.164.220/products/${itemID}/related`)
@@ -52,7 +51,7 @@ const RelatedItems = ({itemID}) => {
             httpResponses = httpResponses.map(response => response.json());
             Promise.all(httpResponses) // TODO: I think I don't need nested promises here. Can't I do something like .then(styles => styles.json()) ?
               .then((styles) => {
-                console.log('An array of styles', styles);
+                // console.log('An array of styles', styles);
 
                 // Now we can finally build our "final" relatedItems array
                 let tempRelatedItems = [];

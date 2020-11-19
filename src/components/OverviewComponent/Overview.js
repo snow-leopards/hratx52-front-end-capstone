@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle } from '../../reducers/overviewReducers';
-import { Layout, Row, Col, Descriptions, Skeleton, List, Divider } from 'antd';
-import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
+import { Layout, Row, Col, Descriptions, Skeleton, List, Divider, Rate } from 'antd';
+import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined, CheckOutlined, StarOutlined } from '@ant-design/icons';
 import { ButtonBack, ButtonFirst, ButtonLast, ButtonNext,
   CarouselProvider, DotGroup, Image, ImageWithZoom, Slide, Slider } from 'pure-react-carousel';
+
+import { Menu, Dropdown, Button, message, Tooltip } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -27,6 +30,33 @@ const Overview = (props) => {
     carouselClassName === 'outer-carousel' ? setCarouselClassName('outer-carousel expanded') : setCarouselClassName('outer-carousel');
     carouselSlideWidth === 1 ? setCarouselSlideWidth(3) : setCarouselSlideWidth(1);
   };
+
+
+
+  const handleButtonClick = (e) => {
+    message.info('Click on left button.');
+    console.log('click left button', e);
+  };
+
+  const handleMenuClick = (e) => {
+    message.info('Click on menu item.');
+    console.log('click', e);
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="1" icon={<UserOutlined />}>
+        1st menu item
+      </Menu.Item>
+      <Menu.Item key="2" icon={<UserOutlined />}>
+        2nd menu item
+      </Menu.Item>
+      <Menu.Item key="3" icon={<UserOutlined />}>
+        3rd menu item
+      </Menu.Item>
+    </Menu>
+  );
+
 
   useEffect(() => {
     // invokes ajax requests for selected product by id
@@ -129,11 +159,34 @@ const Overview = (props) => {
                   </div>
                 </Col>
                 <Col span={8}>
-                  <Descriptions title="Product Info">
-                    <Descriptions.Item span={3} label="Product Name">{product.name}</Descriptions.Item>
-                    <Descriptions.Item span={3} label="Price">${product.defaultPrice}</Descriptions.Item>
-                    <Descriptions.Item span={3} label="Style">{productStyleList[0].name}</Descriptions.Item>
-                  </Descriptions>
+                  <Row gutter={[16, 16]}>
+                    <Col span={24} style={{ marginTop: '30px', paddingLeft: '30px' }}><Rate allowHalf disabled defaultValue={4.5} />    <a style={{textDecoration: 'underline'}}>Read all reviews</a></Col>
+                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>{product.category.toUpperCase()}</Col>
+                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '32px', fontWeight: 'bold' }}>{product.name}</Col>
+                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>${product.defaultPrice}</Col>
+                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}><a style={{ fontWeight: 'bold', color: 'black' }}>STYLE > </a>{productStyleList[0].name.toUpperCase()}</Col>
+                    <Col span={24} style={{ paddingLeft: '30px'}}>
+                      <Dropdown overlay={menu}>
+                        <Button>
+                          SELECT SIZE <DownOutlined />
+                        </Button>
+                      </Dropdown>
+                      <Dropdown overlay={menu}>
+                        <Button>
+                          1 <DownOutlined />
+                        </Button>
+                      </Dropdown>
+                    </Col>
+                    <Col span={24} style={{ paddingLeft: '30px'}}>
+                      <Dropdown overlay={menu}>
+                        <Button>
+                          ADD TO BAG <DownOutlined />
+                        </Button>
+                      </Dropdown>
+                      <Button type="primary"><StarOutlined /></Button>
+
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
               <Row gutter={[24, 24]} style={{ paddingTop: '50px' }} >

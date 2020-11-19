@@ -1,40 +1,15 @@
-body {
-  margin: 0;
-
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Do not delete this*/
+.overview-skeleton {
+  height: 664px;
+  background-color: white;
 }
 
-.center {
-  margin: auto;
-  width: 60%;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.searchForm {
-  align-self: center;
-}
-
-.logo{
-  color: white;
-}
-
+/* --------- Cannot find this one -----------------*/
 #selectionTab {
   background-color: #f0f2f5;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
+/*Not refactoring carousel style to inline style, because I might delete this one and start over*/
 .carouselPlaceHolder {
   width: 100%;
   height: 600px;
@@ -54,8 +29,6 @@ code {
   width: 100%;
   height: 600px;
   z-index: 9999;
-  transition: width 2s;
-
 }
 
 .outer-carousel .carousel__slider--horizontal li{
@@ -106,9 +79,4 @@ code {
   outline: none;
   width: 100%;
   font-size: 20px;
-}
-
-.overview-skeleton {
-  height: 664px;
-  background-color: white;
 }

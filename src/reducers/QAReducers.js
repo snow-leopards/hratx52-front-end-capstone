@@ -1,11 +1,11 @@
 import makeActionCreator from '../utils/makeActionCreator';
 import { createSelector } from 'reselect';
 
-export const setQA = makeActionCreator('SET_QA', 'question');
+export const setQA = makeActionCreator('SET_QA', 'questions');
 export const setAnswer = makeActionCreator('SET_ANSWERS', 'answers');
 
 const initialState = {
-  question: [],
+  questions: [],
   answers: []
 };
 
@@ -14,7 +14,7 @@ export const QAReducer = (state = initialState, action) => {
   case 'SET_QA': {
     return {
       ...state,
-      question: action.payload
+      questions: action.payload
     };
   }
   case 'SET_ANSWERS': {
@@ -33,7 +33,7 @@ export const selectQ = createSelector(
   //This needs to map to whatever the key is in rootReducer.js
   state => state.QA,
   //This needs to map to whatever is defined in this file
-  QA => QA.question
+  QA => QA.questions
 );
 
 export const selectA = createSelector(
@@ -43,13 +43,22 @@ export const selectA = createSelector(
   QA => QA.answers
 );
 
-export const fetchQuestions = (productId) => {
+export const fetchQuestions = (productId, number) => {
 
   return (dispatch, getState) => {
     fetch(`http://3.21.164.220/qa/questions?product_id=${productId}`)
       .then((res) => res.json())
       .then((questions) => {
-        dispatch({type: 'SET_QA', payload: questions.results});
+        number = number || questions.results.length;
+        if (questions.results.length < number) {
+          number = questions.results.length;
+        }
+        var maxQuestions = [];
+        questions.results.sort((a, b) => (a.question_helpfulness < b.question_helpfulness) ? 1 : -1);
+        for (var i = 0; i < number; i++) {
+          maxQuestions.push(questions.results[i]);
+        }
+        dispatch({type: 'SET_QA', payload: maxQuestions});
       })
       .catch((error) => {
         console.log(error);

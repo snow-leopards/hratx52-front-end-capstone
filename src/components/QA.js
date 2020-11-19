@@ -1,21 +1,41 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectQ, selectA} from '../reducers/QAReducers';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectQ, selectA, fetchQuestions } from '../reducers/QAReducers';
 import { selectProduct } from '../reducers/overviewReducers';
+import { Layout, Row, Col, Image, Descriptions } from 'antd';
+import dummyData from '../dummyData/QAListQuestionsData';
+import IndividualQuestion from './QAIndividualQuestion';
 
+const { Header, Footer, Sider, Content } = Layout;
 
+const QA = ({ productId }) => {
 
-const QA = () => {
-  const question = useSelector(selectQ);
-  const answer = useSelector(selectA);
-  //Here I am sharing state from Kornelija's store
   const product = useSelector(selectProduct);
+  const dispatch = useDispatch();
+  const fetchedQuestions = useSelector(selectQ);
+
+
+  useEffect(() => {
+    dispatch(fetchQuestions(productId));
+  }, []);
+
 
   return (
     <div>
-    This is QA Section for product: {product.name} <br/>
-    Question: {question} <br/>
-    Answer: {answer}
+      <Layout>
+        <Header id="questionsAndAnswers" style={{color: 'white'}}>Questions and Answers</Header>
+        <Content>
+          <div>
+            {fetchedQuestions.length > 0 &&
+            fetchedQuestions.map((question) => {
+              return (
+                <IndividualQuestion key={question.question_id} productId={productId} question={question}/>
+              );
+            })
+            }
+          </div>
+        </Content>
+      </Layout>
     </div>
   );
 };

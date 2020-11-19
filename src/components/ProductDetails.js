@@ -3,10 +3,10 @@ import { useParams } from '@reach/router';
 import { Layout, Space, Divider } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import Overview from './Overview';
+import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
 import QA from './QA';
-import Ratings from './Ratings';
+import RatingsReviewsOverview from './RatingsAndReviews/RatingsReviewsOverview';
 
 const { Content} = Layout;
 const { Search } = Input;
@@ -26,8 +26,8 @@ const ProductDetails = () => {
         <Space style={{ width: '100%' }} direction="vertical" size="large" split={<Divider/>}>
           <Overview productId={params.id}></Overview>
           <RelatedItems itemID={3}></RelatedItems>
-          <QA></QA>
-          <Ratings></Ratings>
+          <QA productId={params.id}></QA>
+          <RatingsReviewsOverview productId={params.id}></RatingsReviewsOverview>
         </Space>
       </Content>
 

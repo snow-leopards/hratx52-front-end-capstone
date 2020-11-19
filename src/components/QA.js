@@ -16,7 +16,7 @@ const QA = ({ productId }) => {
 
 
   useEffect(() => {
-    dispatch(fetchQuestions(productId));
+    dispatch(fetchQuestions(productId, 4));
   }, []);
 
 
@@ -33,6 +33,9 @@ const QA = ({ productId }) => {
               );
             })
             }
+            <button onClick={() => {
+              console.log('Need to fetch more!');
+            }}>Show More Questions</button>
           </div>
         </Content>
       </Layout>

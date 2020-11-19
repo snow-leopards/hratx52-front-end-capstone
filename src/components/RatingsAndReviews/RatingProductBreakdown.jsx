@@ -24,6 +24,7 @@ const RatingProductBreakdown = (props) => {
       Product Breakdown
       <br />
       Comfort:
+      <br />
       <Progress
         type={'line'}
         steps={5}
@@ -33,6 +34,7 @@ const RatingProductBreakdown = (props) => {
       />
       <br />
       Fit:
+      <br />
       <Progress
         type={'line'}
         steps={5}
@@ -40,6 +42,7 @@ const RatingProductBreakdown = (props) => {
         percent={75} />
       <br />
       Quality:
+      <br />
       <Progress
         type={'line'}
         steps={5}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectQ, selectA, fetchQuestions } from '../reducers/QAReducers';
+import { selectQ, selectA, fetchQuestions, selectShowed } from '../reducers/QAReducers';
 import { selectProduct } from '../reducers/overviewReducers';
 import { Layout, Row, Col, Image, Descriptions } from 'antd';
 import dummyData from '../dummyData/QAListQuestionsData';
@@ -13,11 +13,23 @@ const QA = ({ productId }) => {
   const product = useSelector(selectProduct);
   const dispatch = useDispatch();
   const fetchedQuestions = useSelector(selectQ);
-
+  const showedMore = useSelector(selectShowed);
 
   useEffect(() => {
     dispatch(fetchQuestions(productId, 4));
   }, []);
+
+  var showMoreQuestions = () => {
+    dispatch(fetchQuestions(productId));
+    dispatch({type: 'SET_SHOWED', payload: true});
+  };
+
+  var showLessQuestions = () => {
+    dispatch(fetchQuestions(productId, 4));
+    dispatch({type: 'SET_SHOWED', payload: false});
+  };
+
+
 
 
   return (
@@ -33,9 +45,13 @@ const QA = ({ productId }) => {
               );
             })
             }
-            <button onClick={() => {
-              console.log('Need to fetch more!');
+            {showedMore ? <button onClick={() => {
+              showLessQuestions();
+            }}>Show Less Questions</button> : <button onClick={() => {
+              showMoreQuestions();
             }}>Show More Questions</button>
+            }
+
           </div>
         </Content>
       </Layout>

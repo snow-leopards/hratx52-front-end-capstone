@@ -67,6 +67,6 @@ export const fetchReviewList = (productId) => {
         (result) => {
           dispatch({ type: 'SET_REVIEW_LIST', payload: result.results });
         })
-      .catch(console.log('error cannot fetch'));
+      .catch(console.log('Sofia --> error cannot fetch '));
   };
 };

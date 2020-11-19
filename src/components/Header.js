@@ -22,7 +22,7 @@ const PageHeader = () => {
       <Header className="header">
         <div className="logo">LOGO</div>
         <Menu style={{ float: 'left' }}>
-          <Menu.Item key="home">
+          <Menu.Item key="home" >
             <a href="/" rel="noopener noreferrer">
               Home
             </a>

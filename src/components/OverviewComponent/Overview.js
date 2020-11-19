@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle } from '../../reducers/overviewReducers';
-import { Layout, Row, Col, Descriptions, Skeleton, List } from 'antd';
+import { Layout, Row, Col, Descriptions, Skeleton, List, Divider } from 'antd';
 import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { ButtonBack, ButtonFirst, ButtonLast, ButtonNext,
   CarouselProvider, DotGroup, Image, ImageWithZoom, Slide, Slider } from 'pure-react-carousel';
@@ -37,11 +37,11 @@ const Overview = (props) => {
   return (
     <>
       <Layout>
-        <Header id='siteWideMessage'>Site-wide annoucement message - sale / discount offer - new product highlight</Header>
+
         <Content>
           {productStyleList.length === 0 || product.id === null ? <Skeleton paragraph={{ rows: 16 }} className='overview-skeleton' active /> :
             <>
-              <Row gutter={[48, 48]}>
+              <Row gutter={[24, 24]}>
                 <Col span={16}>
                   <div className='carouselPlaceHolder'>
 
@@ -131,21 +131,23 @@ const Overview = (props) => {
                   </Descriptions>
                 </Col>
               </Row>
-              <Row gutter={[24, 24]}>
-                <Col span={16}>
-                  <Descriptions title="Product Slogan and Description">
-                    <Descriptions.Item span={3} label="Slogan">{product.slogan}</Descriptions.Item>
-                    <Descriptions.Item span={3} label="Description">{product.description}</Descriptions.Item>
+              <Row gutter={[24, 24]} style={{ paddingTop: '50px' }} >
+                <Col span={16} style={{ padding: '20px 40px 0px 125px' }}>
+                  <Descriptions title={product.slogan}>
+                    <Descriptions.Item span={3}>{product.description}</Descriptions.Item>
                   </Descriptions>
                 </Col>
-                <Col span={8}>
+                <Col span={1}>
+                  <Divider type='vertical' style= {{ height: '100%', width: '2px', backgroundColor: 'darkgrey' }}/>
+                </Col>
+                <Col span={7}>
                   <List
                     itemLayout="horizontal"
                     dataSource={product.featuresList}
                     renderItem={item => (
                       <List.Item>
                         <List.Item.Meta
-                          avatar={<CheckOutlined />}
+                          avatar={<CheckOutlined style={{ fontSize: '20px' }}/>}
                           title={<a>{item.value === 'null' ? '' : item.value} {item.feature === 'null' ? '' : item.feature}</a>}
                         />
                       </List.Item>

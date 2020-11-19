@@ -1,38 +1,82 @@
-body {
-  margin: 0;
-
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Do not delete this*/
+.overview-skeleton {
+  height: 664px;
+  background-color: white;
 }
 
-.center {
-  margin: auto;
-  width: 60%;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.searchForm {
-  align-self: center;
-}
-
-.logo{
-  color: white;
-}
-
+/* --------- Cannot find this one -----------------*/
 #selectionTab {
   background-color: #f0f2f5;
 }
-#siteWideMessage {
-  background-color: #f0f2f5;
+
+/*Not refactoring carousel style to inline style, because I might delete this one and start over*/
+.carouselPlaceHolder {
+  width: 100%;
+  height: 600px;
 }
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.innerCarousel {
+  position: absolute;
+  z-index: 9999;
+  margin-left: 15px;
+  margin-top: 30px;
+  height: 60px;
+  width: 60px;
+}
+
+.outer-carousel {
+  position: absolute;
+  width: 100%;
+  height: 600px;
+  z-index: 9999;
+}
+
+.outer-carousel .carousel__slider--horizontal li{
+  height: 600px;
+}
+
+.outer-carousel.expanded .carousel__slider--horizontal li{
+  height: 600px;
+}
+
+.outer-carousel.expanded .carousel__slider--horizontal{
+  width: 135%;
+}
+.expand-button {
+  position: relative;
+  top: 20px;
+  right: -675px;
+  z-index: 99999;
+}
+
+.arrows {
+  position: relative;
+  z-index: 99999999px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 20px;
+}
+
+.arrows.right {
+  top: -330px;
+  left: 340px;
+}
+
+.arrows.left {
+  top: -300px;
+  left: -380px
+}
+
+.small-image {
+  object-fit: contain;
+}
+
+.chevron {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 20px;
 }

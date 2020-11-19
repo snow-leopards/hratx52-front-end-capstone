@@ -3,10 +3,12 @@ import { createSelector } from 'reselect';
 
 export const setQA = makeActionCreator('SET_QA', 'questions');
 export const setAnswer = makeActionCreator('SET_ANSWERS', 'answers');
+export const setShowed = makeActionCreator('SET_SHOWED', 'showedMore');
 
 const initialState = {
   questions: [],
-  answers: []
+  answers: [],
+  showedMore: false
 };
 
 export const QAReducer = (state = initialState, action) => {
@@ -21,6 +23,12 @@ export const QAReducer = (state = initialState, action) => {
     return {
       ...state,
       answers: action.payload
+    };
+  }
+  case 'SET_SHOWED': {
+    return {
+      ...state,
+      showedMore: action.payload
     };
   }
   default: {
@@ -41,6 +49,13 @@ export const selectA = createSelector(
   state => state.QA,
   //This needs to map to whatever is defined in this file
   QA => QA.answers
+);
+
+export const selectShowed = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.QA,
+  //This needs to map to whatever is defined in this file
+  QA => QA.showedMore
 );
 
 export const fetchQuestions = (productId, number) => {
@@ -64,4 +79,14 @@ export const fetchQuestions = (productId, number) => {
         console.log(error);
       });
   };
+};
+
+export const putHelpfulness = (answerID) => {
+  fetch(`http://3.21.164.220/qa/answers/${answerID}/helpful`, {
+    method: 'PUT',
+  })
+    .then((res) => console.log('Feedback Received!'))
+    .catch((error) => {
+      console.log(error);
+    });
 };

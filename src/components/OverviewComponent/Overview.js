@@ -70,8 +70,13 @@ const Overview = (props) => {
                       >
                         <ButtonBack className='chevron'><UpOutlined /></ButtonBack>
                         <Slider >
+                          {/* {productStyleList.photos.map((index, foto) =>
+                          <Slide index={index}>
+                            <Image className='small-image' src={foto.url} />
+                          </Slide>
+                        )} */}
                           <Slide index={0}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
+                            <Image className='small-image' src={productStyleList[0].photos[0].url} />
                           </Slide>
                           <Slide index={1}>
                             <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
@@ -100,7 +105,7 @@ const Overview = (props) => {
                       <div className='expand-button' onClick={() => toggleExpandCarousel()}><ExpandOutlined /></div>
                       <Slider>
                         <Slide index={0}>
-                          <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
+                          <ImageWithZoom src={productStyleList[0].photos[0].url} />
                         </Slide>
                         <Slide index={1}>
                           <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />

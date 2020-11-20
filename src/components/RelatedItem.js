@@ -31,7 +31,7 @@ const RelatedItem = ({ relatedProductID }) => {
           }
         }
         if (!foundADefaultStyle) { // TODO: search for a picture somewhere else
-          console.log('Item', relatedProductID, 'didn\'t have a default style');
+          // console.log('Item', relatedProductID, 'didn\'t have a default style');
           setImgURL(results[0].photos[0].thumbnail_url ? results[0].photos[0].thumbnail_url : placeHolderImgURL);
         }
       })

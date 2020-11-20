@@ -21,7 +21,7 @@ const RelatedItem = ({ relatedProductID }) => {
     fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
       .then(styleInfo => styleInfo.json())
       .then(({ results }) => { //styleInfo is an object with only has one useful key: "results", which is an array of style infos
-        console.log('Styles for item', relatedProductID, ':', results);
+        // console.log('Styles for item', relatedProductID, ':', results);
         let foundADefaultStyle = false;
         for (let style of results) {
           if (style['default?'] === 1) {

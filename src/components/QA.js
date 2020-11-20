@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectQ, selectA, fetchQuestions, selectShowed, putHelpfulnessQuestion } from '../reducers/QAReducers';
+import { selectQ, selectA, fetchQuestions, selectShowedQ, putHelpfulnessQuestion } from '../reducers/QAReducers';
 import { selectProduct } from '../reducers/overviewReducers';
 import { Layout, Row, Col, Image, Descriptions, Button, Divider } from 'antd';
 import dummyData from '../dummyData/QAListQuestionsData';
@@ -13,7 +13,7 @@ const QA = ({ productId }) => {
   const product = useSelector(selectProduct);
   const dispatch = useDispatch();
   const fetchedQuestions = useSelector(selectQ);
-  const showedMore = useSelector(selectShowed);
+  const showedMoreQuestions = useSelector(selectShowedQ);
 
   useEffect(() => {
     dispatch(fetchQuestions(productId, 4));
@@ -21,12 +21,12 @@ const QA = ({ productId }) => {
 
   var showMoreQuestions = () => {
     dispatch(fetchQuestions(productId));
-    dispatch({type: 'SET_SHOWED', payload: true});
+    dispatch({type: 'SET_SHOWED_Q', payload: true});
   };
 
   var showLessQuestions = () => {
     dispatch(fetchQuestions(productId, 4));
-    dispatch({type: 'SET_SHOWED', payload: false});
+    dispatch({type: 'SET_SHOWED_Q', payload: false});
   };
 
   var incrementQuestionHelpfulness = (question) => {
@@ -75,7 +75,7 @@ const QA = ({ productId }) => {
               );
             })
             }
-            {showedMore ? <Button onClick={() => {
+            {showedMoreQuestions ? <Button onClick={() => {
               showLessQuestions();
             }}>Show Less Questions</Button> : <Button onClick={() => {
               showMoreQuestions();

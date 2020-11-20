@@ -3,12 +3,13 @@ import { createSelector } from 'reselect';
 
 export const setQA = makeActionCreator('SET_QA', 'questions');
 export const setAnswer = makeActionCreator('SET_ANSWERS', 'answers');
-export const setShowed = makeActionCreator('SET_SHOWED', 'showedMore');
+export const setShowed = makeActionCreator('SET_SHOWED_Q', 'showedMoreQuestions');
 
 const initialState = {
   questions: [],
   answers: [],
-  showedMore: false
+  showedMoreQuestions: false,
+  showedMoreAnswers: false
 };
 
 export const QAReducer = (state = initialState, action) => {
@@ -25,10 +26,16 @@ export const QAReducer = (state = initialState, action) => {
       answers: action.payload
     };
   }
-  case 'SET_SHOWED': {
+  case 'SET_SHOWED_Q': {
     return {
       ...state,
-      showedMore: action.payload
+      showedMoreQuestions: action.payload
+    };
+  }
+  case 'SET_SHOWED_Q': {
+    return {
+      ...state,
+      showedMoreAnswers: action.payload
     };
   }
   default: {
@@ -51,11 +58,18 @@ export const selectA = createSelector(
   QA => QA.answers
 );
 
-export const selectShowed = createSelector(
+export const selectShowedQ = createSelector(
   //This needs to map to whatever the key is in rootReducer.js
   state => state.QA,
   //This needs to map to whatever is defined in this file
-  QA => QA.showedMore
+  QA => QA.showedMoreQuestions
+);
+
+export const selectShowedA = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.QA,
+  //This needs to map to whatever is defined in this file
+  QA => QA.showedMoreAnswers
 );
 
 export const fetchQuestions = (productId, number) => {

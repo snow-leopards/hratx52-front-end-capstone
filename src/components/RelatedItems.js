@@ -1,7 +1,5 @@
-import React, { useEffect, useState, Component } from 'react';
-import ScrollMenu from 'react-horizontal-scrolling-menu';
-import { List, Card, Carousel } from 'antd';
-import RelatedItem from './RelatedItem.js';
+import React, { useEffect, useState } from 'react';
+import { List, Card } from 'antd';
 
 const RelatedItems = ({productId}) => {
 
@@ -35,15 +33,13 @@ const RelatedItems = ({productId}) => {
   // Our "main" information array of related items
   // This will need to be built from multiple calls to the API
   const [relatedItems, setRelatedItems] = useState(placeholderData);
-  const [relatedItemIDs, setRelatedItemIDs] = useState([]);
 
   const getRelatedItemsFromAPI = () => {
 
     // Initial fetch, to find the list of relatedItems e.g. [5, 9, 7, 2, 1]
     fetch(`http://3.21.164.220/products/${productId}/related`)
-      .then(tempRelatedItemIDs => tempRelatedItemIDs.json())
-      .then((tempRelatedItemIDs) => {
-        setRelatedItemIDs(tempRelatedItemIDs);
+      .then(relatedItemIDs => relatedItemIDs.json())
+      .then((relatedItemIDs) => {
         let relatedItemsStylePromises = [];
 
         // Now fetch the style information for each of the IDs
@@ -87,36 +83,27 @@ const RelatedItems = ({productId}) => {
   }, []);
 
   return (
-    // <div>
-    //   <List
-    //     grid = {{ gutter: 8, column: 5 }}
-    //     scroll = {{ x: 400 }}
-    //     dataSource = {relatedItems}
-    //     renderItem={item => (
-    //       <List.Item>
-    //         <Card
-    //           hoverable
-    //           style={{ width: 140 }}
-    //           cover={<img alt="example" src={item.imgSrc} />}
-    //         >
-    //           <Card.Meta
-    //             title={item.name}
-    //             description={'$' + item.defaultPrice}
-    //           />
-    //         </Card>
-    //       </List.Item>
-    //     )}
-    //   >
-    //   </List>
-    // </div>
     <div>
-      <ScrollMenu
-        data = {
-          relatedItemIDs.map((relatedItemID) => {
-            return <RelatedItem relatedProductID={relatedItemID} key={relatedItemID}/>;
-          })
-        }
-      />
+      <List
+        grid = {{ gutter: 8, column: 5 }}
+        scroll = {{ x: 400 }}
+        dataSource = {relatedItems}
+        renderItem={item => (
+          <List.Item>
+            <Card
+              hoverable
+              style={{ width: 140 }}
+              cover={<img alt="example" src={item.imgSrc} />}
+            >
+              <Card.Meta
+                title={item.name}
+                description={'$' + item.defaultPrice}
+              />
+            </Card>
+          </List.Item>
+        )}
+      >
+      </List>
     </div>
   );
 };

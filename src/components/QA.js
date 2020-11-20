@@ -53,23 +53,25 @@ const QA = ({ productId }) => {
             {fetchedQuestions.length > 0 &&
             fetchedQuestions.map((question) => {
               return (
-                <>
-                  <Row style={{width: '100%'}}>
-                    <Col flex={4}>
+                <Row key={question.question_id * 847} style={{width: '100%'}}>
+                  <Row key={question.question_id * 77} style={{width: '100%'}}>
+                    <Col flex={4} key={question.question_id * 777}>
                       <IndividualQuestion key={question.question_id} productId={productId} question={question}/>
                     </Col>
-                    {question.clickedHelpful ? <Col flex={1} style={{textAlign: 'right'}}>
-                      <Button style={{fontWeight: 'bold', color: 'blue'}}>Helpful? Yes({question.question_helpfulness})</Button>
-                    </Col> : <Col flex={1} style={{textAlign: 'right'}}>
-                      <Button onClick={() => {
-                        incrementQuestionHelpfulness(question);
-                      }
-                      }
-                      >Helpful? Yes({question.question_helpfulness})</Button>
-                    </Col>}
+                    {question.clickedHelpful ?
+                      <Col key={question.question_id * 742} flex={1} style={{textAlign: 'right'}}>
+                        <Button key={question.question_helpfulness * 1078}style={{fontWeight: 'bold', color: 'blue'}}>Helpful? Yes({question.question_helpfulness})</Button>
+                      </Col> :
+                      <Col key={question.question_id * 547} flex={1} style={{textAlign: 'right'}}>
+                        <Button key={question.question_helpfulness * 129} onClick={() => {
+                          incrementQuestionHelpfulness(question);
+                        }
+                        }
+                        >Helpful? Yes({question.question_helpfulness})</Button>
+                      </Col>}
                   </Row>
-                  <Divider></Divider>
-                </>
+                  <Divider key={question.question_id * 427}></Divider>
+                </Row>
               );
             })
             }

@@ -39,7 +39,6 @@ const RelatedItems = ({productId}) => {
 
   return (
     <div>
-<<<<<<< HEAD
       <ScrollMenu
         alignCenter = {false}
         dragging = {false}
@@ -51,28 +50,6 @@ const RelatedItems = ({productId}) => {
           })
         }
       />
-=======
-      <List
-        grid = {{ gutter: 8, column: 5 }}
-        scroll = {{ x: 400 }}
-        dataSource = {relatedItems}
-        renderItem={item => (
-          <List.Item>
-            <Card
-              hoverable
-              style={{ width: 140 }}
-              cover={<img alt="example" src={item.imgSrc} />}
-            >
-              <Card.Meta
-                title={item.name}
-                description={'$' + item.defaultPrice}
-              />
-            </Card>
-          </List.Item>
-        )}
-      >
-      </List>
->>>>>>> main
     </div>
   );
 };

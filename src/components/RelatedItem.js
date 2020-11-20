@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
 
-const RelatedItem = ({relatedProductID}) => {
+const RelatedItem = ({ relatedProductID }) => {
   const placeHolderImgURL = 'https://via.placeholder.com/150';
   const [productName, setProductName] = useState('Loading...');
   const [imgURL, setImgURL] = useState(placeHolderImgURL);
@@ -20,17 +20,19 @@ const RelatedItem = ({relatedProductID}) => {
       });
     fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
       .then(styleInfo => styleInfo.json())
-      .then(({results}) => { //styleInfo is an object with only has one useful key: "results", which is an array of style infos
-        console.log('Style info for', relatedProductID, ':', results);
+      .then(({ results }) => { //styleInfo is an object with only has one useful key: "results", which is an array of style infos
+        console.log('Styles for item', relatedProductID, ':', results);
         let foundADefaultStyle = false;
         for (let style of results) {
           if (style['default?'] === 1) {
             foundADefaultStyle = true;
-            setImgURL(style.photos[0].thumbnail_url ? style.photos[0].thumbnail_url : placeHolderImgURL ); // TODO: search for a picture somewhere else
+            setImgURL(style.photos[0].thumbnail_url ? style.photos[0].thumbnail_url : placeHolderImgURL); // TODO: search for a picture somewhere else if one isn't found
             break;
           }
         }
         if (!foundADefaultStyle) { // TODO: search for a picture somewhere else
+          console.log('Item', relatedProductID, 'didn\'t have a default style');
+          setImgURL(results[0].photos[0].thumbnail_url ? results[0].photos[0].thumbnail_url : placeHolderImgURL);
         }
       })
       .catch((err) => {
@@ -39,7 +41,7 @@ const RelatedItem = ({relatedProductID}) => {
   }, []);
 
   return (
-    <div>
+    <a href={`/details/${relatedProductID}`}>
       <Card
         hoverable
       >
@@ -52,7 +54,7 @@ const RelatedItem = ({relatedProductID}) => {
         </div>
         <div>{productName}</div>
       </Card>
-    </div>
+    </a>
   );
 };
 

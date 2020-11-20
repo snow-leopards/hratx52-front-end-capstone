@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { List, Card } from 'antd';
+import RelatedItem from './RelatedItem.js';
 
 //Arrows for the react-horizontal-scrolling-menu
 const Arrow = ({ text, className }) => {
@@ -25,9 +26,9 @@ const RelatedItems = ({productId}) => {
 
     // Initial fetch, to find the list of relatedItems e.g. [5, 9, 7, 2, 1]
     fetch(`http://3.21.164.220/products/${productId}/related`)
-      .then(relatedItemIDs => relatedItemIDs.json())
-      .then((relatedItemIDs) => {
-        let relatedItemsStylePromises = [];
+      .then(tempRelatedItemIDs => tempRelatedItemIDs.json())
+      .then((tempRelatedItemIDs) => {
+        setRelatedItemIDs(tempRelatedItemIDs);
       })
       .catch((err) => {
         console.log('Error when fetching IDs of relatedItems', err);

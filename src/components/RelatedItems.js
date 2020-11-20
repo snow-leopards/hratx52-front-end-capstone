@@ -35,9 +35,10 @@ const RelatedItems = ({productId}) => {
   // Our "main" information array of related items
   // This will need to be built from multiple calls to the API
   const [relatedItems, setRelatedItems] = useState(placeholderData);
-  const [relatedItemIDs, setRelatedItemIDs] = useState([]);
+  const [relatedItemIDs, setRelatedItemIDs] = useState([null, null, null, null]);
 
   const getRelatedItemsFromAPI = () => {
+    console.log('Fetching related items for itemID:', productId);
 
     // Initial fetch, to find the list of relatedItems e.g. [5, 9, 7, 2, 1]
     fetch(`http://3.21.164.220/products/${productId}/related`)
@@ -111,6 +112,7 @@ const RelatedItems = ({productId}) => {
     // </div>
     <div>
       <ScrollMenu
+        alignCenter = {false}
         data = {
           relatedItemIDs.map((relatedItemID) => {
             return <RelatedItem relatedProductID={relatedItemID} key={relatedItemID}/>;

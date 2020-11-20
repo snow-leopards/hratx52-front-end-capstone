@@ -85,7 +85,9 @@ export const putHelpfulnessAnswer = (answerID) => {
   fetch(`http://3.21.164.220/qa/answers/${answerID}/helpful`, {
     method: 'PUT',
   })
-    .then((res) => console.log('Feedback Received!'))
+    .then((res) => {
+
+    })
     .catch((error) => {
       console.log(error);
     });
@@ -96,7 +98,7 @@ export const putHelpfulnessQuestion = (questionID) => {
     method: 'PUT',
   })
     .then((res) => {
-      console.log('Feedback Received!');
+
     })
     .catch((error) => {
       console.log(error);

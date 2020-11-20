@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
 
 const RelatedItem = ({relatedProductID}) => {
+  const placeHolderImgURL = 'https://via.placeholder.com/150';
   const [productName, setProductName] = useState('Loading...');
-  const [imgURL, setImgURL] = useState('https://via.placeholder.com/150');
+  const [imgURL, setImgURL] = useState(placeHolderImgURL);
 
   useEffect(() => {
     if (relatedProductID === null) {
@@ -12,17 +13,6 @@ const RelatedItem = ({relatedProductID}) => {
     fetch(`http://3.21.164.220/products/${relatedProductID}`)
       .then(productInfo => productInfo.json())
       .then((productInfo) => {
-        /*
-        {
-          category: "Pants"
-          default_price: "40"
-          description: "Whether you're a morning person or not.  Whether you're gym bound or not.  Everyone looks good in joggers."
-          features: (2) [{…}, {…}]
-          id: 3
-          name: "Morning Joggers"
-          slogan: "Make yourself a morning person"
-        }
-        */
         setProductName(productInfo.name);
       })
       .catch(() => {
@@ -32,6 +22,16 @@ const RelatedItem = ({relatedProductID}) => {
       .then(styleInfo => styleInfo.json())
       .then(({results}) => { //styleInfo is an object with only has one useful key: "results", which is an array of style infos
         console.log('Style info for', relatedProductID, ':', results);
+        let foundADefaultStyle = false;
+        for (let style of results) {
+          if (style['default?'] === 1) {
+            foundADefaultStyle = true;
+            setImgURL(style.photos[0].thumbnail_url ? style.photos[0].thumbnail_url : placeHolderImgURL ); // TODO: search for a picture somewhere else
+            break;
+          }
+        }
+        if (!foundADefaultStyle) { // TODO: search for a picture somewhere else
+        }
       })
       .catch((err) => {
         console.log(`Error fetching related product styles for product with id ${relatedProductID}:`, err);
@@ -43,7 +43,13 @@ const RelatedItem = ({relatedProductID}) => {
       <Card
         hoverable
       >
-        <div><img src={imgURL} /></div>
+        <div>
+          <img
+            src={imgURL}
+            alt={productName}
+            height={150}
+          />
+        </div>
         <div>{productName}</div>
       </Card>
     </div>

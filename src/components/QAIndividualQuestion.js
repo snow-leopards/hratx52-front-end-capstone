@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectQ, selectA, fetchQuestions, putHelpfulness } from '../reducers/QAReducers';
+import { selectQ, selectA, fetchQuestions, putHelpfulnessAnswer } from '../reducers/QAReducers';
 import { selectProduct } from '../reducers/overviewReducers';
 import { Layout, Row, Col, Image, Descriptions, Button } from 'antd';
 import dummyData from '../dummyData/QAListQuestionsData';
@@ -27,7 +27,7 @@ const IndividualQuestion = ({ question }) => {
     for (var i = 0; i < listOfAnswers.length; i++) {
       if (listOfAnswers[i].id === answer.id && listOfAnswers[i].clickedHelpful === undefined) {
         listOfAnswers[i].helpfulness = answer.helpfulness + 1;
-        putHelpfulness(answer.id);
+        putHelpfulnessAnswer(answer.id);
         listOfAnswers[i].clickedHelpful = true;
       }
     }
@@ -41,9 +41,9 @@ const IndividualQuestion = ({ question }) => {
         return (
           <div key={answer.id}>
             <Row key={answer.body} className="answerBody">A: {answer.body}</Row>
-            <Row key={answer.date} className="answerDetails">by {answer.answerer_name}, {answer.date.slice(5, 8)}{answer.date.slice(8, 10)}-{answer.date.slice(0, 4)}</Row>
-            {answer.clickedHelpful ? <Button type="link" key={'helpful' + answer.id} disabled>Helpful? Yes({answer.helpfulness})</Button> :
-              <Button type="link" key={'helpful' + answer.id} onClick={() => {
+            <Row key={answer.date} className="answerDetails">by {answer.answerer_name}, {answer.date.slice(5, 8)}{answer.date.slice(8, 10)}-{answer.date.slice(0, 4)}    </Row>
+            {answer.clickedHelpful ? <Button type="link" key={'helpful' + answer.id} style={{fontWeight: 'bold', color: 'blue'}}>Helpful? Yes({answer.helpfulness})</Button> :
+              <Button type="link" key={'helpful' + answer.id} style={{color: 'blue'}} onClick={() => {
                 incrementHelpfulness(answer);
               }}
               >Helpful? Yes({answer.helpfulness})</Button>

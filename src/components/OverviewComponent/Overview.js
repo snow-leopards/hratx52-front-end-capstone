@@ -18,11 +18,38 @@ const Overview = (props) => {
   const product = useSelector(selectProduct);
   const productStyleList = useSelector(selectProductStyle);
 
+  // const defaultPictures = productStyleList[0].photos;
 
   // overview component state --->  not shared state
   // const [name, setName] = useState('Kornelija');
   const [carouselClassName, setCarouselClassName] = useState('outer-carousel');
   const [carouselSlideWidth, setCarouselSlideWidth] = useState(1);
+  const [selectedProductStyleId, setSelectedProductStyle] = useState(null);
+
+  //updates photos in the carousel according to selected style id
+  var selectedProductStyle = null;
+  if (productStyleList.length > 0) {
+    selectedProductStyle = productStyleList.find((element) => {
+      if (!selectedProductStyleId) {
+        return element['default?'] === 1;
+      } else {
+        return element.style_id === selectedProductStyleId;
+      }
+    });
+  }
+
+  // clicking on style thumbnail sets product style id in local state
+  const handleStyleClick = (styleID) => {
+    console.log('style with style id: ' + styleID + ' was clicked');
+    setSelectedProductStyle(styleID);
+  };
+
+
+  useEffect(() => {
+    // invokes ajax requests for selected product by id
+    dispatch(fetchProductInformation(props.productId));
+    dispatch(fetchProductStyle(props.productId));
+  }, []);
 
   // expands image when expand icon is clicked on a top right corner of a picture
   const toggleExpandCarousel = () => {
@@ -33,10 +60,10 @@ const Overview = (props) => {
 
 
 
-  const handleButtonClick = (e) => {
-    message.info('Click on left button.');
-    console.log('click left button', e);
-  };
+  // const handleButtonClick = (e) => {
+  //   message.info('Click on left button.');
+  //   console.log('click left button', e);
+  // };
 
   const handleMenuClick = (e) => {
     message.info('Click on menu item.');
@@ -58,19 +85,13 @@ const Overview = (props) => {
   );
 
 
-  useEffect(() => {
-    // invokes ajax requests for selected product by id
-    dispatch(fetchProductInformation(props.productId));
-    dispatch(fetchProductStyle(props.productId));
-  }, []);
-
   return (
     <>
       <Layout>
 
         <Content>
           {productStyleList.length === 0 || product.id === null ? <Skeleton paragraph={{ rows: 16 }} className='overview-skeleton' active /> :
-            <>
+            < div >
               <Row gutter={[24, 24]}>
                 <Col span={16}>
                   <div className='carouselPlaceHolder'>
@@ -164,7 +185,20 @@ const Overview = (props) => {
                     <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>{product.category.toUpperCase()}</Col>
                     <Col span={24} style={{ paddingLeft: '30px', fontSize: '32px', fontWeight: 'bold' }}>{product.name}</Col>
                     <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>${product.defaultPrice}</Col>
-                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}><a style={{ fontWeight: 'bold', color: 'black' }}>STYLE > </a>{productStyleList[0].name.toUpperCase()}</Col>
+                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>
+                      <div>
+                        <a style={{ fontWeight: 'bold', color: 'black' }}>
+                        STYLE ></a>
+                        {productStyleList[0].name.toUpperCase()}
+                      </div>
+                      <div style={{display: 'flex', flexWrap: 'wrap' }}>
+                        {productStyleList.map((productStyle) =>
+                          <div key={productStyle.style_id} onClick={() => handleStyleClick(productStyle.style_id)} style= {{ padding: '10px'}}>
+                            <img src={productStyle.photos[0].thumbnail_url} style={{border: '1px solid darkgrey', borderRadius: '50%', height: '65px', width: '65px', objectFit: 'cover' }}/>
+                          </div>
+                        )}
+                      </div>
+                    </Col>
                     <Col span={24} style={{ paddingLeft: '30px'}}>
                       <Dropdown overlay={menu}>
                         <Button>
@@ -183,8 +217,7 @@ const Overview = (props) => {
                           ADD TO BAG <DownOutlined />
                         </Button>
                       </Dropdown>
-                      <Button type="primary"><StarOutlined /></Button>
-
+                      <Button><StarOutlined /></Button>
                     </Col>
                   </Row>
                 </Col>
@@ -213,7 +246,7 @@ const Overview = (props) => {
                   />
                 </Col>
               </Row>
-            </>
+            </div>
           }
         </Content>
       </Layout>

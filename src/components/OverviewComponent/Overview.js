@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle } from '../../reducers/overviewReducers';
-import { Layout, Row, Col, Descriptions, Skeleton, List, Divider, Rate } from 'antd';
-import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined, CheckOutlined, StarOutlined } from '@ant-design/icons';
+import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle, selectDefaultProductStyle } from '../../reducers/overviewReducers';
+import Slider from 'react-slick';
+import { Layout, Row, Col, Descriptions, Skeleton, List, Divider, Rate, Menu, Dropdown, Button, message, Tooltip } from 'antd';
+import { DownOutlined, UpOutlined, ExpandOutlined, ArrowRightOutlined, ArrowLeftOutlined, CheckOutlined, StarOutlined, UserOutlined} from '@ant-design/icons';
 import { ButtonBack, ButtonFirst, ButtonLast, ButtonNext,
-  CarouselProvider, DotGroup, Image, ImageWithZoom, Slide, Slider } from 'pure-react-carousel';
+  CarouselProvider, DotGroup, Image, ImageWithZoom, Slide } from 'pure-react-carousel';
+import Zoom from 'react-img-zoom';
 
-import { Menu, Dropdown, Button, message, Tooltip } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -17,31 +18,27 @@ const Overview = (props) => {
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
   const productStyleList = useSelector(selectProductStyle);
+  const defaultProductStyle = useSelector(selectDefaultProductStyle);
 
   // const defaultPictures = productStyleList[0].photos;
 
   // overview component state --->  not shared state
   // const [name, setName] = useState('Kornelija');
-  const [carouselClassName, setCarouselClassName] = useState('outer-carousel');
-  const [carouselSlideWidth, setCarouselSlideWidth] = useState(1);
-  const [selectedProductStyleId, setSelectedProductStyle] = useState(null);
-
+  const [expanded, setExpanded] = useState(false);
+  const [selectedProductStyle, setSelectedProductStyle] = useState(null);
+  debugger;
   //updates photos in the carousel according to selected style id
-  var selectedProductStyle = null;
-  if (productStyleList.length > 0) {
-    selectedProductStyle = productStyleList.find((element) => {
-      if (!selectedProductStyleId) {
-        return element['default?'] === 1;
-      } else {
-        return element.style_id === selectedProductStyleId;
-      }
-    });
+  if (selectedProductStyle === null && defaultProductStyle != null) {
+    setSelectedProductStyle(defaultProductStyle);
   }
 
   // clicking on style thumbnail sets product style id in local state
   const handleStyleClick = (styleID) => {
     console.log('style with style id: ' + styleID + ' was clicked');
-    setSelectedProductStyle(styleID);
+
+    setSelectedProductStyle(productStyleList.find((element) => {
+      return element.style_id === styleID;
+    }));
   };
 
 
@@ -52,12 +49,20 @@ const Overview = (props) => {
   }, []);
 
   // expands image when expand icon is clicked on a top right corner of a picture
-  const toggleExpandCarousel = () => {
-    // changes overview component state
-    carouselClassName === 'outer-carousel' ? setCarouselClassName('outer-carousel expanded') : setCarouselClassName('outer-carousel');
-    carouselSlideWidth === 1 ? setCarouselSlideWidth(3) : setCarouselSlideWidth(1);
+  const toggleCrap = () => {
+    expanded ? setExpanded(false) : setExpanded(true);
   };
-
+  // settings for photo carousel
+  const settings = {
+    dots: false,
+    variableWidth: true,
+    centerMode: true,
+    infinite: false,
+    speed: 500,
+    initialSlide: 0,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
 
   // const handleButtonClick = (e) => {
@@ -84,99 +89,33 @@ const Overview = (props) => {
     </Menu>
   );
 
+  debugger;
 
   return (
     <>
       <Layout>
 
         <Content>
-          {productStyleList.length === 0 || product.id === null ? <Skeleton paragraph={{ rows: 16 }} className='overview-skeleton' active /> :
+          {productStyleList.length === 0 || product.id === null || selectedProductStyle == null ? <Skeleton paragraph={{ rows: 16 }} className='overview-skeleton' active /> :
             < div >
               <Row gutter={[24, 24]}>
                 <Col span={16}>
-                  <div className='carouselPlaceHolder'>
-
-                    {/* <Image
-                      width={350}
-                      src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg"
-                    /> */}
-                    <CarouselProvider
-                      visibleSlides={1}
-                      totalSlides={6}
-                      step={1}
-                      className={carouselClassName}
-                      naturalSlideWidth={8}
-                      naturalSlideHeight={6}
-                      hasMasterSpinner
-                    >
-                      <CarouselProvider
-                        className='innerCarousel'
-                        visibleSlides={7}
-                        totalSlides={8}
-                        step={1}
-                        naturalSlideWidth={100}
-                        naturalSlideHeight={100}
-                        hasMasterSpinner
-                        orientation='vertical'
-                      >
-                        <ButtonBack className='chevron'><UpOutlined /></ButtonBack>
-                        <Slider >
-                          {/* {productStyleList.photos.map((index, foto) =>
-                          <Slide index={index}>
-                            <Image className='small-image' src={foto.url} />
-                          </Slide>
-                        )} */}
-                          <Slide index={0}>
-                            <Image className='small-image' src={productStyleList[0].photos[0].url} />
-                          </Slide>
-                          <Slide index={1}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                          <Slide index={2}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                          <Slide index={3}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                          <Slide index={4}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                          <Slide index={5}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                          <Slide index={6}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                          <Slide index={7}>
-                            <Image className='small-image' src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                          </Slide>
-                        </Slider>
-                        <ButtonNext className='chevron'><DownOutlined /></ButtonNext>
-                      </CarouselProvider>
-                      <div className='expand-button' onClick={() => toggleExpandCarousel()}><ExpandOutlined /></div>
-                      <Slider>
-                        <Slide index={0}>
-                          <ImageWithZoom src={productStyleList[0].photos[0].url} />
-                        </Slide>
-                        <Slide index={1}>
-                          <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                        </Slide>
-                        <Slide index={2}>
-                          <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                        </Slide>
-                        <Slide index={3}>
-                          <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                        </Slide>
-                        <Slide index={4}>
-                          <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                        </Slide>
-                        <Slide index={5}>
-                          <ImageWithZoom src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg" />
-                        </Slide>
+                  <div class='carousel-place-holder'>
+                    <div onClick={ ()=> toggleCrap() } >Expand</div>
+                    <div class={expanded ? 'carousel-container expanded' : 'carousel-container'}>
+                      <Slider {...settings} ref={slider => slider = slider}>
+                        {selectedProductStyle.photos.map((photo) =>
+                          <div key={photo.url}>
+                            <Zoom
+                              img={photo.url}
+                              zoomScale={expanded ? 2 : 1}
+                              width={600}
+                              height={500}
+                            />
+                          </div>
+                        )}
                       </Slider>
-                      <ButtonBack className='arrows left'><ArrowLeftOutlined /></ButtonBack>
-                      <ButtonNext className='arrows right'><ArrowRightOutlined /></ButtonNext>
-                    </CarouselProvider>
+                    </div>
                   </div>
                 </Col>
                 <Col span={8}>
@@ -189,7 +128,7 @@ const Overview = (props) => {
                       <div>
                         <a style={{ fontWeight: 'bold', color: 'black' }}>
                         STYLE ></a>
-                        {productStyleList[0].name.toUpperCase()}
+                        {selectedProductStyle.name.toUpperCase()}
                       </div>
                       <div style={{display: 'flex', flexWrap: 'wrap' }}>
                         {productStyleList.map((productStyle) =>

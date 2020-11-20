@@ -1,8 +1,15 @@
 import React from 'react';
+import { Card } from 'antd';
 
 const RelatedItem = ({relatedProductID}) => {
   return (
-    <div>{relatedProductID}</div>
+    <div>
+      <Card
+        hoverable
+      >
+        {relatedProductID}
+      </Card>
+    </div>
   );
 };
 

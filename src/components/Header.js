@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Space, Divider, Menu } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, NotificationOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
@@ -33,8 +33,9 @@ const PageHeader = () => {
           placeholder="input search text"
           allowClear
           onSearch={onSearch}
-          style={{ width: '200px', alignSelf: 'center' }}
+          style={{ width: '200px', alignSelf: 'center', borderColor: 'orange'}}
         />
+        <ShoppingCartOutlined style={{ fontSize: '30px', alignSelf: 'center' }} />
       </Header>
     </Layout>
   );

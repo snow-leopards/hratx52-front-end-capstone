@@ -16,7 +16,8 @@ const initialState = {
     featuresList: []
   },
   productList: [],
-  productStyleList: []
+  productStyleList: [],
+  defaultProductStyle: null
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -38,9 +39,11 @@ export const productReducer = (state = initialState, action) => {
   case 'SET_PRODUCT_STYLE': {
     return {
       ...state,
-      productStyleList: action.productStyleList
-
-    };
+      productStyleList: action.productStyleList,
+      defaultProductStyle: action.productStyleList.find((element) => {
+        return element['default?'] === 1;
+      }
+      )};
   }
   default: {
     return state;
@@ -66,6 +69,12 @@ export const selectProductStyle = createSelector(
   state => state.overview,
   //This needs to map to whatever is defined in this file
   overview => overview.productStyleList
+);
+export const selectDefaultProductStyle = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.overview,
+  //This needs to map to whatever is defined in this file
+  overview => overview.defaultProductStyle
 );
 
 // gets first 100 products from the list

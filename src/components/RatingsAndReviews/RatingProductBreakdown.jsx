@@ -122,6 +122,7 @@ const RatingProductBreakdown = ({productId}) => {
         showInfo={true}
       />
       <br/>
+
       <br/>
       Product Breakdown
       <br/>

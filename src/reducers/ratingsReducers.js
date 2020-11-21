@@ -11,18 +11,39 @@ const initialState = {
   avgRating: null,
   reviewList: [],
   renderList: [],
-  metaData: {},
-  review: {},
-  isVisible: false
+  metaData: {
+    characteristics: {},
+    'product_id': null,
+    ratings: {},
+    recommended: {}
+  },
+  review: {
+    body: '',
+    date: '',
+    helpfullness: null,
+    photos: [],
+    ratings: null,
+    recommend: null,
+    'review_id': null,
+    'reviewer_name': '',
+    summary: '',
+  },
+  isVisible: false,
 };
 
 export const ratingReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'SET_RATING': {
-    console.log('setting rating', action.rating);
+    // console.log('setting rating', action.rating);
     return {
       ...state,
       rating: action.rating
+    };
+  }
+  case 'SET_REVIEW': {
+    return {
+      ...state,
+      review: action.payload
     };
   }
   case 'SET_REVIEW_LIST': {
@@ -50,17 +71,18 @@ export const selectRating = createSelector(
   ratings => ratings.rating
 );
 
-export const selectReviewList = createSelector(
-  //This needs to map to whatever the key is in rootReducer.js
+export const selectReview = createSelector(
   state => state.ratings,
-  //This needs to map to whatever is defined in this file
+  ratings => ratings.review
+);
+
+export const selectReviewList = createSelector(
+  state => state.ratings,
   ratings => ratings.reviewList
 );
 
 export const selectMetaData = createSelector(
-  //This needs to map to whatever the key is in rootReducer.js
   state => state.ratings,
-  //This needs to map to whatever is defined in this file
   ratings => ratings.metaData
 );
 //API call for ReviewList

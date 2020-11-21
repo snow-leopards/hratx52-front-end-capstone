@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector} from 'react-redux';
-import { Layout, Space, Divider, Card, Rate } from 'antd';
+import { Layout, Card, Rate, Image } from 'antd';
 import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
 import { CheckOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import { selectProduct } from '../../reducers/overviewReducers.js';
-import Ratings from './Ratings';
 
 
 const ReviewOne = () => {
@@ -51,6 +51,23 @@ const ReviewOne = () => {
     </div>
   );
 
+
+  //Conditional rendering of photos
+  const Photos = (props) => (
+    <div> {
+      (props.review.photos.length > 0) ?
+        props.review.photos.map((photo) => (
+          <Image
+            width={75}
+            src={photo.url}
+          />
+        ))
+        :
+        null
+    }
+    </div>
+  );
+
   return (
     <>
       <div>
@@ -59,12 +76,13 @@ const ReviewOne = () => {
             <Card
               key={review.review_id}
               title={<Rate key={review.date + idx} allowHalf disabled defaultValue={review.rating} />}
-              extra={review.reviewer_name} style={{ width: 500 }}
+              extra={`${review.reviewer_name} ${moment(review.date).format('MMMM Do YYYY')}`} style={{ width: 500 }}
             >
               <b key={review.summary}>{review.summary}</b>
               <p key={review.body}>{review.body}</p>
               <WouldRecommend review={review} key={review.reviewer_name + idx}/>
               <SellerResponse review={review} key={review.rating}/>
+              <Photos review={review}/>
             </Card>
           ))
         }

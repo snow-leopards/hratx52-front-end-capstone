@@ -10,7 +10,7 @@ const RatingProductBreakdown = ({productId}) => {
   //data from store
   const product = useSelector(selectProduct);
   const metaData = useSelector(selectMetaData);
-  // console.log('metadata: ', metaData);
+  console.log('metadata: ', metaData);
 
   //dispatch invocation
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ const RatingProductBreakdown = ({productId}) => {
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[4] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[4] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <u>3 stars</u>
@@ -103,7 +103,7 @@ const RatingProductBreakdown = ({productId}) => {
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[3] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[3] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <u>2 stars</u>
@@ -111,14 +111,14 @@ const RatingProductBreakdown = ({productId}) => {
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[2] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[2] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <u>1 stars</u>
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[1] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[1] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <br/>

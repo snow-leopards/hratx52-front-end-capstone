@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector} from 'react-redux';
 import { Layout, Space, Divider, Card, Rate } from 'antd';
 import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
+import { CheckOutlined } from '@ant-design/icons';
 import { selectProduct } from '../../reducers/overviewReducers.js';
 import Ratings from './Ratings';
 
@@ -14,39 +15,59 @@ const ReviewOne = () => {
   const shownReviews = reviewList.slice(0, 2);
   // console.log(shownReviews);
 
+  //ConditionalRecommend rendering
+  const WouldRecommend = (props) => {
+    return <div key={props.review.rating}>
+      {
+        (props.review.recommend === 1) ?
+          // console.log("YASSS", review.review.recommend === 1)
+          <div key={props.review.reviewer_name}>
+            <CheckOutlined key={props.review.helpfulness} />
+            I recommend this product!
+          </div>
+          :
+          null
+      }
+    </div>;
+  };
+
   //Conditional rendering of Seller response
-  const SellerResponse = () => (
-    <div>
-      {shownReviews.map((rev) => {
-        if (rev.response) {
-          return <div key={rev.response}>
+  const SellerResponse = (props) => (
+    <div key={props.review.rating + 1}>
+      {
+        (!!props.review.response) ?
+          <div key={props.review.date}>
             <Card
-              key={rev.response}
+              key={props.review.response}
               type="inner"
               title="Seller Response"
             >
-              {rev.response}
+              {props.review.response}
             </Card>
-          </div>;
-        }
-      })
+          </div>
+          :
+          null
       }
     </div>
   );
 
   return (
     <>
-      <div> {reviewList.length > 0 && shownReviews.map((review) => (
-        <Card
-          key={review.review_id}
-          title={<Rate key={review.rate} allowHalf disabled defaultValue={review.rating} />}
-          extra={review.reviewer_name} style={{ width: 500 }}
-        >
-          <b key={review.summary}>{review.summary}</b>
-          <p key={review.body}>{review.body}</p>
-          <SellerResponse/>
-        </Card>
-      ))}
+      <div>
+        {
+          shownReviews.map((review) => (
+            <Card
+              key={review.review_id}
+              title={<Rate key={review.date + 2} allowHalf disabled defaultValue={review.rating} />}
+              extra={review.reviewer_name} style={{ width: 500 }}
+            >
+              <b key={review.summary}>{review.summary}</b>
+              <p key={review.body}>{review.body}</p>
+              <WouldRecommend review={review} key={review.date + 1}/>
+              <SellerResponse review={review} key={review.rating}/>
+            </Card>
+          ))
+        }
       </div>
     </>
   );

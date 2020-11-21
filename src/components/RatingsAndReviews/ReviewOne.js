@@ -11,12 +11,32 @@ const ReviewOne = () => {
   const product = useSelector(selectProduct);
   const reviewList = useSelector(selectReviewList);
   // console.log('reviewListRO: ', reviewList);
+  const shownReviews = reviewList.slice(0, 2);
+  // console.log(shownReviews);
 
-
+  //Conditional rendering of Seller response
+  const SellerResponse = () => (
+    <div>
+      {shownReviews.map((rev) => {
+        if (rev.response) {
+          return <div key={rev.response}>
+            <Card
+              key={rev.response}
+              type="inner"
+              title="Seller Response"
+            >
+              {rev.response}
+            </Card>
+          </div>;
+        }
+      })
+      }
+    </div>
+  );
 
   return (
     <>
-      <div> {reviewList.map((review) => (
+      <div> {reviewList.length > 0 && shownReviews.map((review) => (
         <Card
           key={review.review_id}
           title={<Rate key={review.rate} allowHalf disabled defaultValue={review.rating} />}
@@ -24,13 +44,7 @@ const ReviewOne = () => {
         >
           <b key={review.summary}>{review.summary}</b>
           <p key={review.body}>{review.body}</p>
-          <Card
-            key={review.response}
-            type="inner"
-            title="Seller Response"
-          >
-            {review.response}
-          </Card>
+          <SellerResponse/>
         </Card>
       ))}
       </div>

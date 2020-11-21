@@ -1,50 +1,131 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Layout, Space, Divider, Progress } from 'antd';
+import { Layout, Space, Divider, Progress, Rate, Slider } from 'antd';
 import Ratings from './Ratings';
 import { selectMetaData, fetchReviewList, fetchMeta } from '../../reducers/ratingsReducers';
 import { selectProduct } from '../../reducers/overviewReducers.js';
 
-const RatingProductBreakdown = (props) => {
+const RatingProductBreakdown = ({productId}) => {
+
+  //data from store
+  const product = useSelector(selectProduct);
+  const metaData = useSelector(selectMetaData);
+  // console.log('metadata: ', metaData);
 
   //dispatch invocation
   const dispatch = useDispatch();
   //retrieve metaData
   useEffect(() => {
-    dispatch(fetchMeta(props.productId));
+    dispatch(fetchMeta(productId));
   }, []);
 
-  //data from store
-  const product = useSelector(selectProduct);
-  const metaData = useSelector(selectMetaData);
-  // console.log('product breakdown: ', metaData);
+  //average rating
+  const average = () => {
+    var sumTotal = 0;
+    var numberOfRatings = 0;
+    for (var key in metaData.ratings) {
+      var totalVotes = parseInt(key) * metaData.ratings[key];
+      sumTotal += totalVotes;
+      numberOfRatings += metaData.ratings[key];
+    }
+    return parseFloat(sumTotal / numberOfRatings).toFixed(1);
+  };
+  //total ratings
+  const totalRatings = () => {
+    var total = 0;
+    for (var key in metaData.ratings) {
+      total += metaData.ratings[key];
+    }
+    return total;
+  };
 
+  //graduation of slider bars
+  const marks = {
+    1: 'Poor',
+    2: 'Below Average',
+    3: 'Average',
+    4: 'Pretty Great',
+    5: 'Perfect'
+  };
+
+  //Product Characteristics
+  const ProductCharacteristics = () => {
+    var characteristicsArray = [];
+    //Put each characteristic obj in array with new item of title[key]
+    for (var category in metaData.characteristics) {
+      var newChar = metaData.characteristics[category];
+      newChar.charName = category;
+      characteristicsArray.push(newChar);
+    }
+    return <div>
+      {
+        characteristicsArray.map((char) => (
+          <div key={char.id}>
+            <p>{char.charName}</p>
+            <Slider
+              marks={marks}
+              step={0.1}
+              included={false}
+              value={char !== undefined ? char.value : 3}
+              max={5}
+              toolTipVisible={true}/>
+          </div>
+        ))
+      }
+    </div>;
+  };
+
+  //TODO: refactor to modularize progress
   return (
     <div>
-      Product Breakdown
-      <br />
-      Comfort:
+      <b>{average()}</b>
+      <Ratings/>
+      Rating Breakdown
+      <br/>
+      <u>5 stars</u>
       <Progress
         type={'line'}
-        steps={5}
-        strokeColor={'green'}
-        percent={50}
+        strokeColor={'gold'}
+        percent={metaData.ratings !== undefined ? metaData.ratings[5] / totalRatings() * 100 : 50}
         showInfo={true}
       />
-      <br />
-      Fit:
+      <br/>
+      <u>4 stars</u>
+      <br/>
       <Progress
         type={'line'}
-        steps={5}
-        strokeColor={'green'}
-        percent={75} />
-      <br />
-      Quality:
+        strokeColor={'gold'}
+        percent={metaData.ratings !== undefined ? metaData.ratings[4] / 5 * 100 : 50}
+        showInfo={true}
+      />
+      <u>3 stars</u>
+      <br/>
       <Progress
         type={'line'}
-        steps={5}
-        strokeColor={'green'}
-        percent={25} />
+        strokeColor={'gold'}
+        percent={metaData.ratings !== undefined ? metaData.ratings[3] / 5 * 100 : 50}
+        showInfo={true}
+      />
+      <u>2 stars</u>
+      <br/>
+      <Progress
+        type={'line'}
+        strokeColor={'gold'}
+        percent={metaData.ratings !== undefined ? metaData.ratings[2] / 5 * 100 : 50}
+        showInfo={true}
+      />
+      <u>1 stars</u>
+      <Progress
+        type={'line'}
+        strokeColor={'gold'}
+        percent={metaData.ratings !== undefined ? metaData.ratings[1] / 5 * 100 : 50}
+        showInfo={true}
+      />
+      <br/>
+      <br/>
+      Product Breakdown
+      <br/>
+      <ProductCharacteristics />
     </div>
   );
 };

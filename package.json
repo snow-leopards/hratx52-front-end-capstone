@@ -14,6 +14,7 @@
     "react-dom": "^17.0.1",
     "react-img-zoom": "^0.1.0",
     "react-inner-image-zoom": "^1.1.1",
+    "react-horizontal-scrolling-menu": "^0.7.8",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.0",
     "react-slick": "^0.27.13",

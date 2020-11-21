@@ -1,25 +1,18 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Layout, Space, Divider, List } from 'antd';
-import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
-import { selectProduct } from '../../reducers/overviewReducers.js';
 import ReviewOne from './ReviewOne';
 
 
-
-const ReviewList = (props) => {
-  //data from store
+const ReviewList = () => {
+  //data from antD
   const { Content } = Layout;
-  // const product = useSelector(selectProduct);
-  // const reviewList = useSelector(selectReviewList);
-
 
   return (
     <Layout>
       <Content>
         <List
           itemLayout="vertical"
-          size="medium">
+          size="large">
           <ReviewOne></ReviewOne>
         </List>
       </Content>

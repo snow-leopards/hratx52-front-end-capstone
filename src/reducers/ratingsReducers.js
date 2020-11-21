@@ -3,16 +3,17 @@ import { createSelector } from 'reselect';
 
 export const setRating = makeActionCreator('SET_RATING', 'rating');
 export const setReview = makeActionCreator('SET_REVIEW', 'review');
-export const setReviewList = makeActionCreator('SET_REVIEW_LIST');
-export const setMetaData = makeActionCreator('SET_META_DATA');
+export const setReviewList = makeActionCreator('SET_REVIEW_LIST', 'reviewList');
+export const setMetaData = makeActionCreator('SET_META_DATA', 'metaData');
 
 const initialState = {
-  rating: 3,
+  rating: null,
   avgRating: null,
   reviewList: [],
   renderList: [],
   metaData: {},
-  review: {}
+  review: {},
+  isVisible: false
 };
 
 export const ratingReducer = (state = initialState, action) => {
@@ -22,12 +23,6 @@ export const ratingReducer = (state = initialState, action) => {
     return {
       ...state,
       rating: action.rating
-    };
-  }
-  case 'SET_REVIEW': {
-    return {
-      ...state,
-      review: action.review
     };
   }
   case 'SET_REVIEW_LIST': {
@@ -53,13 +48,6 @@ export const selectRating = createSelector(
   state => state.ratings,
   //This needs to map to whatever is defined in this file
   ratings => ratings.rating
-);
-
-export const selectReview = createSelector(
-  //This needs to map to whatever the key is in rootReducer.js
-  state => state.ratings,
-  //This needs to map to whatever is defined in this file
-  ratings => ratings.review
 );
 
 export const selectReviewList = createSelector(
@@ -99,3 +87,4 @@ export const fetchMeta = (productId) => {
       .catch(console.log('error cannot fetch MetaData'));
   };
 };
+//API call to Add New Review

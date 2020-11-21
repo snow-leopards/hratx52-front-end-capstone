@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Layout, Dropdown, Menu, Button, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import '../../App.css';
-import Ratings from './Ratings';
+import NewReview from './NewReview';
 import ReviewList from './ReviewList';
 import RatingProductBreakdown from './RatingProductBreakdown';
-import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
+import { selectReview, selectRating, selectReviewList, fetchReviewList, fetchMeta} from '../../reducers/ratingsReducers';
 
 //layout tags
 const { Header, Sider, Content } = Layout;
@@ -53,25 +53,22 @@ const RatingsReviewsOverview = (props) => {
         className='RROverviewSider'
         style={styles.sider}
       >
-        <Space direction='vertical'>
-          <b>Ratings and Reviews:</b>
-          <br />
-          <Ratings></Ratings>
+        <b>Ratings and Reviews:</b>
           % of reviews recommend this product
-          <br />
-          Star rating breakdown
-          <br />
-          <RatingProductBreakdown
-            productId={props.productId}
-          ></RatingProductBreakdown>
-        </Space>
+        <br />
+        <RatingProductBreakdown
+          productId={props.productId}
+        ></RatingProductBreakdown>
       </Sider>
       <Layout>
         <Header
           style={{color: 'white'}}>
           (filter/sort drop-down menu) :
           <Dropdown overlay={menu}>
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>Sort By: <DownOutlined />
+            <a
+              className="ant-dropdown-link"
+              onClick={e => e.preventDefault()}>
+              Sort By: <DownOutlined/>
             </a>
           </Dropdown>
         </Header>
@@ -80,8 +77,8 @@ const RatingsReviewsOverview = (props) => {
             productId={props.productId}
             reviewList={props.reviewList}
           ></ReviewList>
-          <Button type='primary'>Add A Review</Button>
           <Button disabled>More Reviews</Button>
+          <NewReview/>
         </Content>
       </Layout>
     </Layout>

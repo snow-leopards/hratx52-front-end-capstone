@@ -17,7 +17,7 @@ const ReviewOne = () => {
 
   //ConditionalRecommend rendering
   const WouldRecommend = (props) => {
-    return <div key={props.review.rating}>
+    return <div key={props.review.helpfulness + props.idx}>
       {
         (props.review.recommend === 1) ?
           // console.log("YASSS", review.review.recommend === 1)
@@ -33,7 +33,7 @@ const ReviewOne = () => {
 
   //Conditional rendering of Seller response
   const SellerResponse = (props) => (
-    <div key={props.review.rating + 1}>
+    <div key={props.review.rating + props.idx}>
       {
         (!!props.review.response) ?
           <div key={props.review.date}>
@@ -55,15 +55,15 @@ const ReviewOne = () => {
     <>
       <div>
         {
-          shownReviews.map((review) => (
+          shownReviews.map((review, idx) => (
             <Card
               key={review.review_id}
-              title={<Rate key={review.date + 2} allowHalf disabled defaultValue={review.rating} />}
+              title={<Rate key={review.date + idx} allowHalf disabled defaultValue={review.rating} />}
               extra={review.reviewer_name} style={{ width: 500 }}
             >
               <b key={review.summary}>{review.summary}</b>
               <p key={review.body}>{review.body}</p>
-              <WouldRecommend review={review} key={review.date + 1}/>
+              <WouldRecommend review={review} key={review.reviewer_name + idx}/>
               <SellerResponse review={review} key={review.rating}/>
             </Card>
           ))

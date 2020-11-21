@@ -26,7 +26,14 @@ const Overview = (props) => {
   // const [name, setName] = useState('Kornelija');
   const [expanded, setExpanded] = useState(false);
   const [selectedProductStyle, setSelectedProductStyle] = useState(null);
-  debugger;
+  //gives me key number of selected size in the dropdown menu
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSizeLetters, setSelectedSizeLetters] = useState('SELECT SIZE');
+
+
+
+
+
   //updates photos in the carousel according to selected style id
   if (selectedProductStyle === null && defaultProductStyle != null) {
     setSelectedProductStyle(defaultProductStyle);
@@ -36,9 +43,12 @@ const Overview = (props) => {
   const handleStyleClick = (styleID) => {
     console.log('style with style id: ' + styleID + ' was clicked');
 
-    setSelectedProductStyle(productStyleList.find((element) => {
+    var selectedProductStyle = productStyleList.find((element) => {
       return element.style_id === styleID;
-    }));
+    });
+    setSelectedSize(null);
+    setSelectedSizeLetters('SELECT SIZE');
+    setSelectedProductStyle(selectedProductStyle);
   };
 
 
@@ -47,6 +57,7 @@ const Overview = (props) => {
     dispatch(fetchProductInformation(props.productId));
     dispatch(fetchProductStyle(props.productId));
   }, []);
+
 
   // expands image when expand icon is clicked on a top right corner of a picture
   const toggleCrap = () => {
@@ -70,26 +81,49 @@ const Overview = (props) => {
   //   console.log('click left button', e);
   // };
 
-  const handleMenuClick = (e) => {
+  const handleSizeClick = (event) => {
+    //Set state of selected Size
+    setSelectedSize(event.item.props.skuId);
+    setSelectedSizeLetters(event.item.props.value);
+
+    //This will cause a re-render
+    //On re-render, choose available quantities for selected SKU
+  };
+
+  const sizeMenu = selectedProductStyle ? (
+    <Menu>
+      {Object.keys(selectedProductStyle.skus).map((skuId) => {
+        return (
+          <Menu.Item skuId={skuId} value={selectedProductStyle.skus[skuId].size} onClick={(event) => handleSizeClick(event)} icon={<UserOutlined />}>
+            {selectedProductStyle.skus[skuId].size}
+          </Menu.Item>
+        );
+      })}
+    </Menu>
+  ) : null;
+
+
+
+  const handleQuantityClick = (e) => {
     message.info('Click on menu item.');
     console.log('click', e);
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        1st menu item
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" icon={<UserOutlined />}>
-        3rd menu item
-      </Menu.Item>
-    </Menu>
-  );
 
-  debugger;
+  const quantityMenu = (selectedSize !== null && selectedProductStyle !== null) ? (
+    <Menu onClick={handleQuantityClick}>
+      {[...Array(selectedProductStyle.skus[selectedSize].quantity + 1).keys()].map((number) => {
+        return (
+          <Menu.Item key={number} icon={<UserOutlined />}>
+            {number}
+          </Menu.Item>
+        );
+      })}
+    </Menu>
+  ) :
+    (<Menu onClick={handleQuantityClick}>
+      <Menu.Item key={1} icon={<UserOutlined />}>0</Menu.Item>
+    </Menu>);
 
   return (
     <>
@@ -103,16 +137,19 @@ const Overview = (props) => {
                   <div class='carousel-place-holder'>
                     <div onClick={ ()=> toggleCrap() } >Expand</div>
                     <div class={expanded ? 'carousel-container expanded' : 'carousel-container'}>
-                      <Slider {...settings} ref={slider => slider = slider}>
-                        {selectedProductStyle.photos.map((photo) =>
-                          <div key={photo.url}>
-                            <Zoom
-                              img={photo.url}
-                              zoomScale={expanded ? 2 : 1}
-                              width={600}
-                              height={500}
-                            />
-                          </div>
+                      <Slider {...settings} key={selectedProductStyle.style_id}>
+                        {selectedProductStyle.photos.map((photo) => {
+                          return (
+                            <div key={photo.url}>
+                              <Zoom key={photo.url}
+                                img={photo.url}
+                                zoomScale={expanded ? 2 : 1}
+                                width={600}
+                                height={500}
+                              />
+                            </div>
+                          );
+                        }
                         )}
                       </Slider>
                     </div>
@@ -123,7 +160,7 @@ const Overview = (props) => {
                     <Col span={24} style={{ marginTop: '30px', paddingLeft: '30px' }}><Rate allowHalf disabled defaultValue={4.5} />    <a style={{textDecoration: 'underline'}}>Read all reviews</a></Col>
                     <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>{product.category.toUpperCase()}</Col>
                     <Col span={24} style={{ paddingLeft: '30px', fontSize: '32px', fontWeight: 'bold' }}>{product.name}</Col>
-                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>${product.defaultPrice}</Col>
+                    <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>${selectedProductStyle.original_price}</Col>
                     <Col span={24} style={{ paddingLeft: '30px', fontSize: '16px' }}>
                       <div>
                         <a style={{ fontWeight: 'bold', color: 'black' }}>
@@ -139,19 +176,19 @@ const Overview = (props) => {
                       </div>
                     </Col>
                     <Col span={24} style={{ paddingLeft: '30px'}}>
-                      <Dropdown overlay={menu}>
+                      <Dropdown overlay={sizeMenu}>
                         <Button>
-                          SELECT SIZE <DownOutlined />
+                          {selectedSizeLetters}<DownOutlined />
                         </Button>
                       </Dropdown>
-                      <Dropdown overlay={menu}>
+                      <Dropdown overlay={quantityMenu}>
                         <Button>
                           1 <DownOutlined />
                         </Button>
                       </Dropdown>
                     </Col>
                     <Col span={24} style={{ paddingLeft: '30px'}}>
-                      <Dropdown overlay={menu}>
+                      <Dropdown overlay={quantityMenu}>
                         <Button>
                           ADD TO BAG <DownOutlined />
                         </Button>

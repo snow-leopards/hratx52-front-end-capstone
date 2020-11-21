@@ -1,51 +1,12 @@
-/* Do not delete this*/
-.overview-skeleton {
-  height: 664px;
+.ant-layout-content {
+  background: white;
+}
+
+header.ant-layout-header.site-wide-header {
   background-color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: orange;
 }
 
-/* --------- Cannot find this one -----------------*/
-#selectionTab {
-  background-color: #f0f2f5;
-}
-
-/*Not refactoring carousel style to inline style, because I might delete this one and start over*/
-
-.imagee {
-  height: 600px;
-  width: 700px;
-  object-fit: scale-down;
-}
-
-
-.slick-track {
-  transition: transform 0.35s ease;
-}
-
-
-.carousel-container
-{
-  height: 600px;
-  width: 740px;
-  background-color: #FAFAFA;
-  transition: width 0.35s ease;
-}
-
-
-.carousel-container.expanded
-{
-  height: 600px;
-  width: 147%;
-  position: absolute;
-  z-index: 99999;
-}
-
-.carousel-place-holder {
-  height: 600px;
-  width: 100%;
-}
-
-.slick-prev:before, .slick-next:before {
-  color: black !important;
-  font-size: 24px;
-}

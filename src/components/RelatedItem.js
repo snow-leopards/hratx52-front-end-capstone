@@ -4,12 +4,12 @@ import { Card } from 'antd';
 const RelatedItem = ({ relatedProductID }) => {
   const placeHolderImgURL = 'https://via.placeholder.com/150';
   const [productName, setProductName] = useState('Loading...');
+  const [category, setCategory] = useState('Category');
+  const [basePrice, setBasePrice] = useState('0');
+  const [salePrice, setSalePrice] = useState('0');
   const [imgURL, setImgURL] = useState(placeHolderImgURL);
 
-  useEffect(() => {
-    if (relatedProductID === null) {
-      return;
-    }
+  const getProductInfo = () => {
     fetch(`http://3.21.164.220/products/${relatedProductID}`)
       .then(productInfo => productInfo.json())
       .then((productInfo) => {
@@ -18,10 +18,15 @@ const RelatedItem = ({ relatedProductID }) => {
       .catch(() => {
         console.log(`Error fetching related product info for product with id ${relatedProductID}:`, err);
       });
+
+  };
+
+  const getStyleInfo = () => {
     fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
       .then(styleInfo => styleInfo.json())
       .then(({ results }) => { //styleInfo is an object with only has one useful key: "results", which is an array of style infos
         // console.log('Styles for item', relatedProductID, ':', results);
+        console.log('results:', results);
         let foundADefaultStyle = false;
         for (let style of results) {
           if (style['default?'] === 1) {
@@ -38,6 +43,14 @@ const RelatedItem = ({ relatedProductID }) => {
       .catch((err) => {
         console.log(`Error fetching related product styles for product with id ${relatedProductID}:`, err);
       });
+  };
+
+  useEffect(() => {
+    if (relatedProductID === null) {
+      return;
+    }
+    getProductInfo();
+    getStyleInfo();
   }, []);
 
   return (
@@ -52,7 +65,9 @@ const RelatedItem = ({ relatedProductID }) => {
             height={150}
           />
         </div>
+        <div>{category}</div>
         <div>{productName}</div>
+        <div>${basePrice}</div>
       </Card>
     </a>
   );

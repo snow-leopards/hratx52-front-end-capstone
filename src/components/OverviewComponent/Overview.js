@@ -81,7 +81,7 @@ const Overview = (props) => {
                   />
                 </Col>
               </Row>
-              <Row gutter={[24, 24]} style={{ paddingTop: '50px' }} >
+              <Row gutter={[24, 24]} style={{ paddingTop: '10px' }} >
                 <DescriptionAndFeatures />
               </Row>
             </div>

@@ -13,7 +13,7 @@ const ReviewOne = () => {
   const reviewList = useSelector(selectReviewList);
   // console.log('reviewListRO: ', reviewList);
   const shownReviews = reviewList.slice(0, 2);
-  // console.log(shownReviews);
+  console.log(shownReviews);
 
   //ConditionalRecommend rendering
   const WouldRecommend = (props) => {
@@ -35,7 +35,7 @@ const ReviewOne = () => {
   const SellerResponse = (props) => (
     <div key={props.review.rating + props.idx}>
       {
-        (!!props.review.response) ?
+        (props.review.response.length > 0 && props.review.response !== 'null') ?
           <div key={props.review.date}>
             <Card
               key={props.review.response}

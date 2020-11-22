@@ -38,6 +38,8 @@ const RatingProductBreakdown = ({productId}) => {
     }
     return total;
   };
+  //percent recommending product
+  const recommending = Math.round((metaData.recommended[1] / (metaData.recommended[0] + metaData.recommended[1]) * 100));
 
   //graduation of slider bars
   const marks = {
@@ -80,6 +82,7 @@ const RatingProductBreakdown = ({productId}) => {
     <div>
       <b>{average()}</b>
       <Ratings/>
+      {recommending}% of reviews recommend this product.
       Rating Breakdown
       <br/>
       <u>5 stars</u>

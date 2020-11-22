@@ -18,7 +18,7 @@ const Carousel = (props) => {
   const [expanded, setExpanded] = useState(false);
 
   // expands image when expand icon is clicked on a top right corner of a picture
-  const toggleCrap = () => {
+  const toggleExpand = () => {
     expanded ? setExpanded(false) : setExpanded(true);
   };
   // settings for photo carousel
@@ -38,7 +38,7 @@ const Carousel = (props) => {
     <>
       <div class='carousel-place-holder'>
         <div class={expanded ? 'expand-button-container expanded' : 'expand-button-container'}>
-          <div class='expand-button' onClick={ ()=> toggleCrap() } >
+          <div class='expand-button' onClick={ ()=> toggleExpand() } >
             <ExpandOutlined />
           </div>
         </div>

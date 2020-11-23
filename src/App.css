@@ -3,6 +3,9 @@
 @import '~slick-carousel/slick/slick.css';
 @import '~react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 
+@import './index.css';
+@import './overview.css';
+
 /* styling for product breakdown */
 .ant-slider-handle {
   background-color: green;

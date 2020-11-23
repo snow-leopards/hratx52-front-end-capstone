@@ -1,5 +1,6 @@
 import makeActionCreator from '../utils/makeActionCreator';
 import { createSelector } from 'reselect';
+import { useSelector } from 'react-redux';
 
 export const setQA = makeActionCreator('SET_QA', 'questions');
 export const setAnswer = makeActionCreator('SET_ANSWERS', 'answers');
@@ -23,7 +24,7 @@ export const QAReducer = (state = initialState, action) => {
   case 'SET_ANSWERS': {
     return {
       ...state,
-      answers: action.payload
+      answers: [...action.payload]
     };
   }
   case 'SET_SHOWED_Q': {
@@ -88,6 +89,31 @@ export const fetchQuestions = (productId, number) => {
           maxQuestions.push(questions.results[i]);
         }
         dispatch({type: 'SET_QA', payload: maxQuestions});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const fetchAnswers = (questionId, number) => {
+
+  return (dispatch, getState) => {
+    fetch(`http://3.21.164.220/qa/questions/${questionId}/answers`)
+      .then((res) => res.json())
+      .then((answers) => {
+        number = number || answers.results.length;
+        if (answers.results.length < number) {
+          number = answers.results.length;
+        }
+        var maxAnswers = [];
+        answers.results.sort((a, b) => (a.question_helpfulness < b.question_helpfulness) ? 1 : -1);
+        for (var i = 0; i < number; i++) {
+          maxAnswers.push(answers.results[i]);
+        }
+        getState().QA.answers.push(maxAnswers);
+
+        dispatch({type: 'SET_ANSWERS', payload: getState().QA.answers});
       })
       .catch((error) => {
         console.log(error);

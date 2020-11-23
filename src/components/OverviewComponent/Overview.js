@@ -103,7 +103,7 @@ const Overview = (props) => {
   ) : null;
 
 
- /// work in progres for handleQuantityClick
+  // work in progres for handleQuantityClick
   const handleQuantityClick = (e) => {
     message.info('Click on menu item.');
     console.log('click', e);

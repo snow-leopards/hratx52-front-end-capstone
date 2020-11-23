@@ -52,11 +52,11 @@ const IndividualQuestion = ({ question }) => {
           return (
             <div key={answer.id}>
               <Row key={answer.body} className="answerBody">A: {answer.body}</Row>
-              <Row key={answer.date} className="answerDetails">by {answer.answerer_name}, {answer.date.slice(5, 8)}{answer.date.slice(8, 10)}-{answer.date.slice(0, 4)}
+              <Row style={{fontSize: '12px', marginBottom: '5px'}} key={answer.date} className="answerDetails">by {answer.answerer_name}, {answer.date.slice(5, 8)}{answer.date.slice(8, 10)}-{answer.date.slice(0, 4)}
               </Row>
               {answer.clickedHelpful ?
-                <Button key={'helpful' + answer.id} style={{fontWeight: 'bold', color: 'blue'}}>Helpful? Yes({answer.helpfulness})</Button> :
-                <Button key={'helpful' + answer.id} onClick={() => {
+                <Button key={'helpful' + answer.id} style={{fontSize: '12px', fontWeight: 'bold', color: 'blue', marginBottom: '5px'}}>Helpful? Yes({answer.helpfulness})</Button> :
+                <Button style={{fontSize: '12px', marginBottom: '5px'}} key={'helpful' + answer.id} onClick={() => {
                   incrementHelpfulness(answer);
                 }}
                 >Helpful? Yes({answer.helpfulness})

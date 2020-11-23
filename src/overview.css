@@ -1,0 +1,137 @@
+/* Do not delete this*/
+.overview-skeleton {
+  height: 664px;
+  background-color: white;
+}
+
+.slick-track {
+  transition: transform 0.35s ease;
+}
+
+.slick-slide {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.carousel-container
+{
+  position: absolute;
+  z-index: 999999;
+  height: 600px;
+  width: 95%;
+  background-color:#08080A;
+  transition: width 0.35s ease;
+}
+
+
+.carousel-container.expanded
+{
+  height: 600px;
+  width: 147%;
+  position: absolute;
+  z-index: 99999;
+}
+
+.carousel-place-holder {
+  height: 600px;
+  width: 100%;
+}
+
+.slick-prev:before, .slick-next:before {
+  color: black !important;
+  font-size: 24px;
+}
+
+.slick-track {
+  width: calc(100% + 10000px) !important;
+}
+
+.expand-button-container {
+  position: absolute;
+  z-index: 9999999;
+  width: 98.8%;
+  transition: width 0.35s ease;
+}
+
+.expand-button-container.expanded {
+  width: 151%;
+}
+
+.expand-button {
+  width: 35px;
+  height: 35px;
+  padding: 4px 4px 4px 4px;
+  float: right;
+  font-size: 22px;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.expand-button:hover {
+  font-size: 26px;
+  padding: 2px 4px 4px 4px;
+  cursor: pointer;
+}
+
+
+/*StyleGrid styles*/
+.selection-container {
+  padding-left: 55px;
+  margin-top: 2px;
+  font-size: 16px;
+}
+
+.selection-container > * {
+  margin-bottom: 15px;
+}
+
+.row-container > * {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.selection-container .product-name {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.selection-container .product-style-label {
+  font-weight: bold;
+}
+
+.selection-container .style-thumbnails-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selection-container .style-image-container {
+  margin: 8px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.selection-container .style-image-container:hover {
+  border: 2px solid orange;
+  cursor: pointer;
+}
+
+.style-image-container .style-thumbnail{
+  border: 1px solid darkgrey;
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  object-fit: cover;
+}
+
+.checkmark-container{
+  position: absolute;
+  margin-left: 50px;
+  margin-top: -10px;
+  font-size: 20px;
+  color: green;
+  display: none;
+}
+
+.checkmark-container.selected{
+  display: block;
+}

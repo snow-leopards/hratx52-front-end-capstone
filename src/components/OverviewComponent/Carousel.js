@@ -50,7 +50,7 @@ const Carousel = (props) => {
                   <Zoom key={photo.url}
                     img={photo.url}
                     zoomScale={expanded ? 2 : 1}
-                    width={800}
+                    width={700}
                     height={600}
                   />
                 </div>

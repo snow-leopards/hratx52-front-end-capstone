@@ -42,9 +42,7 @@ const RelatedItem = ({ relatedProductID }) => {
 
   return (
     <a href={`/details/${relatedProductID}`}>
-      <Card
-        hoverable
-      >
+      <Card>
         <div>
           <img
             src={imgURL}

@@ -74,7 +74,17 @@ const YourOutfit = ({productId}) => {
       <p style={{'textAlign': 'center'}}>Your Outfit</p>
 
       <button onClick={addToOutfit}>Add this item to your outfit!</button> <br />
-      <p>{JSON.stringify(outfitItemIDs)}</p>
+      <ScrollMenu
+        alignCenter = {false}
+        dragging = {false}
+        arrowLeft={ArrowLeft}
+        arrowRight={ArrowRight}
+        data = {
+          outfitItemIDs.map((outfitItemID, index) => {
+            return <RelatedItem relatedProductID={outfitItemID} key={index}/>;
+          })
+        }
+      />
       <button onClick={resetOutfit}>Reset Outfit</button> <br />
     </div>
   );

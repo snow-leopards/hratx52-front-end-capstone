@@ -15,7 +15,7 @@ const RelatedItem = ({ relatedProductID }) => {
       .then((productInfo) => {
         setProductName(productInfo.name);
       })
-      .catch(() => {
+      .catch((err) => {
         console.log(`Error fetching related product info for product with id ${relatedProductID}:`, err);
       });
     fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
@@ -42,9 +42,7 @@ const RelatedItem = ({ relatedProductID }) => {
 
   return (
     <a href={`/details/${relatedProductID}`}>
-      <Card
-        hoverable
-      >
+      <Card>
         <div>
           <img
             src={imgURL}

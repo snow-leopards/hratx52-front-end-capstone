@@ -5,6 +5,7 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/
 import { Input } from 'antd';
 import Overview from './OverviewComponent/Overview';
 import RelatedItems from './RelatedItems';
+import YourOutfit from './YourOutfit';
 import QA from './QA';
 import RatingsReviewsOverview from './RatingsAndReviews/RatingsReviewsOverview';
 
@@ -26,6 +27,7 @@ const ProductDetails = () => {
         <Space style={{ width: '100%' }} direction="vertical" size="large" split={<Divider/>}>
           <Overview productId={params.id}></Overview>
           <RelatedItems productId={params.id}></RelatedItems>
+          <YourOutfit productId={params.id}></YourOutfit>
           <QA productId={params.id}></QA>
           <RatingsReviewsOverview productId={params.id}></RatingsReviewsOverview>
         </Space>

@@ -23,7 +23,7 @@ const YourOutfit = ({productId}) => {
     var name = 'outfitItemIDs=';
     var cookieArray = document.cookie.split(';');
 
-    // cookie will be a string, e.g. 'outfitItemIDs=[1,3,8]'
+    // cookie will be a string, e.g. 'outfitItemIDs=["1","3","10"]'
     for (var cookie of cookieArray) {
       while (cookie.charAt(0) === ' ') {
         cookie = cookie.slice(1);
@@ -73,10 +73,9 @@ const YourOutfit = ({productId}) => {
     <div className="YourOutfit">
       <p style={{'textAlign': 'center'}}>Your Outfit</p>
 
-      <button onClick={addToOutfit}>Add to Outfit</button> <br />
+      <button onClick={addToOutfit}>Add this item to your outfit!</button> <br />
+      <p>{JSON.stringify(outfitItemIDs)}</p>
       <button onClick={resetOutfit}>Reset Outfit</button> <br />
-
-      {JSON.stringify(outfitItemIDs)}
     </div>
   );
 };

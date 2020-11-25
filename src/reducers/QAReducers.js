@@ -10,7 +10,9 @@ const initialState = {
   questions: [],
   answers: [],
   showedMoreQuestions: false,
-  showedMoreAnswers: false
+  showedMoreAnswers: false,
+  modalVisible: false,
+  modalLoading: false
 };
 
 export const QAReducer = (state = initialState, action) => {
@@ -24,7 +26,7 @@ export const QAReducer = (state = initialState, action) => {
   case 'SET_ANSWERS': {
     return {
       ...state,
-      answers: [...action.payload]
+      answers: action.payload
     };
   }
   case 'SET_SHOWED_Q': {
@@ -33,10 +35,22 @@ export const QAReducer = (state = initialState, action) => {
       showedMoreQuestions: action.payload
     };
   }
-  case 'SET_SHOWED_Q': {
+  case 'SET_SHOWED_A': {
     return {
       ...state,
       showedMoreAnswers: action.payload
+    };
+  }
+  case 'SET_MODAL_VISIBLE': {
+    return {
+      ...state,
+      modalVisible: action.payload
+    };
+  }
+  case 'SET_MODAL_LOADING': {
+    return {
+      ...state,
+      modalLoading: action.payload
     };
   }
   default: {
@@ -71,6 +85,20 @@ export const selectShowedA = createSelector(
   state => state.QA,
   //This needs to map to whatever is defined in this file
   QA => QA.showedMoreAnswers
+);
+
+export const selectModalVisible = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.QA,
+  //This needs to map to whatever is defined in this file
+  QA => QA.modalVisible
+);
+
+export const selectModalLoading = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.QA,
+  //This needs to map to whatever is defined in this file
+  QA => QA.modalLoading
 );
 
 export const fetchQuestions = (productId, number) => {
@@ -144,3 +172,4 @@ export const putHelpfulnessQuestion = (questionID) => {
       console.log(error);
     });
 };
+

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { List, Card } from 'antd';
-import RelatedItem from './RelatedItem.js';
+import ProductCard from './ProductCard.js';
 
 //Arrows for the react-horizontal-scrolling-menu
 const Arrow = ({ text, className }) => {
@@ -81,7 +81,7 @@ const YourOutfit = ({productId}) => {
         arrowRight={ArrowRight}
         data = {
           outfitItemIDs.map((outfitItemID, index) => {
-            return <RelatedItem relatedProductID={outfitItemID} key={index}/>;
+            return <ProductCard relatedProductID={outfitItemID} key={index}/>;
           })
         }
       />

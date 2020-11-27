@@ -8,7 +8,6 @@ export const setMetaData = makeActionCreator('SET_META_DATA', 'metaData');
 
 const initialState = {
   rating: null,
-  avgRating: null,
   reviewList: [],
   renderList: [],
   metaData: {
@@ -20,7 +19,7 @@ const initialState = {
   review: {
     body: '',
     date: '',
-    helpfullness: null,
+    helpfullness: 0,
     photos: [],
     ratings: null,
     recommend: null,
@@ -34,7 +33,6 @@ const initialState = {
 export const ratingReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'SET_RATING': {
-    // console.log('setting rating', action.rating);
     return {
       ...state,
       rating: action.rating
@@ -85,16 +83,29 @@ export const selectMetaData = createSelector(
   state => state.ratings,
   ratings => ratings.metaData
 );
+
 //API call for ReviewList
-export const fetchReviewList = (productId) => {
+export const fetchReviewList = (productId, count) => {
   return async(dispatch, getState) => {
-    fetch(`http://3.21.164.220/reviews/?product_id=${productId}`)
+    fetch(`http://3.21.164.220/reviews/?product_id=${productId}&count=${count}&sort=relevance`)
       .then(res => res.json())
       .then(
         (result) => {
           dispatch({ type: 'SET_REVIEW_LIST', payload: result.results });
         })
       .catch(console.log('Sofia --> error cannot fetch '));
+  };
+};
+//API call for Sorted ReviewList
+export const fetchSortedList = (productId, sort) => {
+  return async(dispatch, getState) => {
+    fetch(`http://3.21.164.220/reviews/?product_id=${productId}&sort=${sort}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          dispatch({ type: 'SET_REVIEW_LIST', payload: result.results });
+        })
+      .catch(console.log('Sofia --> error cannot sort '));
   };
 };
 //API call for metaData

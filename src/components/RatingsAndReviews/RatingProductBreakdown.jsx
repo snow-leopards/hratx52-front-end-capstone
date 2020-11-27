@@ -10,7 +10,7 @@ const RatingProductBreakdown = ({productId}) => {
   //data from store
   const product = useSelector(selectProduct);
   const metaData = useSelector(selectMetaData);
-  console.log('metadata: ', metaData);
+  // console.log('metadata: ', metaData);
 
   //dispatch invocation
   const dispatch = useDispatch();

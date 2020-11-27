@@ -5,15 +5,16 @@ import { selectReview, selectRating, selectReviewList, fetchReviewList} from '..
 import { CheckOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { selectProduct } from '../../reducers/overviewReducers.js';
+import '../../App.css';
 
 
 const ReviewOne = () => {
   //data from store
   const product = useSelector(selectProduct);
   const reviewList = useSelector(selectReviewList);
-  // console.log('reviewListRO: ', reviewList);
-  const shownReviews = reviewList.slice(0, 2);
-  console.log(shownReviews);
+  console.log('reviewListRO: ', reviewList);
+  // const shownReviews = reviewList.slice(0, 2);
+  // console.log(shownReviews);
 
   //ConditionalRecommend rendering
   const WouldRecommend = (props) => {
@@ -35,7 +36,7 @@ const ReviewOne = () => {
   const SellerResponse = (props) => (
     <div key={props.review.rating + props.idx}>
       {
-        (props.review.response.length > 0 && props.review.response !== 'null') ?
+        (!!props.review.response && props.review.response !== 'null') ?
           <div key={props.review.date}>
             <Card
               key={props.review.response}
@@ -72,16 +73,26 @@ const ReviewOne = () => {
     <>
       <div>
         {
-          shownReviews.map((review, idx) => (
+          reviewList.map((review, idx) => (
             <Card
               key={review.review_id}
-              title={<Rate key={review.date + idx} allowHalf disabled defaultValue={review.rating} />}
-              extra={`${review.reviewer_name} ${moment(review.date).format('MMMM Do YYYY')}`} style={{ width: 500 }}
+              title={<Rate key={review.date + idx}
+                allowHalf
+                disabled
+                defaultValue={review.rating}
+              />}
+              extra={`${review.reviewer_name} ${moment(review.date).format('MMMM Do YYYY')}`} style={{ width: 'auto' }}
             >
               <b key={review.summary}>{review.summary}</b>
               <p key={review.body}>{review.body}</p>
-              <WouldRecommend review={review} key={review.reviewer_name + idx}/>
-              <SellerResponse review={review} key={review.rating}/>
+              <WouldRecommend
+                review={review}
+                key={review.reviewer_name + idx}
+              />
+              <SellerResponse
+                review={review}
+                key={review.rating}
+              />
               <Photos review={review}/>
             </Card>
           ))

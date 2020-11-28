@@ -23,15 +23,15 @@ const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
 const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
 const YourOutfit = ({productId}) => {
-  var [outfitItemIDs, setOutfitItemIDs] = useState([]);
+  let [outfitItemIDs, setOutfitItemIDs] = useState([]);
 
   // will return an array, e.g. ["1","3","10"]
   const readOutfitItemIDsCookie = () => {
-    var name = 'outfitItemIDs=';
-    var cookieArray = document.cookie.split(';');
+    let name = 'outfitItemIDs=';
+    let cookieArray = document.cookie.split(';');
 
     // cookie will be a string, e.g. 'outfitItemIDs=["1","3","10"]'
-    for (var cookie of cookieArray) {
+    for (let cookie of cookieArray) {
       while (cookie.charAt(0) === ' ') {
         cookie = cookie.slice(1);
       }
@@ -45,17 +45,27 @@ const YourOutfit = ({productId}) => {
   const addToOutfitItemIDsCookie = (outfitItemID) => {
 
     // Cookies must have an expiration date:
-    var d = new Date();
+    let d = new Date();
     d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000)); // 7 days in the future
-    var expires = 'expires=' + d.toUTCString() + ';';
+    let expires = 'expires=' + d.toUTCString() + ';';
 
-    var outfitItemIDsTemp = readOutfitItemIDsCookie(); // this function returns an array, e.g. ["1","3","10"]
+    let outfitItemIDsTemp = readOutfitItemIDsCookie(); // this function returns an array, e.g. ["1","3","10"]
 
     // Add our new outfit to list (convert to set to enfore uniqueness)
-    var outfitSet = new Set(outfitItemIDsTemp);
+    let outfitSet = new Set(outfitItemIDsTemp);
     outfitSet.add(outfitItemID);
     outfitItemIDsTemp = [...outfitSet];
     document.cookie = 'outfitItemIDs=' + JSON.stringify(outfitItemIDsTemp) + ';' + expires + 'path=/';
+  };
+
+  const setOutfitItemIDsCookie = (outfitItemIDs) => {
+    // Cookies must have an expiration date:
+    let d = new Date();
+    d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000)); // 7 days in the future
+    let expires = 'expires=' + d.toUTCString() + ';';
+
+    document.cookie = 'outfitItemIDs=' + JSON.stringify(outfitItemIDs) + ';' + expires + 'path=/';
+
   };
 
   const resetOutfitItemIDsCookie = () => {
@@ -70,6 +80,18 @@ const YourOutfit = ({productId}) => {
   const resetOutfit = () => {
     resetOutfitItemIDsCookie();
     setOutfitItemIDs(readOutfitItemIDsCookie());
+  };
+
+  const removeItemFromOutfit = (outfitItemID) => {
+    console.log('We want to remove item', outfitItemID, 'from our outfit');
+    console.log('outfitItemIDs before removal:', outfitItemIDs);
+    let targetIndex = outfitItemIDs.indexOf(outfitItemID);
+    if (targetIndex !== -1) { /* Remove the array element at the index of indexOf(outfitItemID) */
+      let newOutfitItemIDs = [...outfitItemIDs.slice(0, targetIndex), ...outfitItemIDs.slice(targetIndex + 1, outfitItemIDs.length)];
+      console.log('newOutfitItemIDs:', newOutfitItemIDs);
+      setOutfitItemIDsCookie(newOutfitItemIDs);
+      setOutfitItemIDs(newOutfitItemIDs);
+    }
   };
 
   useEffect(() => {
@@ -88,7 +110,12 @@ const YourOutfit = ({productId}) => {
         arrowRight={ArrowRight}
         data = {
           outfitItemIDs.map((outfitItemID, index) => {
-            return <ProductCard relatedProductID={outfitItemID} key={index} actionButtonType={'remove-from-outfit'}/>;
+            return <ProductCard
+              relatedProductID={outfitItemID}
+              key={index}
+              actionButtonType={'remove-from-outfit'}
+              removeItemFromOutfit={(outfitItemID) => { removeItemFromOutfit(outfitItemID); }}
+            />;
           })
         }
       />

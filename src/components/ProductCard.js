@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
 
-const ProductCard = ({ relatedProductID, actionButtonType }) => {
+const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit }) => {
   const imgHeight = 200;
   const placeHolderImgURL = `https://via.placeholder.com/${imgHeight}`;
   const [productName, setProductName] = useState('Loading...');
@@ -62,12 +62,14 @@ const ProductCard = ({ relatedProductID, actionButtonType }) => {
 
   const handleActionButton = (e) => {
     e.preventDefault();
-    console.log('click!');
+    if (actionButtonType === 'remove-from-outfit') {
+      removeItemFromOutfit(relatedProductID);
+    }
   };
 
   useEffect(() => {
     if (relatedProductID === null) {
-      return;
+      return null; /* returning null prevents a component from rendering */
     }
     getProductInfo();
     getStyleInfo();

@@ -21,6 +21,9 @@ const Overview = (props) => {
   //gives me key number of selected size in the dropdown menu
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedSizeLetters, setSelectedSizeLetters] = useState('SELECT SIZE');
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [sizeDropDownVisible, setSizeDropDownVisible] = useState(false);
+
 
   useEffect(() => {
     // invokes ajax requests for selected product by id
@@ -43,6 +46,7 @@ const Overview = (props) => {
     setSelectedSize(null);
     setSelectedSizeLetters('SELECT SIZE');
     setSelectedProductStyle(selectedProductStyle);
+    setSelectedQuantity(1);
   };
 
   const handleSizeClick = (event) => {
@@ -54,10 +58,19 @@ const Overview = (props) => {
     setSelectedSizeLetters(event.item.props.value);
   };
 
-  /// work in progres for handleQuantityClick
-  const handleQuantityClick = (e) => {
-    message.info('Click on menu item.');
-    console.log('click', e);
+  const handleQuantityClick = (event) => {
+    setSelectedQuantity(event.item.props.value);
+  };
+
+  const handleAddToCartClick = (event) => {
+    if (selectedSizeLetters === 'SELECT SIZE') {
+      message.error('Please, select size');
+    } else{
+      message.success(product.name + ' in size ' + selectedSizeLetters + ' is added to your shooping cart. Quantity: ' + selectedQuantity );
+    }
+
+    // message.info('Item: ' + product.name + '. Size: ' + selectedSizeLetters + ' was added to your shooping cart. \n Quantity: ' + selectedQuantity );
+
   };
 
   return (
@@ -74,10 +87,14 @@ const Overview = (props) => {
                   <SelectionGrid
                     selectedProductStyle={selectedProductStyle}
                     handleSizeClick={handleSizeClick}
+                    selectedQuantity={selectedQuantity}
                     handleQuantityClick={handleQuantityClick}
                     selectedSize={selectedSize}
                     selectedSizeLetters={selectedSizeLetters}
                     handleStyleClick={handleStyleClick}
+                    handleAddToCartClick={handleAddToCartClick}
+                    sizeDropDownVisible={sizeDropDownVisible}
+
                   />
                 </Col>
               </Row>

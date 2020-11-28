@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectProduct, fetchProductInformation, selectProductStyle, fetchProductStyle } from '../../reducers/overviewReducers';
 //clean this up
 import { Layout, Row, Col, Descriptions, Skeleton, List, Divider, Rate, Menu, Dropdown, Button, message, Tooltip } from 'antd';
-import { DownOutlined, StarOutlined, TagOutlined, CheckCircleFilled, ShoppingOutlined } from '@ant-design/icons';
+import { DownOutlined, StarOutlined, TagOutlined, CheckCircleFilled, ShoppingOutlined, FacebookOutlined, TwitterOutlined, InstagramOutlined, PlusOutlined } from '@ant-design/icons';
 import Ratings from '../RatingsAndReviews/Ratings';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityClick, selectedSize, selectedSizeLetters, handleStyleClick }) => {
+const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity, handleQuantityClick, selectedSize, selectedSizeLetters, handleStyleClick, handleAddToCartClick, sizeDropDownVisible }) => {
 
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
@@ -28,18 +28,18 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityCli
   );
 
   const quantityMenu = (selectedSize !== null) ? (
-    <Menu onClick={handleQuantityClick}>
+    <Menu >
       {[...Array(selectedProductStyle.skus[selectedSize].quantity).keys()].map((number) => {
         return number > 14 ? null :
           (
-            <Menu.Item key={number + 1} icon={<ShoppingOutlined />}>
+            <Menu.Item key={number + 1} value={number + 1} onClick={(event) => handleQuantityClick(event)} icon={<ShoppingOutlined />}>
               {number + 1}
             </Menu.Item>
           );
       })}
     </Menu>
   ) :
-    (<Menu onClick={handleQuantityClick}>
+    (<Menu >
       <Menu.Item key={1} icon={<ShoppingOutlined />}>0</Menu.Item>
     </Menu>);
 
@@ -48,11 +48,12 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityCli
       <div className='selection-container'>
         <div className='row-container'>
           <Ratings/>
-          <a style={{textDecoration: 'underline'}}>Read all reviews</a>
+          <a href="#ratings-component" style={{textDecoration: 'underline'}}>Read all reviews</a>
         </div>
         <div>{product.category.toUpperCase()}</div>
         <div className='product-name'>{product.name}</div>
-        <div>${selectedProductStyle.original_price}</div>
+
+        {selectedProductStyle.sale_price === '0' ? <div>${selectedProductStyle.original_price}</div> : <div><span style={{color: 'red'}}>${selectedProductStyle.sale_price}</span> <span style={{textDecoration: 'line-through'}}>${selectedProductStyle.original_price}</span></div>}
         <div>
           <span className='product-style-label'>
           STYLE >  </span>
@@ -69,25 +70,32 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityCli
           )}
         </div>
         <div className='row-container'>
-          <Dropdown overlay={sizeMenu} trigger={['click']}>
-            <Button data-testid='size-button' className='size-button'>
-              {selectedSizeLetters}<DownOutlined />
-            </Button>
-          </Dropdown>
-          <Dropdown overlay={quantityMenu}>
-            <Button>
-              1 <DownOutlined />
-            </Button>
-          </Dropdown>
+          {selectedProductStyle.skus.null !== undefined ? <Dropdown className='select-size-drop-down'disabled={true} overlay={sizeMenu} ><Button>OUT OF STOCK</Button></Dropdown> :
+            <Dropdown className='select-size-drop-down selection-grid-button-dropdown ' overlay={sizeMenu} trigger={['click']}>
+              <Button className='selection-grid-button-dropdown' data-testid='size-button' className='size-button'>
+                {selectedSizeLetters} <DownOutlined />
+              </Button>
+            </Dropdown>}
+          {selectedSizeLetters === 'SELECT SIZE' ? <Dropdown className='select-quantity-drop-down' disabled={true} overlay={quantityMenu}><Button>-</Button></Dropdown> :
+            <Dropdown className='select-quantity-drop-down selection-grid-button-dropdown' overlay={quantityMenu}>
+              <Button className='selection-grid-button-dropdown'>
+                {selectedQuantity} <DownOutlined />
+              </Button>
+            </Dropdown>}
         </div>
         <div className='row-container'>
-          <Button>
-            ADD TO CART <DownOutlined />
-          </Button>
-          <Button><StarOutlined title='star'/></Button>
+          {selectedProductStyle.skus.null !== undefined ? null :
+            <Button className='selection-grid-button-dropdown add-to-bag-button' onClick={(event) => handleAddToCartClick(event)}>
+              <div>ADD TO BAG </div>
+              <PlusOutlined />
+            </Button>
+          }
+          <Button className='icon'><StarOutlined title='star'  /></Button>
         </div>
-
-
+        <div className='row-container'>
+          <Button className='icon'><FacebookOutlined /></Button>
+          <Button className='icon'><TwitterOutlined /></Button>
+          <Button className='icon'><InstagramOutlined /></Button></div>
       </div>
     </>
   );

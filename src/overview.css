@@ -135,3 +135,34 @@
 .checkmark-container.selected{
   display: block;
 }
+
+.select-size-drop-down {
+  width: 60%;
+  height: 65px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: auto;
+}
+ .select-quantity-drop-down {
+  width: 30%;
+  height: 65px;
+ }
+
+ .add-to-bag-button{
+  width: 70%;
+ }
+
+ .selection-grid-button-dropdown {
+  height: 65px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+
+.icon{
+  width: 20%;
+  height: 65px;
+ }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
 
-const ProductCard = ({ relatedProductID }) => {
+const ProductCard = ({ relatedProductID, actionButtonType }) => {
   const imgHeight = 200;
   const placeHolderImgURL = `https://via.placeholder.com/${imgHeight}`;
   const [productName, setProductName] = useState('Loading...');
@@ -9,6 +9,17 @@ const ProductCard = ({ relatedProductID }) => {
   const [originalPrice, setOriginalPrice] = useState(null);
   const [salePrice, setSalePrice] = useState(null);
   const [imgURL, setImgURL] = useState(placeHolderImgURL);
+  const [actionButtonSymbol, setActionButtonSymbol] = useState(
+    ((actionButtonType) => {
+      if (actionButtonType === 'compare-with-current') {
+        return '⭐';
+      } else if (actionButtonType === 'remove-from-outfit') {
+        return 'X';
+      } else {
+        return '?';
+      }
+    })(actionButtonType)
+  );
 
   const getProductInfo = () => {
     fetch(`http://3.21.164.220/products/${relatedProductID}`)
@@ -84,9 +95,12 @@ const ProductCard = ({ relatedProductID }) => {
               }
             }
           >
-            <button>
+            <button
+              action=""
+            >
+              { actionButtonSymbol }
               {/* X */}
-              ⭐
+              {/* ⭐ */}
             </button>
           </span>
         </div>

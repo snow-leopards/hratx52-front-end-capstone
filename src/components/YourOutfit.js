@@ -88,7 +88,7 @@ const YourOutfit = ({productId}) => {
         arrowRight={ArrowRight}
         data = {
           outfitItemIDs.map((outfitItemID, index) => {
-            return <ProductCard relatedProductID={outfitItemID} key={index} actionButton={'remove-from-outfit'}/>;
+            return <ProductCard relatedProductID={outfitItemID} key={index} actionButtonType={'remove-from-outfit'}/>;
           })
         }
       />

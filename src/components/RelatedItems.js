@@ -56,7 +56,7 @@ const RelatedItems = ({productId}) => {
         arrowRight={ArrowRight}
         data = {
           relatedItemIDs.map((relatedItemID, index) => {
-            return <ProductCard relatedProductID={relatedItemID} key={index} actionButton={'compare-with-current'}/>;
+            return <ProductCard relatedProductID={relatedItemID} key={index} actionButtonType={'compare-with-current'}/>;
           })
         }
       />

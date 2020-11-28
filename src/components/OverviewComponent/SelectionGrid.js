@@ -15,11 +15,11 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityCli
   const productStyleList = useSelector(selectProductStyle);
 
   const sizeMenu = (
-    <Menu>
+    <Menu data-testid='size-menu' className='size-menu'>
       {Object.keys(selectedProductStyle.skus).map((skuId) => {
         return selectedProductStyle.skus[skuId].quantity === 0 ? null :
           (
-            <Menu.Item skuId={skuId} value={selectedProductStyle.skus[skuId].size} onClick={(event) => handleSizeClick(event)} icon={<TagOutlined />}>
+            <Menu.Item key={skuId} sku-id={skuId} value={selectedProductStyle.skus[skuId].size} onClick={(event) => handleSizeClick(event)} icon={<TagOutlined />}>
               {selectedProductStyle.skus[skuId].size}
             </Menu.Item>
           );
@@ -45,32 +45,32 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityCli
 
   return (
     <>
-      <div class='selection-container'>
-        <div class='row-container'>
+      <div className='selection-container'>
+        <div className='row-container'>
           <Ratings/>
           <a style={{textDecoration: 'underline'}}>Read all reviews</a>
         </div>
         <div>{product.category.toUpperCase()}</div>
-        <div class='product-name'>{product.name}</div>
+        <div className='product-name'>{product.name}</div>
         <div>${selectedProductStyle.original_price}</div>
         <div>
-          <span class='product-style-label'>
+          <span className='product-style-label'>
           STYLE >  </span>
           {selectedProductStyle.name.toUpperCase()}
         </div>
-        <div class='style-thumbnails-container'>
+        <div className='style-thumbnails-container'>
           {productStyleList.map((productStyle) =>
-            <div class='style-image-container' key={productStyle.style_id} onClick={() => handleStyleClick(productStyle.style_id)}>
-              <div class={productStyle.style_id === selectedProductStyle.style_id ? 'checkmark-container selected' : 'checkmark-container' }>
+            <div className='style-image-container' key={productStyle.style_id} onClick={() => handleStyleClick(productStyle.style_id)}>
+              <div className={productStyle.style_id === selectedProductStyle.style_id ? 'checkmark-container selected' : 'checkmark-container' }>
                 <CheckCircleFilled />
               </div>
-              <img class='style-thumbnail' src={productStyle.photos[0].thumbnail_url}/>
+              <img className='style-thumbnail' src={productStyle.photos[0].thumbnail_url}/>
             </div>
           )}
         </div>
-        <div class='row-container'>
-          <Dropdown overlay={sizeMenu}>
-            <Button>
+        <div className='row-container'>
+          <Dropdown overlay={sizeMenu} trigger={['click']}>
+            <Button data-testid='size-button' className='size-button'>
               {selectedSizeLetters}<DownOutlined />
             </Button>
           </Dropdown>
@@ -80,11 +80,11 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, handleQuantityCli
             </Button>
           </Dropdown>
         </div>
-        <div class='row-container'>
+        <div className='row-container'>
           <Button>
             ADD TO CART <DownOutlined />
           </Button>
-          <Button><StarOutlined /></Button>
+          <Button><StarOutlined title='star'/></Button>
         </div>
 
 

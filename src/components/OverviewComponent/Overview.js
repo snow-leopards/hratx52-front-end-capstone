@@ -50,7 +50,7 @@ const Overview = (props) => {
     //This will cause a re-render
     //On re-render, choose available quantities for selected SKU
 
-    setSelectedSize(event.item.props.skuId);
+    setSelectedSize(event.item.props['sku-id']);
     setSelectedSizeLetters(event.item.props.value);
   };
 

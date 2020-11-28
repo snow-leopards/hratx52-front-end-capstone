@@ -25,7 +25,6 @@ const ProductCard = ({ relatedProductID, actionButtonType }) => {
     fetch(`http://3.21.164.220/products/${relatedProductID}`)
       .then(productInfo => productInfo.json())
       .then((productInfo) => {
-        console.log('productinfo:', productInfo);
         setProductName(productInfo.name);
         setCategory(productInfo.category);
       })
@@ -39,7 +38,6 @@ const ProductCard = ({ relatedProductID, actionButtonType }) => {
     fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
       .then(styleInfo => styleInfo.json())
       .then(({ results }) => { /* styleInfo is an object with only has one useful key: "results", which is an array of style infos */
-        console.log('results:', results);
         let foundADefaultStyle = false;
         for (let style of results) {
           if (style['default?'] === 1) {
@@ -60,6 +58,11 @@ const ProductCard = ({ relatedProductID, actionButtonType }) => {
       .catch((err) => {
         console.log(`Error fetching related product styles for product with id ${relatedProductID}:`, err);
       });
+  };
+
+  const handleActionButton = (e) => {
+    e.preventDefault();
+    console.log('click!');
   };
 
   useEffect(() => {
@@ -96,11 +99,9 @@ const ProductCard = ({ relatedProductID, actionButtonType }) => {
             }
           >
             <button
-              action=""
+              onClick = {handleActionButton}
             >
               { actionButtonSymbol }
-              {/* X */}
-              {/* ⭐ */}
             </button>
           </span>
         </div>

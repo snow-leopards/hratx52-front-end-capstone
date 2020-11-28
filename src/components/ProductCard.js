@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
 
 const ProductCard = ({ relatedProductID }) => {
-  const placeHolderImgURL = 'https://via.placeholder.com/150';
+  const imgHeight = 200;
+  const placeHolderImgURL = `https://via.placeholder.com/${imgHeight}`;
   const [productName, setProductName] = useState('Loading...');
   const [category, setCategory] = useState('Category');
-  const [originalPrice, setOriginalPrice] = useState('-999');
-  const [salePrice, setSalePrice] = useState('-999');
+  const [originalPrice, setOriginalPrice] = useState(null);
+  const [salePrice, setSalePrice] = useState(null);
   const [imgURL, setImgURL] = useState(placeHolderImgURL);
 
   const getProductInfo = () => {
@@ -26,22 +27,20 @@ const ProductCard = ({ relatedProductID }) => {
   const getStyleInfo = () => {
     fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
       .then(styleInfo => styleInfo.json())
-      .then(({ results }) => { //styleInfo is an object with only has one useful key: "results", which is an array of style infos
-        // console.log('Styles for item', relatedProductID, ':', results);
+      .then(({ results }) => { /* styleInfo is an object with only has one useful key: "results", which is an array of style infos */
         console.log('results:', results);
         let foundADefaultStyle = false;
         for (let style of results) {
           if (style['default?'] === 1) {
             foundADefaultStyle = true;
-            setImgURL(style.photos[0].thumbnail_url ? style.photos[0].thumbnail_url : placeHolderImgURL); // TODO: search for a picture somewhere else if one isn't found
+            setImgURL(style.photos[0].thumbnail_url ? style.photos[0].thumbnail_url : placeHolderImgURL); /* TODO: search for a picture somewhere else if one isn't found */
             setOriginalPrice(style.original_price);
             setSalePrice(style.sale_price);
 
             break;
           }
         }
-        if (!foundADefaultStyle) { // TODO: search for a picture somewhere else
-          // console.log('Item', relatedProductID, 'didn\'t have a default style');
+        if (!foundADefaultStyle) { /* TODO: if a picture isn't found, search for a picture somewhere else */
           setImgURL(results[0].photos[0].thumbnail_url ? results[0].photos[0].thumbnail_url : placeHolderImgURL);
           setOriginalPrice(results[0].original_price);
           setSalePrice(results[0].sale_price);
@@ -62,21 +61,40 @@ const ProductCard = ({ relatedProductID }) => {
 
   return (
     <a href={`/details/${relatedProductID}`}>
-      <Card
-        hoverable
-      >
+      <Card>
         <div>
           <img
             src={imgURL}
             alt={productName}
-            height={200}
+            height={imgHeight}
+            style={
+              {
+                position: 'relative',
+              }
+            }
           />
+          <span
+            style = {
+              {
+                fontWeight: 'bold',
+                fontSize: '1em',
+                position: 'absolute',
+                zIndex: '1',
+                right: '24px',
+              }
+            }
+          >
+            <button>
+              {/* X */}
+              ⭐
+            </button>
+          </span>
         </div>
         <div>{category}</div>
-        <div>{productName}</div>
+        <div style={{fontWeight: 'bold'}}>{productName}</div> {/* TODO: style with css file! */}
         <div>
           {salePrice > 0
-            ? <span>Sale! ${salePrice}</span> // TODO strikethrough original price
+            ? <span>Sale! ${salePrice}</span> /* TODO strikethrough original price */
             : <span>${originalPrice}</span>
           }
         </div>

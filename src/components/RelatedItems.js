@@ -8,12 +8,19 @@ const Arrow = ({ text, className }) => {
   return (
     <div
       className={className}
-    >{text}</div>
+      style = {
+        {
+          fontSize: '2em',
+        }
+      }
+    >
+      {text}
+    </div>
   );
 };
 
-const ArrowLeft = Arrow({ text: '<<<', className: 'arrow-prev' });
-const ArrowRight = Arrow({ text: '>>>', className: 'arrow-next' });
+const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
 const RelatedItems = ({productId}) => {
 

@@ -3,7 +3,7 @@ import { Layout, Space, Divider, List } from 'antd';
 import ReviewOne from './ReviewOne';
 
 
-const ReviewList = () => {
+const ReviewList = (props) => {
   //data from antD
   const { Content } = Layout;
 
@@ -13,7 +13,8 @@ const ReviewList = () => {
         <List
           itemLayout="vertical"
           size="large">
-          <ReviewOne></ReviewOne>
+          <ReviewOne
+            productId={props.productId}></ReviewOne>
         </List>
       </Content>
     </Layout>

@@ -38,15 +38,8 @@ const RatingProductBreakdown = ({productId}) => {
     }
     return total;
   };
-
-  //graduation of slider bars
-  const marks = {
-    1: 'Poor',
-    2: 'Below Average',
-    3: 'Average',
-    4: 'Pretty Great',
-    5: 'Perfect'
-  };
+  //percent recommending product
+  const recommending = Math.round((metaData.recommended[1] / (metaData.recommended[0] + metaData.recommended[1]) * 100));
 
   //Product Characteristics
   const ProductCharacteristics = () => {
@@ -63,7 +56,6 @@ const RatingProductBreakdown = ({productId}) => {
           <div key={char.id}>
             <p>{char.charName}</p>
             <Slider
-              marks={marks}
               step={0.1}
               included={false}
               value={char !== undefined ? char.value : 3}
@@ -78,9 +70,15 @@ const RatingProductBreakdown = ({productId}) => {
   //TODO: refactor to modularize progress
   return (
     <div>
-      <b>{average()}</b>
+      <b
+        style={{
+          fontSize: 32
+        }}
+      >{average()}</b>
       <Ratings/>
-      Rating Breakdown
+      {recommending}% of reviews recommend this product.
+      <br/>
+      <b>Rating Breakdown</b>
       <br/>
       <u>5 stars</u>
       <Progress
@@ -95,7 +93,7 @@ const RatingProductBreakdown = ({productId}) => {
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[4] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[4] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <u>3 stars</u>
@@ -103,7 +101,7 @@ const RatingProductBreakdown = ({productId}) => {
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[3] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[3] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <u>2 stars</u>
@@ -111,19 +109,20 @@ const RatingProductBreakdown = ({productId}) => {
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[2] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[2] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <u>1 stars</u>
       <Progress
         type={'line'}
         strokeColor={'gold'}
-        percent={metaData.ratings !== undefined ? metaData.ratings[1] / 5 * 100 : 50}
+        percent={metaData.ratings !== undefined ? metaData.ratings[1] / totalRatings() * 100 : 50}
         showInfo={true}
       />
       <br/>
+
       <br/>
-      Product Breakdown
+      <b>Product Breakdown</b>
       <br/>
       <ProductCharacteristics />
     </div>

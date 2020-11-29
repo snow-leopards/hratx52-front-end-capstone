@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProduct, selectProductStyle, selectDefaultProductStyle } from '../../reducers/overviewReducers';
 import Slider from 'react-slick';
 import Zoom from 'react-img-zoom';
 import { ExpandOutlined } from '@ant-design/icons';
@@ -10,9 +9,6 @@ import { ExpandOutlined } from '@ant-design/icons';
 const Carousel = (props) => {
 
   const dispatch = useDispatch();
-  const product = useSelector(selectProduct);
-  const productStyleList = useSelector(selectProductStyle);
-  const defaultProductStyle = useSelector(selectDefaultProductStyle);
 
   // carousel component state --->  not shared state
   const [expanded, setExpanded] = useState(false);
@@ -36,13 +32,13 @@ const Carousel = (props) => {
 
   return (
     <>
-      <div class='carousel-place-holder'>
-        <div class={expanded ? 'expand-button-container expanded' : 'expand-button-container'}>
-          <div class='expand-button' onClick={ ()=> toggleExpand() } >
+      <div className='carousel-place-holder'>
+        <div className={expanded ? 'expand-button-container expanded' : 'expand-button-container'}>
+          <div className='expand-button' onClick={ ()=> toggleExpand() } >
             <ExpandOutlined />
           </div>
         </div>
-        <div class={expanded ? 'carousel-container expanded' : 'carousel-container'}>
+        <div className={expanded ? 'carousel-container expanded' : 'carousel-container'}>
           <Slider {...settings} key={props.selectedProductStyle.style_id}>
             {props.selectedProductStyle.photos.map((photo) => {
               return (

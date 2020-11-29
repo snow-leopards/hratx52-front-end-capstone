@@ -102,4 +102,5 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity,
 };
 
 
+
 export default SelectionGrid;

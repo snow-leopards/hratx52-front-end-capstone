@@ -15,11 +15,13 @@ const App = () => {
   return (
     <>
       <PageHeader></PageHeader>
-      <Header className='site-wide-header' >Site-wide annoucement message - sale / discount offer - new product highlight</Header>
-      <Router>
-        <ProductList path='/'></ProductList>
-        <ProductDetails path='/details/:id'></ProductDetails>
-      </Router>
+      <div className = 'product-details-container'>
+        <Header className='site-wide-header' >Site-wide annoucement message - sale / discount offer - new product highlight</Header>
+        <Router>
+          <ProductList path='/'></ProductList>
+          <ProductDetails path='/details/:id'></ProductDetails>
+        </Router>
+      </div>
     </>
   );
 };

@@ -26,8 +26,8 @@ const DescriptionAndFeatures = (props) => {
           renderItem={item => (
             <List.Item>
               <List.Item.Meta
-                avatar={<CheckOutlined style={{ fontSize: '20px' }}/>}
-                title={<a>{item.value === 'null' ? '' : item.value} {item.feature === 'null' ? '' : item.feature}</a>}
+                avatar={<CheckOutlined title='check' style={{ fontSize: '20px' }}/>}
+                title={<a data-testid="features">{item.value === 'null' ? '' : item.value} {item.feature === 'null' ? '' : item.feature}</a>}
               />
             </List.Item>
           )}

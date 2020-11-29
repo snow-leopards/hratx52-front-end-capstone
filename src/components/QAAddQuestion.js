@@ -37,31 +37,6 @@ const QAAddQuestion = ({ productId }) => {
       });
   };
 
-  var authenticateSubmit = () => {
-
-  };
-
-  var validateEmail = function(address) {
-    var letters = address.split('');
-    var split = address.split('@');
-    var username = split[0];
-    var domainName = split[1];
-    var splitAtPeriod = address.split('.');
-    if (address.length <= 5) {
-      return false;
-    } else if (split.length !== 2) {
-      return false;
-    } else if (username.length < 1 || domainName.length < 1) {
-      return false;
-    } else if (domainName[domainName.length - 1] === '.') {
-      return false;
-    } else if (splitAtPeriod.indexOf('') !== -1 || letters.indexOf(' ') !== -1) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   var handleCancel = () => {
     dispatch({type: 'SET_MODAL_VISIBLE', payload: false});
   };

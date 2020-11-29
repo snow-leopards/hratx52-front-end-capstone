@@ -1,14 +1,16 @@
 import makeActionCreator from '../utils/makeActionCreator';
 import { createSelector } from 'reselect';
+import { useSelector } from 'react-redux';
 
 export const setQA = makeActionCreator('SET_QA', 'questions');
 export const setAnswer = makeActionCreator('SET_ANSWERS', 'answers');
-export const setShowed = makeActionCreator('SET_SHOWED', 'showedMore');
+export const setShowed = makeActionCreator('SET_SHOWED_Q', 'showedMoreQuestions');
 
 const initialState = {
   questions: [],
   answers: [],
-  showedMore: false
+  showedMoreQuestions: false,
+  showedMoreAnswers: false
 };
 
 export const QAReducer = (state = initialState, action) => {
@@ -22,13 +24,19 @@ export const QAReducer = (state = initialState, action) => {
   case 'SET_ANSWERS': {
     return {
       ...state,
-      answers: action.payload
+      answers: [...action.payload]
     };
   }
-  case 'SET_SHOWED': {
+  case 'SET_SHOWED_Q': {
     return {
       ...state,
-      showedMore: action.payload
+      showedMoreQuestions: action.payload
+    };
+  }
+  case 'SET_SHOWED_Q': {
+    return {
+      ...state,
+      showedMoreAnswers: action.payload
     };
   }
   default: {
@@ -51,11 +59,18 @@ export const selectA = createSelector(
   QA => QA.answers
 );
 
-export const selectShowed = createSelector(
+export const selectShowedQ = createSelector(
   //This needs to map to whatever the key is in rootReducer.js
   state => state.QA,
   //This needs to map to whatever is defined in this file
-  QA => QA.showedMore
+  QA => QA.showedMoreQuestions
+);
+
+export const selectShowedA = createSelector(
+  //This needs to map to whatever the key is in rootReducer.js
+  state => state.QA,
+  //This needs to map to whatever is defined in this file
+  QA => QA.showedMoreAnswers
 );
 
 export const fetchQuestions = (productId, number) => {
@@ -74,6 +89,31 @@ export const fetchQuestions = (productId, number) => {
           maxQuestions.push(questions.results[i]);
         }
         dispatch({type: 'SET_QA', payload: maxQuestions});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const fetchAnswers = (questionId, number) => {
+
+  return (dispatch, getState) => {
+    fetch(`http://3.21.164.220/qa/questions/${questionId}/answers`)
+      .then((res) => res.json())
+      .then((answers) => {
+        number = number || answers.results.length;
+        if (answers.results.length < number) {
+          number = answers.results.length;
+        }
+        var maxAnswers = [];
+        answers.results.sort((a, b) => (a.question_helpfulness < b.question_helpfulness) ? 1 : -1);
+        for (var i = 0; i < number; i++) {
+          maxAnswers.push(answers.results[i]);
+        }
+        getState().QA.answers.push(maxAnswers);
+
+        dispatch({type: 'SET_ANSWERS', payload: getState().QA.answers});
       })
       .catch((error) => {
         console.log(error);

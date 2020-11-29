@@ -41,6 +41,7 @@ const RelatedItems = ({productId}) => {
 
   return (
     <div>
+      <p style={{'textAlign': 'center'}}>Related Products</p>
       <ScrollMenu
         alignCenter = {false}
         dragging = {false}

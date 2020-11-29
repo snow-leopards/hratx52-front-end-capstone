@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectQ, selectA, fetchQuestions, selectShowed, putHelpfulnessQuestion } from '../reducers/QAReducers';
+import { selectQ, selectA, fetchQuestions, selectShowedQ, putHelpfulnessQuestion } from '../reducers/QAReducers';
 import { selectProduct } from '../reducers/overviewReducers';
 import { Layout, Row, Col, Image, Descriptions, Button, Divider } from 'antd';
 import dummyData from '../dummyData/QAListQuestionsData';
 import IndividualQuestion from './QAIndividualQuestion';
+import QASearch from './QASearch';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -13,20 +14,22 @@ const QA = ({ productId }) => {
   const product = useSelector(selectProduct);
   const dispatch = useDispatch();
   const fetchedQuestions = useSelector(selectQ);
-  const showedMore = useSelector(selectShowed);
+  const showedMoreQuestions = useSelector(selectShowedQ);
 
   useEffect(() => {
     dispatch(fetchQuestions(productId, 4));
   }, []);
 
+  //for each question, fetch the answeers and pass it down as props
+
   var showMoreQuestions = () => {
     dispatch(fetchQuestions(productId));
-    dispatch({type: 'SET_SHOWED', payload: true});
+    dispatch({type: 'SET_SHOWED_Q', payload: true});
   };
 
   var showLessQuestions = () => {
     dispatch(fetchQuestions(productId, 4));
-    dispatch({type: 'SET_SHOWED', payload: false});
+    dispatch({type: 'SET_SHOWED_Q', payload: false});
   };
 
   var incrementQuestionHelpfulness = (question) => {
@@ -48,8 +51,10 @@ const QA = ({ productId }) => {
     <div>
       <Layout>
         <Header id="questionsAndAnswers" style={{color: 'white'}}>Questions and Answers</Header>
-        <Content>
-          <Row>
+        <Content style={{margin: '24px 16px 0'}}>
+          <QASearch questions={fetchedQuestions} productId={productId}/>
+          <Divider />
+          <Row style={{height: '400px', overflow: 'scroll'}}>
             {fetchedQuestions.length > 0 &&
             fetchedQuestions.map((question) => {
               return (
@@ -75,7 +80,7 @@ const QA = ({ productId }) => {
               );
             })
             }
-            {showedMore ? <Button onClick={() => {
+            {showedMoreQuestions ? <Button onClick={() => {
               showLessQuestions();
             }}>Show Less Questions</Button> : <Button onClick={() => {
               showMoreQuestions();

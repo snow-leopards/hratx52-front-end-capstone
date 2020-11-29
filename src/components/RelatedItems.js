@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { List, Card } from 'antd';
-import RelatedItem from './RelatedItem.js';
+import ProductCard from './ProductCard.js';
 
 //Arrows for the react-horizontal-scrolling-menu
 const Arrow = ({ text, className }) => {
   return (
     <div
       className={className}
-    >{text}</div>
+      style = {
+        {
+          fontSize: '2em',
+        }
+      }
+    >
+      {text}
+    </div>
   );
 };
 
-const ArrowLeft = Arrow({ text: '<<<', className: 'arrow-prev' });
-const ArrowRight = Arrow({ text: '>>>', className: 'arrow-next' });
+const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
 const RelatedItems = ({productId}) => {
 
@@ -47,9 +54,10 @@ const RelatedItems = ({productId}) => {
         dragging = {false}
         arrowLeft={ArrowLeft}
         arrowRight={ArrowRight}
+        // hideSingleArrow={true}
         data = {
           relatedItemIDs.map((relatedItemID, index) => {
-            return <RelatedItem relatedProductID={relatedItemID} key={index}/>;
+            return <ProductCard relatedProductID={relatedItemID} key={index} actionButtonType={'compare-with-current'}/>;
           })
         }
       />

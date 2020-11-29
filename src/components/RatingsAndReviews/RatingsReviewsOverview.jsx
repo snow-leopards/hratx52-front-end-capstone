@@ -58,7 +58,7 @@ const RatingsReviewsOverview = (props) => {
   };
 
   return (
-    <Layout>
+    <Layout id="ratings-component">
       <Sider
         className='RROverviewSider'
         style={styles.sider}

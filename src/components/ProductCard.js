@@ -65,7 +65,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       });
   };
 
-  const popOverContent = (
+  const popoverContent = (
     <div>
       <p>Content</p>
       <p>Content</p>
@@ -117,11 +117,19 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
               }
             }
           >
-            <button
-              onClick = {handleActionButton}
+            <ConditionalWrapper
+              condition={actionButtonType === 'compare-with-current'}
+              wrapper={children =>
+                <Popover placement="bottom" content={popoverContent} title="Title" trigger="click">
+                  {children}
+                </Popover>}
             >
-              { actionButtonSymbol }
-            </button>
+              <button
+                onClick = {handleActionButton}
+              >
+                { actionButtonSymbol }
+              </button>
+            </ConditionalWrapper>
           </span>
         </div>
         <div>{category}</div>

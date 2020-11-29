@@ -55,7 +55,7 @@ const QA = ({ productId }) => {
         <Content style={{margin: '24px 16px 0', background: '#f0f2f5'}}>
           <QASearch questions={fetchedQuestions} productId={productId}/>
           <Divider />
-          <Row style={{height: '400px', overflow: 'scroll'}}>
+          <Row style={{height: '500px', overflow: 'scroll'}}>
             {fetchedQuestions.length > 0 &&
             fetchedQuestions.map((question) => {
               return (

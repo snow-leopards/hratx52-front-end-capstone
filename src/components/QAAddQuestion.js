@@ -15,7 +15,6 @@ const QAAddQuestion = ({ productId }) => {
   };
 
   var handleSubmit = (values) => {
-    console.log(values);
     values['product_id'] = productId;
     dispatch({type: 'SET_MODAL_LOADING', payload: true});
     fetch('http://3.21.164.220/qa/questions', {
@@ -28,8 +27,10 @@ const QAAddQuestion = ({ productId }) => {
       .then((res) =>{
         console.log(res);
         dispatch(fetchQuestions(productId));
-        dispatch({type: 'SET_MODAL_LOADING', payload: false});
-        dispatch({type: 'SET_MODAL_VISIBLE', payload: false});
+        setTimeout(() => {
+          dispatch({type: 'SET_MODAL_LOADING', payload: false});
+          dispatch({type: 'SET_MODAL_VISIBLE', payload: false});
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);

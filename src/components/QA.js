@@ -6,6 +6,7 @@ import { Layout, Row, Col, Image, Descriptions, Button, Divider } from 'antd';
 import dummyData from '../dummyData/QAListQuestionsData';
 import IndividualQuestion from './QAIndividualQuestion';
 import QASearch from './QASearch';
+import QAAddQuestion from './QAAddQuestion';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -51,10 +52,10 @@ const QA = ({ productId }) => {
     <div>
       <Layout>
         <Header id="questionsAndAnswers" style={{color: 'white'}}>Questions and Answers</Header>
-        <Content style={{margin: '24px 16px 0'}}>
+        <Content style={{margin: '24px 16px 0', background: '#f0f2f5'}}>
           <QASearch questions={fetchedQuestions} productId={productId}/>
           <Divider />
-          <Row style={{height: '400px', overflow: 'scroll'}}>
+          <Row style={{height: '500px', overflow: 'scroll'}}>
             {fetchedQuestions.length > 0 &&
             fetchedQuestions.map((question) => {
               return (
@@ -86,7 +87,7 @@ const QA = ({ productId }) => {
               showMoreQuestions();
             }}>Show More Questions</Button>
             }
-
+            <QAAddQuestion productId={productId}/>
           </Row>
         </Content>
       </Layout>

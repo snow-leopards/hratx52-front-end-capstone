@@ -47,7 +47,24 @@ const IndividualQuestion = ({ question }) => {
   return (
     <Layout>
       <Row className="questionBody" style={{fontWeight: 'bold'}}> Q: {question.question_body}</Row>
-      <Content>{showedMoreAnswers ? <div></div> :
+      <Content style={{background: '#f0f2f5'}}>{showedMoreAnswers ?
+        listOfAnswers.map((answer) => {
+          return (
+            <div key={answer.id}>
+              <Row key={answer.body} className="answerBody">A: {answer.body}</Row>
+              <Row style={{fontSize: '12px', marginBottom: '5px'}} key={answer.date} className="answerDetails">by {answer.answerer_name}, {answer.date.slice(5, 8)}{answer.date.slice(8, 10)}-{answer.date.slice(0, 4)}
+              </Row>
+              {answer.clickedHelpful ?
+                <Button key={'helpful' + answer.id} style={{fontSize: '12px', fontWeight: 'bold', color: 'blue', marginBottom: '5px'}}>Helpful? Yes({answer.helpfulness})</Button> :
+                <Button style={{fontSize: '12px', marginBottom: '5px'}} key={'helpful' + answer.id} onClick={() => {
+                  incrementHelpfulness(answer);
+                }}
+                >Helpful? Yes({answer.helpfulness})
+                </Button>
+              }
+            </div>
+          );
+        }) :
         firstTwoAnswers.map((answer) => {
           return (
             <div key={answer.id}>
@@ -65,10 +82,15 @@ const IndividualQuestion = ({ question }) => {
             </div>
           );
         })}
-      {listOfAnswers.length > 2 &&
-        <Button onClick={() => {
+      {listOfAnswers.length > 2 && !showedMoreAnswers &&
+        <Button style={{fontSize: '12px'}} onClick={() => {
           showMoreAnswers();
         }}>Show More Answers</Button>
+      }
+      {listOfAnswers.length > 2 && showedMoreAnswers &&
+        <Button style={{fontSize: '12px'}} onClick={() => {
+          showLessAnswers();
+        }}>Show Less Answers</Button>
       }
       </Content>
     </Layout>

@@ -1,20 +1,19 @@
 import React from 'react';
-import { useSelector} from 'react-redux';
-import { Layout, Card, Rate, Image } from 'antd';
-import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
+import { useSelector, useDispatch } from 'react-redux';
+import { Layout, Card, Rate, Image, Button } from 'antd';
+import { selectReview, selectRating, selectReviewList, fetchReviewList, putHelpfulness, fetchSortedList } from '../../reducers/ratingsReducers';
 import { CheckOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { selectProduct } from '../../reducers/overviewReducers.js';
-import '../../App.css';
 
 
 const ReviewOne = () => {
   //data from store
   const product = useSelector(selectProduct);
   const reviewList = useSelector(selectReviewList);
-  console.log('reviewListRO: ', reviewList);
-  // const shownReviews = reviewList.slice(0, 2);
-  // console.log(shownReviews);
+  console.log('product: ', product);
+  const dispatch = useDispatch();
+
 
   //ConditionalRecommend rendering
   const WouldRecommend = (props) => {
@@ -61,6 +60,7 @@ const ReviewOne = () => {
           <Image
             width={75}
             src={photo.url}
+            key={photo.url.length}
           />
         ))
         :
@@ -68,6 +68,13 @@ const ReviewOne = () => {
     }
     </div>
   );
+
+  //Clicked helpfulness handling
+  // const clickHelpfulness = () => {
+  //   // props.review.helpfulness += 1;
+  //   console.log('clickclickclick');
+  //   putHelpfulness(review.review_id);
+  // };
 
   return (
     <>
@@ -81,7 +88,8 @@ const ReviewOne = () => {
                 disabled
                 defaultValue={review.rating}
               />}
-              extra={`${review.reviewer_name} ${moment(review.date).format('MMMM Do YYYY')}`} style={{ width: 'auto' }}
+              extra={`${review.reviewer_name} ${moment(review.date).format('MMMM Do YYYY')}`}
+              style={{ width: 'auto' }}
             >
               <b key={review.summary}>{review.summary}</b>
               <p key={review.body}>{review.body}</p>
@@ -93,6 +101,19 @@ const ReviewOne = () => {
                 review={review}
                 key={review.rating}
               />
+              <br/>
+              <p style={{textAlign: 'right'}}>
+                Was this review helpful?
+                <Button
+                  type="link"
+                  onClick={() => {
+                    (putHelpfulness(review.review_id));
+                    setTimeout(() => { dispatch(fetchSortedList(product.id, 'helpfulness')); }, 300);
+                  }}
+                >
+                  Yes({review.helpfulness})
+                </Button>
+              </p>
               <Photos review={review}/>
             </Card>
           ))

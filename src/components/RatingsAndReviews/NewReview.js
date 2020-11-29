@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Button, Modal, Form, Input, Radio, Upload, DatePicker, Rate } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
-import { selectMetaData } from '../../reducers/ratingsReducers';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectMetaData, selectReview, postReview } from '../../reducers/ratingsReducers';
 
 //form itself
 const NewReviewForm = ({ visible, onCreate, onCancel }) => {
@@ -37,7 +37,7 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
           <div key={char.id}>
             <Form.Item
               key={char.id * 23}
-              name={char.charName}
+              name={char.id}
               label={char.charName}
               rules={[
                 {
@@ -87,7 +87,7 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
         }}
       >
         <Form.Item
-          name="reviewer_name"
+          name="name"
           label="Name"
           rules={[
             {
@@ -104,6 +104,7 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
         <Form.Item
           name="email"
           label="Email Address"
+          extra="For authentication reasons, you will not be emailed."
           rules={[
             {
               required: true,
@@ -114,7 +115,6 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
           <Input
             placeholder="Example: jackson11@email.com"
           />
-            For authentication reasons, you will not be emailed.
         </Form.Item>
 
         <Form.Item
@@ -127,7 +127,7 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
         </Form.Item>
 
         <Form.Item
-          name="ratings"
+          name="rating"
           label="Rate"
           rules={[
             {
@@ -155,7 +155,7 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
         </Form.Item>
 
         <Form.Item
-          name="review_body"
+          name="body"
           label="Review Body"
           rules={[
             {
@@ -184,8 +184,8 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
           ]}
         >
           <Radio.Group>
-            <Radio value="1">Yes</Radio>
-            <Radio value="0">No</Radio>
+            <Radio value="true">Yes</Radio>
+            <Radio value="false">No</Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -213,14 +213,38 @@ const NewReviewForm = ({ visible, onCreate, onCancel }) => {
 };
 
 //Logic for form functionality/what should be referenced from parent component
-const NewReview = () => {
+const NewReview = (props) => {
   //onclick make form visible
   const [visible, setVisible] = useState(false);
+  //dispatch invocation
+  const dispatch = useDispatch();
+  const review = useSelector(selectReview);
   //successful submit of form
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
     setVisible(false);
     //dispatch values to review
+    var review = {
+      characteristics: {}
+    };
+
+    for (var key in values) {
+      // console.log("loglogloglog", parseInt(key).toString() !== 'NaN', parseInt(key).toString());
+      if (parseInt(key).toString() !== 'NaN') {
+        // add to characteristics object
+        review.characteristics[key] = values[key];
+      } else if (values.photos === undefined) {
+        review.photos = [];
+      } else if (key !== 'date') {
+        review[key] = values[key];
+      }
+    }
+
+    console.log('reviewBefore', review);
+    review['product_id'] = props.productId;
+    dispatch({ type: 'SET_REVIEW', payload: review });
+    dispatch(postReview(review));
+    console.log('reviewComplete', review);
   };
 
   return (

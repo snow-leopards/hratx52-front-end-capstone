@@ -99,7 +99,7 @@ export const fetchReviewList = (productId, count) => {
 //API call for Sorted ReviewList
 export const fetchSortedList = (productId, sort) => {
   return async(dispatch, getState) => {
-    fetch(`http://3.21.164.220/reviews/?product_id=${productId}&sort=${sort}`)
+    fetch(`http://3.21.164.220/reviews/?product_id=${productId}&sort=${sort}&count=100`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -121,3 +121,39 @@ export const fetchMeta = (productId) => {
   };
 };
 //API call to Add New Review
+export const postReview = (review, productId) => {
+  return async(dispatch, getState) => {
+    fetch('http://3.21.164.220/reviews', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(review)
+    })
+      .then(res => res.json())
+      .then(
+        (data) => {
+          console.log("logDATAAAAAAAAA", data);
+          // dispatch({ type: 'SET_REVIEW_LIST', payload: review });
+        })
+      .catch(() => {
+        console.log('error cannot post');
+
+        fetchSortedList(productId, 'newest');
+      });
+  };
+};
+
+//API call to put helpfulness
+export const putHelpfulness = (reviewId) => {
+  fetch(`http://3.21.164.220/reviews/${reviewId}/helpful`, {
+    method: 'PUT',
+  })
+    .then((res) => {
+      console.log('success: helpfulness updated');
+    })
+    .catch((error) => {
+      console.log('error could not update helpfulness');
+    });
+};

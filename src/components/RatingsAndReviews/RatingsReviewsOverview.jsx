@@ -19,17 +19,16 @@ const RatingsReviewsOverview = (props) => {
   //default count
   let count = 2;
   //handling for More Reviews Button
-  const onClickMore = (e) => {
-    count += 2;
-    console.log('count', count);
+  let onClickMore = () => {
+    count = 100;
     dispatch(fetchReviewList(props.productId, count));
   };
 
   //handling for drop-down selection
-  let sort = 'relevant';
+  let sort = 'relevance';
   const onClickSort = ({key}) => {
     console.log(`Clicked ${key}`);
-    sort = `${key}`;
+    sort = key;
     dispatch(fetchSortedList(props.productId, sort));
   };
 
@@ -45,9 +44,9 @@ const RatingsReviewsOverview = (props) => {
   //menu for drop-down sort
   const menu = (
     <Menu onClick={onClickSort}>
-      <Menu.Item key="Newest">Newest</Menu.Item>
-      <Menu.Item key="Helpful">Helpful</Menu.Item>
-      <Menu.Item key="Relevance">Relevance</Menu.Item>
+      <Menu.Item key="newest">Newest</Menu.Item>
+      <Menu.Item key="helpfulness">Helpfulness</Menu.Item>
+      <Menu.Item key="relevance">Relevance</Menu.Item>
     </Menu>
   );
 
@@ -64,7 +63,11 @@ const RatingsReviewsOverview = (props) => {
         className='RROverviewSider'
         style={styles.sider}
       >
-        <b>Ratings and Reviews:</b>
+        <b
+          style={{
+            fontSize: 18
+          }}
+        >Ratings and Reviews:</b>
         <br />
         <RatingProductBreakdown
           productId={props.productId}
@@ -83,16 +86,22 @@ const RatingsReviewsOverview = (props) => {
             </a>
           </Dropdown>
         </Header>
-        <Content>
+        <Content
+          style={{
+            height: '50vh',
+            overflow: 'initial',
+          }}
+        >
           <ReviewList
             productId={props.productId}
             reviewList={props.reviewList}
           ></ReviewList>
           <Button
-            // disabled
             onClick={onClickMore}
           >More Reviews</Button>
-          <NewReview/>
+          <NewReview
+            productId={props.productId}
+          />
         </Content>
       </Layout>
     </Layout>

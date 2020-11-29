@@ -14,6 +14,10 @@ header.ant-layout-header.site-wide-header {
   color: orange;
 }
 
+.scroll-menu-arrow--disabled {
+  display: none;
+}
+
 .product-details-container{
   margin: auto;
   min-width: 1024px;

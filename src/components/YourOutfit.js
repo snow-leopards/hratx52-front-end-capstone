@@ -112,7 +112,7 @@ const YourOutfit = ({productId}) => {
           outfitItemIDs.map((outfitItemID, index) => {
             return <ProductCard
               relatedProductID={outfitItemID}
-              key={index}
+              key={outfitItemID}
               actionButtonType={'remove-from-outfit'}
               removeItemFromOutfit={(outfitItemID) => { removeItemFromOutfit(outfitItemID); }}
             />;

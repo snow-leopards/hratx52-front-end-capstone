@@ -223,28 +223,24 @@ const NewReview = (props) => {
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
     setVisible(false);
-    //dispatch values to review
+    //add values to review obj
     var review = {
       characteristics: {}
     };
-
     for (var key in values) {
-      // console.log("loglogloglog", parseInt(key).toString() !== 'NaN', parseInt(key).toString());
+      // console.log('asdfsadf', key !== 'date');
       if (parseInt(key).toString() !== 'NaN') {
         // add to characteristics object
         review.characteristics[key] = values[key];
-      } else if (values.photos === undefined) {
-        review.photos = [];
       } else if (key !== 'date') {
         review[key] = values[key];
       }
     }
-
-    console.log('reviewBefore', review);
+    review.photos = [];
     review['product_id'] = props.productId;
     dispatch({ type: 'SET_REVIEW', payload: review });
     dispatch(postReview(review));
-    console.log('reviewComplete', review);
+    // console.log('reviewComplete', review);
   };
 
   return (

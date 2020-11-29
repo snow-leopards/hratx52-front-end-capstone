@@ -76,7 +76,6 @@ const RatingsReviewsOverview = (props) => {
       <Layout>
         <Header
           style={{color: 'white'}}>
-          (filter/sort drop-down menu) :
           <Dropdown overlay={menu}>
             <a
               className="ant-dropdown-link"

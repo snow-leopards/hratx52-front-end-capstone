@@ -69,13 +69,6 @@ const ReviewOne = () => {
     </div>
   );
 
-  //Clicked helpfulness handling
-  // const clickHelpfulness = () => {
-  //   // props.review.helpfulness += 1;
-  //   console.log('clickclickclick');
-  //   putHelpfulness(review.review_id);
-  // };
-
   return (
     <>
       <div>

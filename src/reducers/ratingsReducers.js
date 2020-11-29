@@ -128,19 +128,18 @@ export const postReview = (review, productId) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(review)
     })
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(
         (data) => {
           console.log("logDATAAAAAAAAA", data);
-          // dispatch({ type: 'SET_REVIEW_LIST', payload: review });
+          fetchSortedList(productId, 'newest');
         })
       .catch(() => {
         console.log('error cannot post');
-
-        fetchSortedList(productId, 'newest');
       });
   };
 };

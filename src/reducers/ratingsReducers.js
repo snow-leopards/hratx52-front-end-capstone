@@ -135,7 +135,7 @@ export const postReview = (review, productId) => {
       // .then(res => res.json())
       .then(
         (data) => {
-          console.log("logDATAAAAAAAAA", data);
+          console.log("post data", data);
           fetchSortedList(productId, 'newest');
         })
       .catch(() => {

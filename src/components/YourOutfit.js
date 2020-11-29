@@ -108,6 +108,7 @@ const YourOutfit = ({productId}) => {
         dragging = {false}
         arrowLeft={ArrowLeft}
         arrowRight={ArrowRight}
+        // hideSingleArrow={true}
         data = {
           outfitItemIDs.map((outfitItemID, index) => {
             return <ProductCard

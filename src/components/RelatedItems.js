@@ -54,6 +54,7 @@ const RelatedItems = ({productId}) => {
         dragging = {false}
         arrowLeft={ArrowLeft}
         arrowRight={ArrowRight}
+        // hideSingleArrow={true}
         data = {
           relatedItemIDs.map((relatedItemID, index) => {
             return <ProductCard relatedProductID={relatedItemID} key={index} actionButtonType={'compare-with-current'}/>;

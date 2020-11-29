@@ -10,3 +10,7 @@ header.ant-layout-header.site-wide-header {
   color: orange;
 }
 
+
+.scroll-menu-arrow--disabled {
+  display: none;
+}

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import { Card, Popover } from 'antd';
+
+/* a component needed to conditionally wrap the action button with a popover tag*/
+/* https://blog.hackages.io/conditionally-wrap-an-element-in-react-a8b9a47fab2 */
+const ConditionalWrapper = ( { condition, wrapper, children}) =>
+  condition ? wrapper(children) : children;
 
 const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit }) => {
   const imgHeight = 200;
@@ -60,10 +65,22 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       });
   };
 
+  const popOverContent = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
+
   const handleActionButton = (e) => {
     e.preventDefault();
     if (actionButtonType === 'remove-from-outfit') {
       removeItemFromOutfit(relatedProductID);
+      return (<></>);
+    } else if (actionButtonType === 'compare-with-current') {
+      console.log('Popup a comparison window');
+    } else {
+      console.log('unknown actionButtonType');
     }
   };
 

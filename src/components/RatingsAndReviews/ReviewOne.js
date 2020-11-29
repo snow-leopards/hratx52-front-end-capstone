@@ -1,52 +1,116 @@
 import React from 'react';
-import { useSelector} from 'react-redux';
-import { Layout, Space, Divider, Card, Rate } from 'antd';
-import { selectReview, selectRating, selectReviewList, fetchReviewList} from '../../reducers/ratingsReducers';
+import { useSelector, useDispatch } from 'react-redux';
+import { Layout, Card, Rate, Image, Button } from 'antd';
+import { selectReview, selectRating, selectReviewList, fetchReviewList, putHelpfulness, fetchSortedList } from '../../reducers/ratingsReducers';
+import { CheckOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import { selectProduct } from '../../reducers/overviewReducers.js';
-import Ratings from './Ratings';
 
 
 const ReviewOne = () => {
   //data from store
   const product = useSelector(selectProduct);
   const reviewList = useSelector(selectReviewList);
-  // console.log('reviewListRO: ', reviewList);
-  const shownReviews = reviewList.slice(0, 2);
-  // console.log(shownReviews);
+  // console.log('product: ', product);
+  const dispatch = useDispatch();
+
+
+  //ConditionalRecommend rendering
+  const WouldRecommend = (props) => {
+    return <div key={props.review.helpfulness + props.idx}>
+      {
+        (props.review.recommend === 1) ?
+          // console.log("YASSS", review.review.recommend === 1)
+          <div key={props.review.reviewer_name}>
+            <CheckOutlined key={props.review.helpfulness} />
+            I recommend this product!
+          </div>
+          :
+          null
+      }
+    </div>;
+  };
 
   //Conditional rendering of Seller response
-  const SellerResponse = () => (
-    <div>
-      {shownReviews.map((rev) => {
-        if (rev.response) {
-          return <div key={rev.response}>
+  const SellerResponse = (props) => (
+    <div key={props.review.rating + props.idx}>
+      {
+        (!!props.review.response && props.review.response !== 'null') ?
+          <div key={props.review.date}>
             <Card
-              key={rev.response}
+              key={props.review.response}
               type="inner"
               title="Seller Response"
             >
-              {rev.response}
+              {props.review.response}
             </Card>
-          </div>;
-        }
-      })
+          </div>
+          :
+          null
       }
+    </div>
+  );
+
+
+  //Conditional rendering of photos
+  const Photos = (props) => (
+    <div> {
+      (props.review.photos.length > 0) ?
+        props.review.photos.map((photo) => (
+          <Image
+            width={75}
+            src={photo.url}
+            key={photo.url.length}
+          />
+        ))
+        :
+        null
+    }
     </div>
   );
 
   return (
     <>
-      <div> {reviewList.length > 0 && shownReviews.map((review) => (
-        <Card
-          key={review.review_id}
-          title={<Rate key={review.rate} allowHalf disabled defaultValue={review.rating} />}
-          extra={review.reviewer_name} style={{ width: 500 }}
-        >
-          <b key={review.summary}>{review.summary}</b>
-          <p key={review.body}>{review.body}</p>
-          <SellerResponse/>
-        </Card>
-      ))}
+      <div>
+        {
+          reviewList.map((review, idx) => (
+            <Card
+              key={review.review_id}
+              title={<Rate key={review.date + idx}
+                allowHalf
+                disabled
+                defaultValue={review.rating}
+              />}
+              extra={`${review.reviewer_name} ${moment(review.date).format('MMMM Do YYYY')}`}
+              style={{ width: 'auto' }}
+            >
+              <b key={review.summary}>{review.summary}</b>
+              <p key={review.body}>{review.body}</p>
+              <WouldRecommend
+                review={review}
+                key={review.reviewer_name + idx}
+              />
+              <SellerResponse
+                review={review}
+                key={review.rating}
+              />
+              <br/>
+              <p style={{textAlign: 'right'}}>
+                Was this review helpful?
+                <Button
+                  type="link"
+                  onClick={() => {
+                    (putHelpfulness(review.review_id));
+                    setTimeout(() => { dispatch(fetchSortedList(product.id, 'helpfulness')); }, 300);
+                  }}
+                >
+                  Yes({review.helpfulness})
+                </Button>
+              </p>
+              <Photos review={review}/>
+            </Card>
+          ))
+        }
       </div>
     </>
   );

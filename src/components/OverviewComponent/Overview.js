@@ -56,6 +56,7 @@ const Overview = (props) => {
 
     setSelectedSize(event.item.props['sku-id']);
     setSelectedSizeLetters(event.item.props.value);
+    setSizeDropDownVisible(false);
   };
 
   const handleQuantityClick = (event) => {
@@ -65,13 +66,12 @@ const Overview = (props) => {
   const handleAddToCartClick = (event) => {
     if (selectedSizeLetters === 'SELECT SIZE') {
       message.error('Please, select size');
+      setSizeDropDownVisible(true);
     } else{
       message.success(product.name + ' in size ' + selectedSizeLetters + ' is added to your shooping cart. Quantity: ' + selectedQuantity );
     }
-
-    // message.info('Item: ' + product.name + '. Size: ' + selectedSizeLetters + ' was added to your shooping cart. \n Quantity: ' + selectedQuantity );
-
   };
+
 
   return (
     <>
@@ -94,6 +94,7 @@ const Overview = (props) => {
                     handleStyleClick={handleStyleClick}
                     handleAddToCartClick={handleAddToCartClick}
                     sizeDropDownVisible={sizeDropDownVisible}
+                    setSizeDropDownVisible={setSizeDropDownVisible}
 
                   />
                 </Col>

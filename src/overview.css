@@ -162,8 +162,34 @@
   align-items: center;
  }
 
-.icon{
+.star-icon{
   width: 20%;
   height: 65px;
   font-size: 20px;
  }
+
+.social-icons{
+  margin-right: 20px;
+}
+
+.icons{
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.facebook:hover{
+  color:#4267B2;
+}
+
+.twitter:hover{
+  color:#1DA1F2;
+}
+
+.instagram:hover{
+  color:#833AB4;
+}
+
+.ant-message {
+  z-index: 999999;
+}

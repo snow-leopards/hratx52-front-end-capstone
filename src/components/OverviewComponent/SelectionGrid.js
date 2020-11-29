@@ -5,14 +5,16 @@ import { selectProduct, fetchProductInformation, selectProductStyle, fetchProduc
 import { Layout, Row, Col, Descriptions, Skeleton, List, Divider, Rate, Menu, Dropdown, Button, message, Tooltip } from 'antd';
 import { DownOutlined, StarOutlined, TagOutlined, CheckCircleFilled, ShoppingOutlined, FacebookOutlined, TwitterOutlined, InstagramOutlined, PlusOutlined } from '@ant-design/icons';
 import Ratings from '../RatingsAndReviews/Ratings';
+import { selectReviewList } from '../../reducers/ratingsReducers';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity, handleQuantityClick, selectedSize, selectedSizeLetters, handleStyleClick, handleAddToCartClick, sizeDropDownVisible }) => {
+const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity, handleQuantityClick, selectedSize, selectedSizeLetters, handleStyleClick, handleAddToCartClick, sizeDropDownVisible, setSizeDropDownVisible }) => {
 
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
   const productStyleList = useSelector(selectProductStyle);
+  const reviewList = useSelector(selectReviewList);
 
   const sizeMenu = (
     <Menu data-testid='size-menu' className='size-menu'>
@@ -48,7 +50,7 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity,
       <div className='selection-container'>
         <div className='row-container'>
           <Ratings/>
-          <a href="#ratings-component" style={{textDecoration: 'underline'}}>Read all reviews</a>
+          <a href="#ratings-component" style={{textDecoration: 'underline'}}>Read all {reviewList.length} reviews</a>
         </div>
         <div>{product.category.toUpperCase()}</div>
         <div className='product-name'>{product.name}</div>
@@ -71,7 +73,7 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity,
         </div>
         <div className='row-container'>
           {selectedProductStyle.skus.null !== undefined ? <Dropdown className='select-size-drop-down'disabled={true} overlay={sizeMenu} ><Button>OUT OF STOCK</Button></Dropdown> :
-            <Dropdown className='select-size-drop-down selection-grid-button-dropdown ' overlay={sizeMenu} trigger={['click']}>
+            <Dropdown visible={sizeDropDownVisible} onClick={() => setSizeDropDownVisible(true)} className='select-size-drop-down selection-grid-button-dropdown ' overlay={sizeMenu} trigger={['click']}>
               <Button className='selection-grid-button-dropdown' data-testid='size-button' className='size-button'>
                 {selectedSizeLetters} <DownOutlined />
               </Button>
@@ -90,12 +92,13 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity,
               <PlusOutlined />
             </Button>
           }
-          <Button className='icon'><StarOutlined title='star'  /></Button>
+          <Button className='star-icon'><StarOutlined title='star'  /></Button>
         </div>
-        <div className='row-container'>
-          <Button className='icon'><FacebookOutlined /></Button>
-          <Button className='icon'><TwitterOutlined /></Button>
-          <Button className='icon'><InstagramOutlined /></Button></div>
+        <div className='row-container social-icons'>
+          <FacebookOutlined  className='icons facebook'/>
+          <TwitterOutlined className='icons twitter'/>
+          <InstagramOutlined className='icons instagram'/>
+        </div>
       </div>
     </>
   );

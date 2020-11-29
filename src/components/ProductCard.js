@@ -66,9 +66,22 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
   };
 
   const popoverContent = (
-    <div>
-      <p>Content</p>
-      <p>Content</p>
+    <div className="grid-container"
+      style={
+        {
+          'display': 'grid',
+          'gridTemplateColumns': 'auto auto auto',
+          'textAlign': 'center',
+          'gridGap': '10px',
+        }
+      }
+    >
+      <div className="grid-item" style={{ 'fontWeight': 'bold' }}>{productName}</div>
+      <div className="grid-item"></div>
+      <div className="grid-item" style={{ 'fontWeight': 'bold' }}>Morning Joggers</div>
+      <div className="grid-item">Yes</div>
+      <div className="grid-item">Organic Merino Fleece</div>
+      <div className="grid-item">No</div>
     </div>
   );
 
@@ -78,7 +91,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       removeItemFromOutfit(relatedProductID);
       return (<></>);
     } else if (actionButtonType === 'compare-with-current') {
-      console.log('Popup a comparison window');
+      // console.log('Popup a comparison window');
     } else {
       console.log('unknown actionButtonType');
     }
@@ -120,7 +133,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
             <ConditionalWrapper
               condition={actionButtonType === 'compare-with-current'}
               wrapper={children =>
-                <Popover placement="bottom" content={popoverContent} title="Title" trigger="click">
+                <Popover placement="bottom" title="Comparing:" content={popoverContent} trigger="hover">
                   {children}
                 </Popover>}
             >

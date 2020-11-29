@@ -27,6 +27,7 @@ const RelatedItems = ({productId}) => {
   // Our "main" information array of related items
   // This will need to be built from multiple calls to the API
   const [relatedItemIDs, setRelatedItemIDs] = useState([]);
+  const [productInfo, setProductInfo] = useState({});
 
   const getRelatedItemsFromAPI = () => {
     // console.log('Fetching related items for itemID:', productId);
@@ -42,8 +43,21 @@ const RelatedItems = ({productId}) => {
       });
   };
 
+  const getProductInfoFromAPI = () => {
+    fetch(`http://3.21.164.220/products/${productId}`)
+      .then(productInfo => productInfo.json())
+      .then((productInfo) => {
+        console.log('productInfo.features', productInfo.features);
+      })
+      .catch((err) => {
+        console.log('Error when fetching product info:', err);
+      });
+  };
+
   useEffect(() =>{
     getRelatedItemsFromAPI();
+    getProductInfoFromAPI();
+
   }, []);
 
   return (

@@ -34,7 +34,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit,
         setProductName(productInfo.name);
         setCategory(productInfo.category);
         setProductFeatures(productInfo.features);
-        console.log('productInfo.features', productInfo.features);
+        // console.log('productInfo.features', productInfo.features);
       })
       .catch(() => {
         console.log(`Error fetching related product info for product with id ${relatedProductID}:`, err);
@@ -112,9 +112,9 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit,
             if (parentProductFeatures ? parentProductFeatures.map(a => a.feature).indexOf(feature.feature) === -1 : false) {
               return (
                 <>
-                  <div className="grid-item" key={`row${index}.col0`}>{feature.value}</div>
-                  <div className="grid-item" key={`row${index}.col1`}>{feature.feature}</div>
-                  <div className="grid-item" key={`row${index}.col2`}>---</div>
+                  <div className="grid-item" key={`second-item-row${index}.col0`}>{feature.value}</div>
+                  <div className="grid-item" key={`second-item-row${index}.col1`}>{feature.feature}</div>
+                  <div className="grid-item" key={`second-item-row${index}.col2`}>---</div>
                 </>
               );
             } else {
@@ -135,6 +135,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit,
       return (<></>);
     } else if (actionButtonType === 'compare-with-current') {
       // console.log('Popup a comparison window');
+      // Do nothing: this is handled by the ConditionalWrapper PopOver tag
     } else {
       console.log('unknown actionButtonType');
     }

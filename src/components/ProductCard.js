@@ -85,14 +85,43 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit,
 
       {
         parentProductFeatures
-          ? parentProductFeatures.map((feature, index) => {
-            return (
-              <>
-                <div className="grid-item" key={`row${index}.col0`}>---</div>
-                <div className="grid-item" key={`row${index}.col1`}>{feature.feature}</div>
-                <div className="grid-item" key={`row${index}.col2`}>{feature.value}</div>
-              </>
-            );
+          ? parentProductFeatures.map((parentFeature, index) => {
+            if (productFeatures.map(a => a.feature).indexOf(parentFeature.feature) === -1) {
+              return (
+                <>
+                  <div className="grid-item" key={`row${index}.col0`}>---</div>
+                  <div className="grid-item" key={`row${index}.col1`}>{parentFeature.feature}</div>
+                  <div className="grid-item" key={`row${index}.col2`}>{parentFeature.value}</div>
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <div className="grid-item" key={`row${index}.col0`}>{productFeatures[productFeatures.map(a => a.feature).indexOf(parentFeature.feature)].value}</div>
+                  <div className="grid-item" key={`row${index}.col1`}>{parentFeature.feature}</div>
+                  <div className="grid-item" key={`row${index}.col2`}>{parentFeature.value}</div>
+                </>
+              );
+            }
+          })
+          : <>No Array Found</>
+      }
+      {
+        productFeatures
+          ? productFeatures.map((feature, index) => {
+            if (parentProductFeatures ? parentProductFeatures.map(a => a.feature).indexOf(feature.feature) === -1 : false) {
+              return (
+                <>
+                  <div className="grid-item" key={`row${index}.col0`}>{feature.value}</div>
+                  <div className="grid-item" key={`row${index}.col1`}>{feature.feature}</div>
+                  <div className="grid-item" key={`row${index}.col2`}>---</div>
+                </>
+              );
+            } else {
+              return (
+                <> </>
+              );
+            }
           })
           : <>No Array Found</>
       }

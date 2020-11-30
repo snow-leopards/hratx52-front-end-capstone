@@ -3,13 +3,14 @@ import { Card, Popover } from 'antd';
 
 /* a component needed to conditionally wrap the action button with a popover tag*/
 /* https://blog.hackages.io/conditionally-wrap-an-element-in-react-a8b9a47fab2 */
-const ConditionalWrapper = ( { condition, wrapper, children}) =>
+const ConditionalWrapper = ({ condition, wrapper, children }) =>
   condition ? wrapper(children) : children;
 
-const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit }) => {
+const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit, parentProductName, parentProductFeatures }) => {
   const imgHeight = 200;
   const placeHolderImgURL = `https://via.placeholder.com/${imgHeight}`;
   const [productName, setProductName] = useState('Loading...');
+  const [productFeatures, setProductFeatures] = useState([]);
   const [category, setCategory] = useState('Category');
   const [originalPrice, setOriginalPrice] = useState(null);
   const [salePrice, setSalePrice] = useState(null);
@@ -32,6 +33,8 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       .then((productInfo) => {
         setProductName(productInfo.name);
         setCategory(productInfo.category);
+        setProductFeatures(productInfo.features);
+        console.log('productInfo.features', productInfo.features);
       })
       .catch(() => {
         console.log(`Error fetching related product info for product with id ${relatedProductID}:`, err);
@@ -72,16 +75,27 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
           'display': 'grid',
           'gridTemplateColumns': 'auto auto auto',
           'textAlign': 'center',
-          'gridGap': '10px',
+          'gridGap': '25px',
         }
       }
     >
       <div className="grid-item" style={{ 'fontWeight': 'bold' }}>{productName}</div>
       <div className="grid-item"></div>
-      <div className="grid-item" style={{ 'fontWeight': 'bold' }}>Morning Joggers</div>
-      <div className="grid-item">Yes</div>
-      <div className="grid-item">Organic Merino Fleece</div>
-      <div className="grid-item">No</div>
+      <div className="grid-item" style={{ 'fontWeight': 'bold' }}>{parentProductName}</div>
+
+      {
+        parentProductFeatures
+          ? parentProductFeatures.map((feature, index) => {
+            return (
+              <>
+                <div className="grid-item" key={`row${index}.col0`}>---</div>
+                <div className="grid-item" key={`row${index}.col1`}>{feature.feature}</div>
+                <div className="grid-item" key={`row${index}.col2`}>{feature.value}</div>
+              </>
+            );
+          })
+          : <>No Array Found</>
+      }
     </div>
   );
 
@@ -120,7 +134,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
             }
           />
           <span
-            style = {
+            style={
               {
                 fontWeight: 'bold',
                 fontSize: '1em',
@@ -138,15 +152,15 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
                 </Popover>}
             >
               <button
-                onClick = {handleActionButton}
+                onClick={handleActionButton}
               >
-                { actionButtonSymbol }
+                {actionButtonSymbol}
               </button>
             </ConditionalWrapper>
           </span>
         </div>
         <div>{category}</div>
-        <div style={{fontWeight: 'bold'}}>{productName}</div> {/* TODO: style with css file! */}
+        <div style={{ fontWeight: 'bold' }}>{productName}</div> {/* TODO: style with css file! */}
         <div>
           {salePrice > 0
             ? <span>Sale! ${salePrice}</span> /* TODO strikethrough original price */

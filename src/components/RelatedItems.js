@@ -27,7 +27,8 @@ const RelatedItems = ({productId}) => {
   // Our "main" information array of related items
   // This will need to be built from multiple calls to the API
   const [relatedItemIDs, setRelatedItemIDs] = useState([]);
-  const [productInfo, setProductInfo] = useState({});
+  const [productFeatures, setProductFeatures] = useState([]);
+  const [productName, setProductName] = useState('Loading...');
 
   const getRelatedItemsFromAPI = () => {
     // console.log('Fetching related items for itemID:', productId);
@@ -47,7 +48,8 @@ const RelatedItems = ({productId}) => {
     fetch(`http://3.21.164.220/products/${productId}`)
       .then(productInfo => productInfo.json())
       .then((productInfo) => {
-        console.log('productInfo.features', productInfo.features);
+        setProductFeatures(productInfo.features);
+        setProductName(productInfo.name);
       })
       .catch((err) => {
         console.log('Error when fetching product info:', err);
@@ -71,7 +73,7 @@ const RelatedItems = ({productId}) => {
         // hideSingleArrow={true}
         data = {
           relatedItemIDs.map((relatedItemID, index) => {
-            return <ProductCard relatedProductID={relatedItemID} key={index} actionButtonType={'compare-with-current'}/>;
+            return <ProductCard relatedProductID={relatedItemID} key={index} actionButtonType={'compare-with-current'} parentProductFeatures={productFeatures} parentProductName={productName}/>;
           })
         }
       />

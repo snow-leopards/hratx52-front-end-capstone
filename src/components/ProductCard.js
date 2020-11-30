@@ -3,13 +3,14 @@ import { Card, Popover } from 'antd';
 
 /* a component needed to conditionally wrap the action button with a popover tag*/
 /* https://blog.hackages.io/conditionally-wrap-an-element-in-react-a8b9a47fab2 */
-const ConditionalWrapper = ( { condition, wrapper, children}) =>
+const ConditionalWrapper = ({ condition, wrapper, children }) =>
   condition ? wrapper(children) : children;
 
-const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit }) => {
+const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit, parentProductName, parentProductFeatures }) => {
   const imgHeight = 200;
   const placeHolderImgURL = `https://via.placeholder.com/${imgHeight}`;
   const [productName, setProductName] = useState('Loading...');
+  const [productFeatures, setProductFeatures] = useState([]);
   const [category, setCategory] = useState('Category');
   const [originalPrice, setOriginalPrice] = useState(null);
   const [salePrice, setSalePrice] = useState(null);
@@ -32,6 +33,8 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       .then((productInfo) => {
         setProductName(productInfo.name);
         setCategory(productInfo.category);
+        setProductFeatures(productInfo.features);
+        // console.log('productInfo.features', productInfo.features);
       })
       .catch(() => {
         console.log(`Error fetching related product info for product with id ${relatedProductID}:`, err);
@@ -65,10 +68,63 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       });
   };
 
-  const popOverContent = (
-    <div>
-      <p>Content</p>
-      <p>Content</p>
+  const popoverContent = (
+    <div className="grid-container"
+      style={
+        {
+          'display': 'grid',
+          'gridTemplateColumns': 'auto auto auto',
+          'textAlign': 'center',
+          'gridGap': '25px',
+        }
+      }
+    >
+      <div className="grid-item" style={{ 'fontWeight': 'bold' }}>{productName}</div>
+      <div className="grid-item"></div>
+      <div className="grid-item" style={{ 'fontWeight': 'bold' }}>{parentProductName}</div>
+
+      {
+        parentProductFeatures
+          ? parentProductFeatures.map((parentFeature, index) => {
+            if (productFeatures.map(a => a.feature).indexOf(parentFeature.feature) === -1) {
+              return (
+                <>
+                  <div className="grid-item" key={`row${index}.col0`}>---</div>
+                  <div className="grid-item" key={`row${index}.col1`}>{parentFeature.feature}</div>
+                  <div className="grid-item" key={`row${index}.col2`}>{parentFeature.value}</div>
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <div className="grid-item" key={`row${index}.col0`}>{productFeatures[productFeatures.map(a => a.feature).indexOf(parentFeature.feature)].value}</div>
+                  <div className="grid-item" key={`row${index}.col1`}>{parentFeature.feature}</div>
+                  <div className="grid-item" key={`row${index}.col2`}>{parentFeature.value}</div>
+                </>
+              );
+            }
+          })
+          : <>No Array Found</>
+      }
+      {
+        productFeatures
+          ? productFeatures.map((feature, index) => {
+            if (parentProductFeatures ? parentProductFeatures.map(a => a.feature).indexOf(feature.feature) === -1 : false) {
+              return (
+                <>
+                  <div className="grid-item" key={`second-item-row${index}.col0`}>{feature.value}</div>
+                  <div className="grid-item" key={`second-item-row${index}.col1`}>{feature.feature}</div>
+                  <div className="grid-item" key={`second-item-row${index}.col2`}>---</div>
+                </>
+              );
+            } else {
+              return (
+                <> </>
+              );
+            }
+          })
+          : <>No Array Found</>
+      }
     </div>
   );
 
@@ -78,7 +134,8 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
       removeItemFromOutfit(relatedProductID);
       return (<></>);
     } else if (actionButtonType === 'compare-with-current') {
-      console.log('Popup a comparison window');
+      // console.log('Popup a comparison window');
+      // Do nothing: this is handled by the ConditionalWrapper PopOver tag
     } else {
       console.log('unknown actionButtonType');
     }
@@ -107,7 +164,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
             }
           />
           <span
-            style = {
+            style={
               {
                 fontWeight: 'bold',
                 fontSize: '1em',
@@ -117,15 +174,23 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit 
               }
             }
           >
-            <button
-              onClick = {handleActionButton}
+            <ConditionalWrapper
+              condition={actionButtonType === 'compare-with-current'}
+              wrapper={children =>
+                <Popover placement="bottom" title="Comparing:" content={popoverContent} trigger="hover">
+                  {children}
+                </Popover>}
             >
-              { actionButtonSymbol }
-            </button>
+              <button
+                onClick={handleActionButton}
+              >
+                {actionButtonSymbol}
+              </button>
+            </ConditionalWrapper>
           </span>
         </div>
         <div>{category}</div>
-        <div style={{fontWeight: 'bold'}}>{productName}</div> {/* TODO: style with css file! */}
+        <div style={{ fontWeight: 'bold' }}>{productName}</div> {/* TODO: style with css file! */}
         <div>
           {salePrice > 0
             ? <span>Sale! ${salePrice}</span> /* TODO strikethrough original price */

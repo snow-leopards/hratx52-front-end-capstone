@@ -50,7 +50,7 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity,
       <div className='selection-container'>
         <div className='row-container'>
           <Ratings/>
-          <a href="#ratings-component" style={{textDecoration: 'underline'}}>Read all {reviewList.length} reviews</a>
+          <a href="#ratings-component" style={{textDecoration: 'underline'}}>Read all {reviewList?.length} reviews</a>
         </div>
         <div>{product.category.toUpperCase()}</div>
         <div className='product-name'>{product.name}</div>
@@ -79,7 +79,7 @@ const SelectionGrid = ({selectedProductStyle, handleSizeClick, selectedQuantity,
               </Button>
             </Dropdown>}
           {selectedSizeLetters === 'SELECT SIZE' ? <Dropdown className='select-quantity-drop-down' disabled={true} overlay={quantityMenu}><Button>-</Button></Dropdown> :
-            <Dropdown className='select-quantity-drop-down selection-grid-button-dropdown' overlay={quantityMenu}>
+            <Dropdown className='select-quantity-drop-down selection-grid-button-dropdown' overlay={quantityMenu} trigger={['click']}>
               <Button className='selection-grid-button-dropdown'>
                 {selectedQuantity} <DownOutlined />
               </Button>

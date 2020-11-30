@@ -51,7 +51,7 @@ const ProductList = () => {
                 <img
                   width={272}
                   alt="logo"
-                  src="https://www.victoriassecret.com/p/760x1013/tif/56/77/56776f6e8c424ac68b4d91a900fbfd9c/111751764ZCK_OM_F.jpg"
+                  src="https://www.clipartkey.com/mpngs/m/33-330671_cartoon-fashion-girl-png-shopping-girl-png-hd.png"
                 />
               }
             >

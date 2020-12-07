@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Popover } from 'antd';
+import url from './url.js';
 
 /* a component needed to conditionally wrap the action button with a popover tag*/
 /* https://blog.hackages.io/conditionally-wrap-an-element-in-react-a8b9a47fab2 */
@@ -28,7 +29,7 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit,
   );
 
   const getProductInfo = () => {
-    fetch(`http://3.21.164.220/products/${relatedProductID}`)
+    fetch(`${url}/products/${relatedProductID}`)
       .then(productInfo => productInfo.json())
       .then((productInfo) => {
         setProductName(productInfo.name);
@@ -36,14 +37,14 @@ const ProductCard = ({ relatedProductID, actionButtonType, removeItemFromOutfit,
         setProductFeatures(productInfo.features);
         // console.log('productInfo.features', productInfo.features);
       })
-      .catch(() => {
+      .catch((err) => {
         console.log(`Error fetching related product info for product with id ${relatedProductID}:`, err);
       });
 
   };
 
   const getStyleInfo = () => {
-    fetch(`http://3.21.164.220/products/${relatedProductID}/styles`)
+    fetch(`${url}/products/${relatedProductID}/styles`)
       .then(styleInfo => styleInfo.json())
       .then(({ results }) => { /* styleInfo is an object with only has one useful key: "results", which is an array of style infos */
         let foundADefaultStyle = false;

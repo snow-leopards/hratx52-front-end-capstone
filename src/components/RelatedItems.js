@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { List, Card } from 'antd';
 import ProductCard from './ProductCard.js';
+import url from './url.js';
 
 //Arrows for the react-horizontal-scrolling-menu
 const Arrow = ({ text, className }) => {
@@ -34,8 +35,10 @@ const RelatedItems = ({productId}) => {
     // console.log('Fetching related items for itemID:', productId);
 
     // Initial fetch, to find the list of relatedItems e.g. [5, 9, 7, 2, 1]
-    fetch(`http://3.21.164.220/products/${productId}/related`)
-      .then(tempRelatedItemIDs => tempRelatedItemIDs.json())
+    fetch(`${url}/products/${productId}/related`)
+      .then(tempRelatedItemIDs => {
+        return tempRelatedItemIDs.json();
+      })
       .then((tempRelatedItemIDs) => {
         setRelatedItemIDs(tempRelatedItemIDs);
       })
@@ -45,7 +48,7 @@ const RelatedItems = ({productId}) => {
   };
 
   const getProductInfoFromAPI = () => {
-    fetch(`http://3.21.164.220/products/${productId}`)
+    fetch(`${url}/products/${productId}`)
       .then(productInfo => productInfo.json())
       .then((productInfo) => {
         setProductFeatures(productInfo.features);

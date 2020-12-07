@@ -67,7 +67,7 @@ const Overview = (props) => {
     if (selectedSizeLetters === 'SELECT SIZE') {
       message.error('Please, select size');
       setSizeDropDownVisible(true);
-    } else{
+    } else {
       message.success(product.name + ' in size ' + selectedSizeLetters + ' is added to your shooping cart. Quantity: ' + selectedQuantity );
     }
   };
